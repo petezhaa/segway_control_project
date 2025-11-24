@@ -18,6 +18,18 @@ module balance_cntrl (
   logic [11:0] PID_cntrl;
   logic [ 7:0] ss_tmr;
 
+  // ===============================================================
+  //  PIPELINE STAGE #1 — Register between PID → SegwayMath
+  // ===============================================================
+  logic signed [11:0] PID_cntrl_p1;
+
+  always_ff @(posedge clk or negedge rst_n) begin
+      if (!rst_n)
+          PID_cntrl_p1 <= '0;
+      else
+          PID_cntrl_p1 <= PID_cntrl;   // <-- registered PID output
+  end
+
   PID #(
       .fast_sim(fast_sim)
   ) iPID (

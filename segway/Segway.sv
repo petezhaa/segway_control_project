@@ -22,7 +22,8 @@ module Segway(clk,RST_n,INERT_SS_n,INERT_MOSI,INERT_SCLK,
   wire vld;								// tells us a new inertial reading is valid
   wire [15:0] ptch;						// ptch reading from inertial interface
   wire [15:0] ptch_rt;
-  wire signed [11:0] lft_spd, rght_spd;	// from balance_cntrl to mtr_drv, specify absolute speed to drive motor
+  wire signed [11:0] lft_spd_comb, rght_spd_comb;	// from balance_cntrl to mtr_drv, specify absolute speed to drive motor  rename these wires to _comb
+  logic signed [11:0] lft_spd_p1, rght_spd_p1; // Pipeline #2 registers
   wire lft_rev, rght_rev;				// left & right motor direction
   wire [11:0] lft_ld, rght_ld;		// measurements from load cells
   wire [11:0] batt;						// proportional to battery measurement
@@ -57,8 +58,22 @@ module Segway(clk,RST_n,INERT_SS_n,INERT_MOSI,INERT_SCLK,
   ///////////////////////////////////					 
   balance_cntrl #(fast_sim) iBAL(.clk(clk),.rst_n(rst_n),.vld(vld),.ptch(ptch),
                      .ptch_rt(ptch_rt),.pwr_up(pwr_up),.rider_off(rider_off),
-					 .steer_pot(steer_pot),.en_steer(en_steer),.lft_spd(lft_spd),
-					 .rght_spd(rght_spd),.too_fast(too_fast));
+					 .steer_pot(steer_pot),.en_steer(en_steer),.lft_spd(lft_spd_comb),
+					 .rght_spd(rght_spd_comb),.too_fast(too_fast));
+
+
+  /////////////////////////////////////////////////////
+  // PIPELINE STAGE #2 — register SegwayMath outputs //
+  ////////////////////////////////////////////////////
+  always_ff @(posedge clk or negedge rst_n) begin
+      if (!rst_n) begin
+          lft_spd_p1  <= '0;
+          rght_spd_p1 <= '0;
+      end else begin
+          lft_spd_p1  <= lft_spd_comb;
+          rght_spd_p1 <= rght_spd_comb;
+      end
+  end
 
 
   //////////////////////////////////
@@ -72,10 +87,18 @@ module Segway(clk,RST_n,INERT_SS_n,INERT_MOSI,INERT_SCLK,
   //////////////////////////////
   // Instantiate motor drive //
   ////////////////////////////  
-  mtr_drv iDRV(.clk(clk),.rst_n(rst_n),.lft_spd(lft_spd),
-               .rght_spd(rght_spd),.PWM1_lft(PWM1_lft),.PWM2_lft(PWM2_lft),
-			   .PWM1_rght(PWM1_rght),.PWM2_rght(PWM2_rght),
-			   .OVR_I_lft(OVR_I_lft),.OVR_I_rght(OVR_I_rght));
+  mtr_drv iDRV(
+    .clk(clk),
+    .rst_n(rst_n),
+    .lft_spd(lft_spd_p1),      // pipelined values
+    .rght_spd(rght_spd_p1),
+    .PWM1_lft(PWM1_lft),       
+    .PWM2_lft(PWM2_lft),       
+    .PWM1_rght(PWM1_rght),    
+    .PWM2_rght(PWM2_rght),     
+    .OVR_I_lft(OVR_I_lft),
+    .OVR_I_rght(OVR_I_rght)
+);
 	  
 	  
  ////////////////////////////////////////////////////////////
