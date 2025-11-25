@@ -157,3 +157,5 @@ run -all
 # ** Note: $stop    : C:/Users/peter/Documents/projects/segway/Segway_tb.sv(239)
 #    Time: 247041930 ps  Iteration: 0  Instance: /Segway_tb
 # Break in Module Segway_tb at C:/Users/peter/Documents/projects/segway/Segway_tb.sv line 239
+# End time: 21:43:32 on Nov 24,2025, Elapsed time: 4:37:16
+# Errors: 0, Warnings: 10
