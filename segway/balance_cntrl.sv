@@ -18,21 +18,19 @@ module balance_cntrl (
   logic [11:0] PID_cntrl;
   logic [ 7:0] ss_tmr;
 
-  // ===============================================================
-  //  PIPELINE STAGE #1 — Register between PID → SegwayMath
-  // ===============================================================
+  // ===========================================================
+  //  PIPELINE STAGE #1 — Register PID output
+  // ===========================================================
   logic signed [11:0] PID_cntrl_p1;
 
   always_ff @(posedge clk or negedge rst_n) begin
       if (!rst_n)
           PID_cntrl_p1 <= '0;
       else
-          PID_cntrl_p1 <= PID_cntrl;   // <-- registered PID output
+          PID_cntrl_p1 <= PID_cntrl;
   end
 
-  PID #(
-      .fast_sim(fast_sim)
-  ) iPID (
+  PID #(.fast_sim(fast_sim)) iPID (
       .ptch(ptch),
       .ptch_rt(ptch_rt),
       .clk(clk),
@@ -44,15 +42,43 @@ module balance_cntrl (
       .PID_cntrl(PID_cntrl)
   );
 
+  // ===========================================================
+  //  COMBINATIONAL OUTPUTS FROM SegwayMath
+  // ===========================================================
+  logic signed [11:0] lft_spd_comb, rght_spd_comb;
+  logic               too_fast_comb;
+
   SegwayMath iSegwayMath (
-      .PID_cntrl(PID_cntrl),
+      .PID_cntrl(PID_cntrl_p1),
       .ss_tmr(ss_tmr),
       .steer_pot(steer_pot),
       .en_steer(en_steer),
       .pwr_up(pwr_up),
-      .lft_spd(lft_spd),
-      .rght_spd(rght_spd),
-      .too_fast(too_fast)
+      .lft_spd(lft_spd_comb),      // ✔ correct signals
+      .rght_spd(rght_spd_comb),
+      .too_fast(too_fast_comb)
   );
+
+  // ===========================================================
+  //  PIPELINE STAGE #2 — Register SegwayMath outputs
+  // ===========================================================
+  logic signed [11:0] lft_spd_p2, rght_spd_p2;
+  logic               too_fast_p2;
+
+  always_ff @(posedge clk or negedge rst_n) begin
+      if (!rst_n) begin
+          lft_spd_p2  <= '0;
+          rght_spd_p2 <= '0;
+          too_fast_p2 <= 1'b0;
+      end else begin
+          lft_spd_p2  <= lft_spd_comb;
+          rght_spd_p2 <= rght_spd_comb;
+          too_fast_p2 <= too_fast_comb;
+      end
+  end
+
+  assign lft_spd  = lft_spd_p2;
+  assign rght_spd = rght_spd_p2;
+  assign too_fast = too_fast_p2;
 
 endmodule

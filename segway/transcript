@@ -1,6 +1,52 @@
+# Compile of A2D_intf.sv was successful.
+# Compile of ADC128S_FC.sv was successful.
+# Compile of Auth_blk.sv was successful.
+# Compile of balance_cntrl.sv was successful.
+# Compile of inert_intf.sv was successful.
+# Compile of inertial_integrator.sv was successful.
+# Compile of mtr_drv.sv was successful.
+# Compile of PID.sv was successful.
+# Compile of piezo_drv.sv was successful.
+# Compile of PWM11.sv was successful.
+# Compile of rst_synch.sv was successful.
+# Compile of Segway.sv was successful.
+# Compile of Segway_tb.sv failed with 4 errors.
+# Compile of SegwayMath.sv was successful.
+# Compile of SegwayModel.sv was successful with warnings.
+# Compile of SPI_ADC128S.sv was successful.
+# Compile of SPI_mnrch.sv was successful.
+# Compile of steer_en.sv was successful.
+# Compile of steer_en_SM.sv was successful.
+# Compile of task_tb.sv was successful.
+# Compile of UART_rx.sv was successful.
+# Compile of UART_tx.sv was successful.
+# 22 compiles, 1 failed with 4 errors.
+# Compile of A2D_intf.sv was successful.
+# Compile of ADC128S_FC.sv was successful.
+# Compile of Auth_blk.sv was successful.
+# Compile of balance_cntrl.sv was successful.
+# Compile of inert_intf.sv was successful.
+# Compile of inertial_integrator.sv was successful.
+# Compile of mtr_drv.sv was successful.
+# Compile of PID.sv was successful.
+# Compile of piezo_drv.sv was successful.
+# Compile of PWM11.sv was successful.
+# Compile of rst_synch.sv was successful.
+# Compile of Segway.sv was successful.
+# Compile of Segway_tb.sv was successful.
+# Compile of SegwayMath.sv was successful.
+# Compile of SegwayModel.sv was successful with warnings.
+# Compile of SPI_ADC128S.sv was successful.
+# Compile of SPI_mnrch.sv was successful.
+# Compile of steer_en.sv was successful.
+# Compile of steer_en_SM.sv was successful.
+# Compile of task_tb.sv was successful.
+# Compile of UART_rx.sv was successful.
+# Compile of UART_tx.sv was successful.
+# 22 compiles, 0 failed with no errors.
 vsim -gui work.A2D_intf work.ADC128S_FC work.Auth_blk work.balance_cntrl work.inert_intf work.inertial_integrator work.mtr_drv work.PID work.piezo_drv work.PWM11 work.rst_synch work.Segway work.Segway_tb work.SegwayMath work.SegwayModel work.SPI_ADC128S work.SPI_mnrch work.steer_en work.steer_en_SM work.task_tb_sv_unit work.UART_rx work.UART_tx
 # vsim -gui work.A2D_intf work.ADC128S_FC work.Auth_blk work.balance_cntrl work.inert_intf work.inertial_integrator work.mtr_drv work.PID work.piezo_drv work.PWM11 work.rst_synch work.Segway work.Segway_tb work.SegwayMath work.SegwayModel work.SPI_ADC128S work.SPI_mnrch work.steer_en work.steer_en_SM work.task_tb_sv_unit work.UART_rx work.UART_tx 
-# Start time: 14:20:08 on Nov 24,2025
+# Start time: 17:01:57 on Nov 24,2025
 # Loading sv_std.std
 # Loading work.A2D_intf
 # Loading work.SPI_mnrch
@@ -25,47 +71,28 @@ vsim -gui work.A2D_intf work.ADC128S_FC work.Auth_blk work.balance_cntrl work.in
 # Loading work.UART_tx
 # Loading work.task_tb_sv_unit
 # ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
-#    Time: 0 ps  Iteration: 0  Instance: /Segway/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
-# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+#    Time: 0 ps  Iteration: 0  Instance: /Segway/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 90
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(90): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+# ** Error (suppressible): (vsim-3389) Port 'ld_cell_lft' not found in the connected module (13th connection).
+#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb/iPHYS File: C:/Users/peter/Documents/projects/segway/Segway_tb.sv Line: 28
+# ** Error (suppressible): (vsim-3389) Port 'ld_cell_rght' not found in the connected module (14th connection).
+#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb/iPHYS File: C:/Users/peter/Documents/projects/segway/Segway_tb.sv Line: 28
+# ** Error (suppressible): (vsim-3389) Port 'steerPot' not found in the connected module (15th connection).
+#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb/iPHYS File: C:/Users/peter/Documents/projects/segway/Segway_tb.sv Line: 28
+# ** Error (suppressible): (vsim-3389) Port 'batt' not found in the connected module (16th connection).
+#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb/iPHYS File: C:/Users/peter/Documents/projects/segway/Segway_tb.sv Line: 28
 # ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
-#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
-# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
-# WARNING: No extended dataflow license exists
-do C:/Users/peter/Documents/projects/segway/wave.do
-run -all
-# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
-#    Time: 0 ps  Iteration: 4  Process: /UART_tx/#implicit#unique__107 File: C:/Users/peter/Documents/projects/segway/UART_tx.sv Line: 107
-# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
-#    Time: 0 ps  Iteration: 4  Process: /UART_rx/#implicit#unique__123 File: C:/Users/peter/Documents/projects/segway/UART_rx.sv Line: 123
-# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
-#    Time: 0 ps  Iteration: 4  Process: /Segway/iAuth/iRX/#implicit#unique__123 File: C:/Users/peter/Documents/projects/segway/UART_rx.sv Line: 123
-# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
-#    Time: 0 ps  Iteration: 4  Process: /Auth_blk/iRX/#implicit#unique__123 File: C:/Users/peter/Documents/projects/segway/UART_rx.sv Line: 123
-do C:/Users/peter/Documents/projects/segway/wave.do
-# ** Note: $stop    : C:/Users/peter/Documents/projects/segway/Segway_tb.sv(129)
-#    Time: 49101930 ps  Iteration: 0  Instance: /Segway_tb
-# Break in Module Segway_tb at C:/Users/peter/Documents/projects/segway/Segway_tb.sv line 129
+#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 90
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(90): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+# Error loading design
+# End time: 17:01:58 on Nov 24,2025, Elapsed time: 0:00:01
+# Errors: 4, Warnings: 7
 # Compile of A2D_intf.sv was successful.
 # Compile of ADC128S_FC.sv was successful.
 # Compile of Auth_blk.sv was successful.
 # Compile of balance_cntrl.sv was successful.
 # Compile of inert_intf.sv was successful.
 # Compile of inertial_integrator.sv was successful.
-restart -f
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.A2D_intf
-# Loading work.ADC128S_FC
-# Loading work.Auth_blk
-# Loading work.balance_cntrl
-# Loading work.inert_intf
-# Loading work.inertial_integrator
-# Loading work.mtr_drv
-# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
-#    Time: 0 ps  Iteration: 0  Instance: /Segway/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
-# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
-# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
-#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
-# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
 # Compile of mtr_drv.sv was successful.
 # Compile of PID.sv was successful.
 # Compile of piezo_drv.sv was successful.
@@ -83,5 +110,50 @@ restart -f
 # Compile of UART_rx.sv was successful.
 # Compile of UART_tx.sv was successful.
 # 22 compiles, 0 failed with no errors.
-# End time: 14:24:16 on Nov 24,2025, Elapsed time: 0:04:08
-# Errors: 0, Warnings: 6
+vsim -gui work.A2D_intf work.ADC128S_FC work.Auth_blk work.balance_cntrl work.inert_intf work.inertial_integrator work.mtr_drv work.PID work.piezo_drv work.PWM11 work.rst_synch work.Segway work.Segway_tb work.SegwayMath work.SegwayModel work.SPI_ADC128S work.SPI_mnrch work.steer_en work.steer_en_SM work.task_tb_sv_unit work.UART_rx work.UART_tx
+# vsim -gui work.A2D_intf work.ADC128S_FC work.Auth_blk work.balance_cntrl work.inert_intf work.inertial_integrator work.mtr_drv work.PID work.piezo_drv work.PWM11 work.rst_synch work.Segway work.Segway_tb work.SegwayMath work.SegwayModel work.SPI_ADC128S work.SPI_mnrch work.steer_en work.steer_en_SM work.task_tb_sv_unit work.UART_rx work.UART_tx 
+# Start time: 17:06:16 on Nov 24,2025
+# Loading sv_std.std
+# Loading work.A2D_intf
+# Loading work.SPI_mnrch
+# Loading work.ADC128S_FC
+# Loading work.SPI_ADC128S
+# Loading work.Auth_blk
+# Loading work.UART_rx
+# Loading work.balance_cntrl
+# Loading work.PID
+# Loading work.SegwayMath
+# Loading work.inert_intf
+# Loading work.inertial_integrator
+# Loading work.mtr_drv
+# Loading work.PWM11
+# Loading work.piezo_drv
+# Loading work.rst_synch
+# Loading work.Segway
+# Loading work.steer_en
+# Loading work.steer_en_SM
+# Loading work.Segway_tb
+# Loading work.SegwayModel
+# Loading work.UART_tx
+# Loading work.task_tb_sv_unit
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
+#    Time: 0 ps  Iteration: 0  Instance: /Segway/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 90
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(90): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
+#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 90
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(90): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+# WARNING: No extended dataflow license exists
+do C:/Users/peter/Documents/projects/segway/wave.do
+run -all
+# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
+#    Time: 0 ps  Iteration: 4  Process: /UART_tx/#implicit#unique__107 File: C:/Users/peter/Documents/projects/segway/UART_tx.sv Line: 107
+# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
+#    Time: 0 ps  Iteration: 4  Process: /UART_rx/#implicit#unique__123 File: C:/Users/peter/Documents/projects/segway/UART_rx.sv Line: 123
+# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
+#    Time: 0 ps  Iteration: 4  Process: /Segway/iAuth/iRX/#implicit#unique__123 File: C:/Users/peter/Documents/projects/segway/UART_rx.sv Line: 123
+# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
+#    Time: 0 ps  Iteration: 4  Process: /Auth_blk/iRX/#implicit#unique__123 File: C:/Users/peter/Documents/projects/segway/UART_rx.sv Line: 123
+# Error Undo Start called while in Redo capture mode
+# ** Note: $stop    : C:/Users/peter/Documents/projects/segway/Segway_tb.sv(239)
+#    Time: 247041930 ps  Iteration: 0  Instance: /Segway_tb
+# Break in Module Segway_tb at C:/Users/peter/Documents/projects/segway/Segway_tb.sv line 239

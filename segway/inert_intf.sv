@@ -212,5 +212,26 @@ module inert_intf(clk,rst_n,ptch,ptch_rt,vld,SS_n,SCLK,
   endgenerate
   
  
+  // ===========================================================
+  //   PIPELINE STAGE — Register ptch, ptch_rt, and vld
+  // ===========================================================
+  logic signed [15:0] ptch_p1, ptch_rt_p1;
+  logic               vld_p1;
+
+  always_ff @(posedge clk or negedge rst_n) begin
+      if (!rst_n) begin
+          ptch_p1    <= '0;
+          ptch_rt_p1 <= '0;
+          vld_p1     <= 1'b0;
+      end else begin
+          ptch_p1    <= ptch;
+          ptch_rt_p1 <= ptch_rt;
+          vld_p1     <= vld;
+      end
+  end
+
+  assign ptch    = ptch_p1;
+  assign ptch_rt = ptch_rt_p1;
+  assign vld     = vld_p1;
+
 endmodule
-	  
