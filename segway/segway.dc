@@ -1,22 +1,7 @@
 #---------------------------------------------------------------
 # 1 Read in RTL source files (SystemVerilog)
 #---------------------------------------------------------------
-read_file -format verilog {
-    A2D_intf.sv
-    Auth_blk.sv
-    balance_cntrl.sv
-    inert_intf.sv
-    inertial_integrator.sv
-    mtr_drv.sv
-    PID.sv
-    piezo_drv.sv
-    PWM11.sv
-    rst_synch.sv
-    Segway.sv
-    SegwayMath.sv
-    SPI_mnrch.sv
-    UART_rx.sv
-}
+read_file -format sverilog { A2D_intf.sv Auth_blk.sv balance_cntrl.sv inert_intf.sv inertial_integrator.sv mtr_drv.sv PID.sv piezo_drv.sv PWM11.sv rst_synch.sv Segway.sv SegwayMath.sv SPI_mnrch.sv UART_rx.sv steer_en.sv steer_en_SM.sv }
 
 current_design Segway
 
@@ -49,12 +34,6 @@ set_load 0.05 [all_outputs]
 
 #---------------------------------------------------------------
 # 6 Define input drive strength
-#    Homework requirement:
-#    "Defines a drive strength equivalent to a 2-input nand of size 2
-#     (NAND2X2_RVT) from the saed32rvt_tt0p85v25c library
-#     for all inputs EXCEPT clk and rst_n."
-#
-#    So: start from all non-clock inputs, then remove rst_n.
 #---------------------------------------------------------------
 set_driving_cell  \
   -lib_cell NAND2X2_RVT \
@@ -78,12 +57,18 @@ set_clock_uncertainty 0.15 clk
 # 9  Multi-cycle path constraints for iNEMO 
 #    (and maybe soft-start timer)
 #---------------------------------------------------------------
-set_multicycle_path 2 –setup –from [find pin iNEMO/ptch_*_reg*/CLK]
-set_multicycle_path 2 –setup –from [find pin iNEMO/AZ*_reg*/CLK]
-set_multicycle_path 2 –hold –from [find pin iNEMO/ptch_*_reg*/CLK]
-set_multicycle_path 2 –hold –from [find pin iNEMO/AZ*_reg*/CLK]
+#set_multicycle_path 2 -setup -from [find pin iNEMO/ptch_*_reg*/clk]
+#set_multicycle_path 2 -setup -from [find pin iNEMO/AZ*/CLK]
+#set_multicycle_path 2 -hold -from [find pin iNEMO/ptch_rt_*/CLK]
+#set_multicycle_path 2 -hold -from [find pin iNEMO/AZ*/CLK]
 #set_multicycle_path 2 –setup –from [find pin iBAL/iCNTRL/ss_tmr_reg*/CLK]
 #set_multicycle_path 2 –hold –from [find pin iBAL/iCNTRL/ss_tmr_reg*/CLK]
+
+set_multicycle_path 2 -setup -from [get_pins {iNEMO/ptch_*_reg*/CLK}]
+set_multicycle_path 2 -setup -from [get_pins {iNEMO/AZ*/CLK}]
+set_multicycle_path 2 -hold -from [get_pins {iNEMO/AZ*/CLK}]
+set_multicycle_path 2 -hold -from [get_pins {iNEMO/ptch_*_reg*/CLK}]
+
 
 
 #---------------------------------------------------------------
