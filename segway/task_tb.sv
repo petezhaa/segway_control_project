@@ -1,3 +1,5 @@
+package task_pkg;
+
 localparam G = 8'h47;
 localparam S = 8'h53;
 localparam UART_TX_FULL_FRAME = 52080; // Number of clock cycles for full UART transmission at 19200 baud with 50MHz clock
@@ -74,3 +76,5 @@ task automatic compute_average(ref logic signed [11:0] sig,  // signal to sample
 
   avg_out = sum / num_samples;
 endtask
+
+endpackage

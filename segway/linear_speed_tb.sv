@@ -1,6 +1,6 @@
 module linear_speed_tb ();
 
-  `include "task_tb.sv"
+  import task_pkg::*;
 
   //// Interconnects to DUT/support defined as type wire /////
   wire SS_n, SCLK, MOSI, MISO, INT;  // to inertial sensor
