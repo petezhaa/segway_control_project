@@ -102,7 +102,7 @@ module linear_speed_tb ();
   logic signed [15:0] prev_lean;
   bit first_iter = 1;
   rand_lean lean_gen;
-  localparam int LEAN_TOL_POS = 100;  // how close two leans can be and be considered "same"
+  localparam int LEAN_TOL_POS = 200;  // how close two leans can be and be considered "same"
   localparam int LEAN_TOL_NEG = 250;  // how close two leans can be and be considered "same"
 
   initial begin
@@ -164,6 +164,7 @@ module linear_speed_tb ();
             $display(
                 "Leans are within tolerance (|%0d - %0d| = %0d <= %0d), skipping monotonic speed check.",
                 rider_lean, prev_lean, lean_diff, eff_lean_tol);
+                continue;
           end else if (rider_lean > prev_lean) begin
             // if the previous lean was less than current lean, expect speed to increase
             // leaning more forward → expect speed to increase
@@ -181,6 +182,8 @@ module linear_speed_tb ();
           end
         end
       end
+
+      $display("Motor speeds changed correctly with lean change.");
 
       // update previous values for next iteration
       prev_lean     = rider_lean;

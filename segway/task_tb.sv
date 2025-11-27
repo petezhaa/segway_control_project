@@ -17,7 +17,7 @@ task automatic init_DUT(ref logic clk, ref logic RST_n, ref logic send_cmd, ref 
   rider_lean = 0;
   ld_cell_lft = 0;
   ld_cell_rght = 0;
-  steerPot = 12'h7FF;
+  steerPot = 12'h800;
   batt = 12'hC00;
   OVR_I_lft = 0;
   OVR_I_rght = 0;
@@ -43,8 +43,8 @@ task automatic SendCmd(ref logic clk, ref logic trmt, ref logic [7:0] tx_data,
 endtask
 
 
-function automatic bit check_equal_with_tolerance(logic signed signal_a, logic signed signal_b,
-                                                  input logic tolerance);
+function automatic bit check_equal_with_tolerance(input int signal_a, input int signal_b,
+                                                  input int tolerance);
   int diff;
 
   diff = signal_a - signal_b;
