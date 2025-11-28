@@ -111,7 +111,7 @@ module Segway_tb ();
 
     ld_cell_lft  = 12'h300;  // simulate rider getting on
     ld_cell_rght = 12'h300;  // simulate rider getting on
-    repeat (350000) @(posedge clk);  // wait for some time
+    repeat (325000) @(posedge clk);  // wait for some time
 
     rider_lean = 16'sh0FFF;  // simulate rider leaning forward
 
