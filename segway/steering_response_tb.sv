@@ -120,7 +120,6 @@ module steering_response_tb ();
     rider_lean = 16'sh0FFF;
     repeat (50000) @(posedge clk);  // wait for balance loop to reach a steady state
 
-
     //============================================================
     // TEST 1: Steering fully to the right (max steer, 0xE00)
     // Expectation: left wheel speed > right wheel speed

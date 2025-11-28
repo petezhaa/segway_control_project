@@ -109,14 +109,13 @@ module Segway_tb ();
     // Send 'G' command
     SendCmd(.clk(clk), .trmt(send_cmd), .tx_data(cmd), .cmd(G));
 
-    repeat (3000) @(posedge clk);  // wait for some time
     ld_cell_lft  = 12'h300;  // simulate rider getting on
     ld_cell_rght = 12'h300;  // simulate rider getting on
-    repeat (800000) @(posedge clk);  // wait for some time
+    repeat (350000) @(posedge clk);  // wait for some time
 
     rider_lean = 16'sh0FFF;  // simulate rider leaning forward
 
-    repeat (800000) @(posedge clk);  // wait for some time
+    repeat (1000000) @(posedge clk);  // wait for some time
 
     // ----------------------------------------------------------
     // 5) Abruptly remove lean (back to zero) and watch ring-down
