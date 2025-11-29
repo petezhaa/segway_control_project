@@ -109,22 +109,43 @@ module Segway_tb ();
     // Send 'G' command
     SendCmd(.clk(clk), .trmt(send_cmd), .tx_data(cmd), .cmd(G));
 
+    repeat (3000) @(posedge clk);  // wait for some time
     ld_cell_lft  = 12'h300;  // simulate rider getting on
     ld_cell_rght = 12'h300;  // simulate rider getting on
     repeat (325000) @(posedge clk);  // wait for some time
 
-    rider_lean = 16'sh0FFF;  // simulate rider leaning forward
-
-    repeat (1000000) @(posedge clk);  // wait for some time
+    $display("=== Starting Lean Tests ===");
+    $display("applying forward lean of 0FFFh (4095)");
+    rider_lean = 16'h0FFF;  // simulate rider leaning forward
+    check_theta_zero(.clk(clk), .ptch(iPHYS.theta_platform), .target_val(16'd0150), .tol(16'd0200));
 
     // ----------------------------------------------------------
     // 5) Abruptly remove lean (back to zero) and watch ring-down
     // ----------------------------------------------------------
+    $display("removing lean to 0000h (0)");
     rider_lean = 16'sh0000;
-    repeat (800000) @(posedge clk);  // wait for some time
+    check_theta_zero(.clk(clk), .ptch(iPHYS.theta_platform), .target_val(16'd0150), .tol(16'd0200));
 
+    // ----------------------------------------------------------
+    // 6) Apply backward lean and watch response
+    // ----------------------------------------------------------
+    $display("applying backward lean of F000h (-4096)");
+    rider_lean = 16'hF000;  // simulate rider leaning backward
+    check_theta_zero(.clk(clk), .ptch(iPHYS.theta_platform), .target_val(16'd0150), .tol(16'd0200));
+    // ----------------------------------------------------------
+    // 7) Abruptly remove lean (back to zero) and watch ring-down
+    // ----------------------------------------------------------
+    $display("removing lean to 0000h (0)");
+    rider_lean = 16'sh0000;
+    check_theta_zero(.clk(clk), .ptch(iPHYS.theta_platform), .target_val(16'd0150), .tol(16'd0200));
 
-    #100;
+    check_glitch_free_transitions(.clk(clk), .signal(rider_lean), .mon_sig(iPHYS.theta_platform),
+                                  .values('{16'sh0FFF, 16'shF000, 16'sh0000}), .wait_cycles(5000),
+                                  .tolerance(16'd0400));
+
+    repeat (500000) @(posedge clk);  // wait for some time
+
+    $display("=== Lean Tests Complete ===");
     $stop();
   end
 

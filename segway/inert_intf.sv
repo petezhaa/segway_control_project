@@ -3,14 +3,14 @@ module inert_intf(clk,rst_n,ptch,ptch_rt,vld,SS_n,SCLK,
  
   parameter fast_sim = 1;
  
-  input clk, rst_n;
-  input MISO;					// SPI input from inertial sensor
-  input INT;					// goes high when measurement ready
+  input logic clk, rst_n;
+  input logic MISO;					// SPI input from inertial sensor
+  input logic INT;					// goes high when measurement ready
   
-  output signed [15:0] ptch;	// fusion corrected pitch
-  output signed [15:0] ptch_rt;
-  output reg vld;				// goes high for 1 clock when new outputs available
-  output SS_n,SCLK,MOSI;		// SPI outputs
+  output logic signed [15:0] ptch;	// fusion corrected pitch
+  output logic signed [15:0] ptch_rt;
+  output logic vld;				// goes high for 1 clock when new outputs available
+  output logic SS_n,SCLK,MOSI;		// SPI outputs
  
 
   ////////////////////////////////////////////

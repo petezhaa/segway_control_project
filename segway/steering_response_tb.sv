@@ -114,11 +114,12 @@ module steering_response_tb ();
     // Apply rider weight (both load cells above threshold)
     ld_cell_lft  = 12'h300;  
     ld_cell_rght = 12'h300;  
-    repeat (50000) @(posedge clk);  // allow weight-detection and enable logic to settle
+    repeat (325000) @(posedge clk);  // allow weight-detection and enable logic to settle
 
     // Apply maximum forward lean to get meaningful wheel speeds before steering
     rider_lean = 16'sh0FFF;
     repeat (50000) @(posedge clk);  // wait for balance loop to reach a steady state
+    $display("\n=== Starting Steering Response Tests ===");
 
     //============================================================
     // TEST 1: Steering fully to the right (max steer, 0xE00)

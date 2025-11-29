@@ -106,8 +106,8 @@ module PID (
         if (!rst_n) long_tmr <= 27'h0000000;
         else if (!pwr_up) long_tmr <= 27'h0000000;
         else if (~(&long_tmr[26:19]))  // Stop incrementing once max count reached
-          //long_tmr <= long_tmr + 9'h100;
-          long_tmr <= long_tmr + 20'h01000;
+          long_tmr <= long_tmr + 9'h100;
+          //long_tmr <= long_tmr + 20'h01000;
       end
     end else
       always_ff @(posedge clk or negedge rst_n) begin

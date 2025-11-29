@@ -1,13 +1,13 @@
 
 module SegwayMath (
-    input signed [11:0] PID_cntrl,  // Signed PID output from balance controller
-    input [7:0] ss_tmr,  //Soft-start timer for ramping the PID control
-    input [11:0] steer_pot,  // Steering potentiometer input (unsigned)
-    input en_steer,  // Steering enable flag
-    input pwr_up,  // Power-up flag (0=off, 1=on)
-    output signed [11:0] lft_spd,  // Computed signed wheel speeds for left motor
-    output signed [11:0] rght_spd,  // Computed signed wheel speeds for right motor
-    output too_fast  // Overspeed flag
+    input logic signed [11:0] PID_cntrl,  // Signed PID output from balance controller
+    input logic [7:0] ss_tmr,  //Soft-start timer for ramping the PID control
+    input logic [11:0] steer_pot,  // Steering potentiometer input (unsigned)
+    input logic en_steer,  // Steering enable flag
+    input logic pwr_up,  // Power-up flag (0=off, 1=on)
+    output logic signed [11:0] lft_spd,  // Computed signed wheel speeds for left motor
+    output logic signed [11:0] rght_spd,  // Computed signed wheel speeds for right motor
+    output logic too_fast  // Overspeed flag
 );
 
   // internal signals
