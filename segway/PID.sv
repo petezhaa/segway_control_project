@@ -25,6 +25,10 @@ module PID (
     logic signed [15:0] D_term_ext;
     logic signed [9:0] ptch_err_sat;
 
+
+    // Declare long_tmr before use
+    logic [26:0] long_tmr;
+
     // Let's start with the P term
 
     // Signed saturation for signed_err
@@ -102,13 +106,18 @@ module PID (
 
     // Now we saturate the sum and assign to PID_cntrl
 
+
+    // Define sum as the sum of the extended P, I, and D terms
+    logic signed [15:0] sum;
+    assign sum = P_term_ext + I_term_ext + D_term_ext;
+
     assign PID_cntrl =
     (!sum[15] && |sum[14:11]) ? 12'h7FF : // too positive
     (sum[15] && ~&sum[14:11]) ? 12'h800 : // too negative
     sum[11:0]; // in range;
 
     // ss_tmr implementation
-    logic [26:0] long_tmr;
+	// ...existing code...
 
     logic [8:0] increment; // default increment value
 

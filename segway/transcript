@@ -1,11 +1,13 @@
 # Compile of A2D_intf.sv was successful.
 # Compile of ADC128S_FC.sv was successful.
 # Compile of Auth_blk.sv was successful.
+# Compile of Auth_segway_tb.sv was successful.
 # Compile of balance_cntrl.sv was successful.
 # Compile of inert_intf.sv was successful.
 # Compile of inertial_integrator.sv was successful.
-# Compile of linear_speed_tb.sv was successful with warnings.
 # Compile of mtr_drv.sv was successful.
+# Compile of over_I_tb.sv was successful.
+# Compile of over_t_task.sv was successful.
 # Compile of PID.sv was successful.
 # Compile of piezo_drv.sv was successful.
 # Compile of PWM11.sv was successful.
@@ -18,49 +20,7 @@
 # Compile of SPI_mnrch.sv was successful.
 # Compile of steer_en.sv was successful.
 # Compile of steer_en_SM.sv was successful.
-# Compile of steering_response_tb.sv was successful.
 # Compile of task_tb.sv was successful.
 # Compile of UART_rx.sv was successful.
 # Compile of UART_tx.sv was successful.
-# 24 compiles, 0 failed with no errors.
-vsim -gui work.Segway_tb
-# vsim -gui work.Segway_tb 
-# Start time: 19:51:56 on Nov 28,2025
-# Loading sv_std.std
-# Loading work.task_pkg
-# Loading work.Segway_tb
-# Loading work.SegwayModel
-# Loading work.ADC128S_FC
-# Loading work.SPI_ADC128S
-# Loading work.Segway
-# Loading work.Auth_blk
-# Loading work.UART_rx
-# Loading work.inert_intf
-# Loading work.SPI_mnrch
-# Loading work.inertial_integrator
-# Loading work.balance_cntrl
-# Loading work.PID
-# Loading work.SegwayMath
-# Loading work.steer_en
-# Loading work.steer_en_SM
-# Loading work.mtr_drv
-# Loading work.PWM11
-# Loading work.A2D_intf
-# Loading work.piezo_drv
-# Loading work.rst_synch
-# Loading work.UART_tx
-# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
-#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
-# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
-# ** Warning: (vsim-PLI-3003) [TOFD] - System task or function '$abs' is not defined.
-#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb File: C:/Users/peter/Documents/projects/segway/Segway_tb.sv Line: 148
-add wave -position insertpoint sim:/Segway_tb/iDUT/*
-run -all
-# ** Error (suppressible): (vsim-12023) Cannot execute undefined system task/function '$abs'
-#    Time: 74052070 ps  Iteration: 1  Process: /Segway_tb/#INITIAL#104 File: C:/Users/peter/Documents/projects/segway/Segway_tb.sv Line: 148
-# Segway system test passed!
-# ** Note: $stop    : C:/Users/peter/Documents/projects/segway/Segway_tb.sv(271)
-#    Time: 268258650 ps  Iteration: 0  Instance: /Segway_tb
-# Break in Module Segway_tb at C:/Users/peter/Documents/projects/segway/Segway_tb.sv line 271
-# End time: 20:05:31 on Nov 28,2025, Elapsed time: 0:13:35
-# Errors: 1, Warnings: 8
+# 25 compiles, 0 failed with no errors.
