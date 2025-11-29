@@ -11,6 +11,7 @@ module over_I_tb ();
   wire piezo, piezo_n;
   wire cmd_sent;
   wire rst_n;  // synchronized global reset
+  wire OVR_I_shtdwn;  
 
   ////// Stimulus is declared as type reg ///////
   reg clk, RST_n;
@@ -44,7 +45,7 @@ module over_I_tb ();
   /////////////////////////////////////////////////////////
   // Instantiate Model of A2D for load cell and battery //
   ///////////////////////////////////////////////////////
-  ADC128S_FC iA2D (
+    ADC128S_FC iA2D (
       .clk(clk),
       .rst_n(RST_n),
       .SS_n(A2D_SS_n),
@@ -55,7 +56,7 @@ module over_I_tb ();
       .ld_cell_rght(ld_cell_rght),
       .steerPot(steerPot),
       .batt(batt)
-  );
+    );
 
   ////// Instantiate DUT ////////
   Segway iDUT (

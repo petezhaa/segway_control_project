@@ -1,22 +1,23 @@
 module Segway(clk,RST_n,INERT_SS_n,INERT_MOSI,INERT_SCLK,
               INERT_MISO,INERT_INT,A2D_SS_n,A2D_MOSI,A2D_SCLK,
-			  A2D_MISO,PWM1_lft,PWM2_lft,PWM1_rght,PWM2_rght,
-			  OVR_I_lft,OVR_I_rght,piezo_n,piezo,RX);
+              A2D_MISO,PWM1_lft,PWM2_lft,PWM1_rght,PWM2_rght,
+              OVR_I_lft,OVR_I_rght,piezo_n,piezo,RX,
+              OVR_I_shtdwn);
 			  
   input logic clk,RST_n;
-  input logic INERT_MISO;						// Serial in from inertial sensor
-  input logic A2D_MISO;						// Serial in from A2D
-  input logic INERT_INT;						// Interrupt from inertial indicating data ready
-  input OVR_I_lft,OVR_I_rght;			// Instantaneous over current in motor
-  input logic RX;								// UART input from BLE module
+  input logic INERT_MISO;                        // Serial in from inertial sensor
+  input logic A2D_MISO;                          // Serial in from A2D
+  input logic INERT_INT;                         // Interrupt from inertial indicating data ready
+  input OVR_I_lft,OVR_I_rght;                    // Instantaneous over current in motor
+  input logic RX;                                // UART input from BLE module
 
-  
-  output logic A2D_SS_n, INERT_SS_n;			// Slave selects to A2D and inertial sensor
-  output logic A2D_MOSI, INERT_MOSI;			// MOSI signals to A2D and inertial sensor
-  output logic A2D_SCLK, INERT_SCLK;			// SCLK signals to A2D and inertial sensor
-  output logic PWM1_lft, PWM2_lft;  			// left motor speed/direction controls
-  output logic PWM1_rght,PWM2_rght;			// right motor speed/direction controls
-  output logic piezo_n,piezo;					// diff drive to piezo for sound
+  output logic A2D_SS_n, INERT_SS_n;             // Slave selects to A2D and inertial sensor
+  output logic A2D_MOSI, INERT_MOSI;             // MOSI signals to A2D and inertial sensor
+  output logic A2D_SCLK, INERT_SCLK;             // SCLK signals to A2D and inertial sensor
+  output logic PWM1_lft, PWM2_lft;               // left motor speed/direction controls
+  output logic PWM1_rght,PWM2_rght;              // right motor speed/direction controls
+  output logic piezo_n,piezo;                    // diff drive to piezo for sound
+  output logic OVR_I_shtdwn;                     // Overcurrent shutdown output
     
   wire rst_n;							// synchronized global reset signal
   wire vld;								// tells us a new inertial reading is valid
@@ -72,10 +73,19 @@ module Segway(clk,RST_n,INERT_SS_n,INERT_MOSI,INERT_SCLK,
   //////////////////////////////
   // Instantiate motor drive //
   ////////////////////////////  
-  mtr_drv iDRV(.clk(clk),.rst_n(rst_n),.lft_spd(lft_spd),
-               .rght_spd(rght_spd),.PWM1_lft(PWM1_lft),.PWM2_lft(PWM2_lft),
-			   .PWM1_rght(PWM1_rght),.PWM2_rght(PWM2_rght),
-			   .OVR_I_lft(OVR_I_lft),.OVR_I_rght(OVR_I_rght));
+  mtr_drv iDRV(
+    .clk(clk),
+    .rst_n(rst_n),
+    .lft_spd(lft_spd),
+    .rght_spd(rght_spd),
+    .PWM1_lft(PWM1_lft),
+    .PWM2_lft(PWM2_lft),
+    .PWM1_rght(PWM1_rght),
+    .PWM2_rght(PWM2_rght),
+    .OVR_I_lft(OVR_I_lft),
+    .OVR_I_rght(OVR_I_rght),
+    .OVR_I_shtdwn(OVR_I_shtdwn)
+  );
 	  
 	  
  ////////////////////////////////////////////////////////////
