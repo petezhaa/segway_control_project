@@ -43,8 +43,7 @@ module balance_cntrl #(
         .pwr_up(pwr_up),
         .lft_spd(lft_spd),
         .rght_spd(rght_spd),
-        .too_fast(too_fast),
-        .clk(clk)
+        .too_fast(too_fast)
     );
 
 endmodule

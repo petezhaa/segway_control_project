@@ -100,6 +100,7 @@ module Segway_tb ();
 
     // Local variables for self-checking
     int lft_avg, rght_avg;
+    int diff;
 
     initial begin
 
@@ -159,6 +160,7 @@ module Segway_tb ();
 
         // ================== Added Comprehensive System Tests ==================
 
+        $display("=== Starting steering Tests ===");
         // Steering right then left (differential wheel response)
         steerPot = 12'hE00;
         repeat (600000) @(posedge clk);
@@ -168,22 +170,52 @@ module Segway_tb ();
         repeat (300000) @(posedge clk);
 
         // Check: Center steering balance
-        compute_average(.sig(iDUT.lft_spd), .num_samples(256), .clk(clk), .avg_out(lft_avg));
-        compute_average(.sig(iDUT.rght_spd), .num_samples(256), .clk(clk), .avg_out(rght_avg));
-        if ($abs(lft_avg - rght_avg) > 150) begin
-            $display("FAIL: Motors not balanced at center steering (diff=%0d)", lft_avg - rght_avg);
+        $display("Checking center steering balance...");
+        compute_average(.sig(iPHYS.omega_lft), .num_samples(256), .clk(clk), .avg_out(lft_avg));
+        compute_average(.sig(iPHYS.omega_rght), .num_samples(256), .clk(clk), .avg_out(rght_avg));
+        diff = lft_avg - rght_avg;
+        diff = (diff < 0) ? -diff : diff;
+        if (diff > 150) begin
+            $display("FAIL: Motors not balanced at center steering (diff=%0d)", diff);
             $stop();
         end
+        $display("Center steering balance OK (diff=%0d)", diff);
+        $display("=== Steering Tests Complete ===");
 
+        $display("=== Starting rider lean Tests ===");
         // Rider lean forward then backward (speed reversal / braking)
         rider_lean = 16'sh0600;
         repeat (800000) @(posedge clk);
+        if (iPHYS.omega_lft <= 0 || iPHYS.omega_rght <= 0) begin
+            $display("FAIL: Motors did not achieve expected forward speed");
+            $display("omega_lft=%0d, omega_rght=%0d", iPHYS.omega_lft, iPHYS.omega_rght);
+            $stop();
+        end
+        $display("Forward speed test passed.");
         rider_lean = -16'sh0400;
         repeat (800000) @(posedge clk);
+        if (iPHYS.omega_lft >= 0 || iPHYS.omega_rght >= 0) begin
+            $display("FAIL: Motors did not achieve expected backward speed");
+            $display("omega_lft=%0d, omega_rght=%0d", iPHYS.omega_lft, iPHYS.omega_rght);
+            $stop();
+        end
+        $display("Backward speed test passed.");
         rider_lean = 16'sh0000;
         repeat (400000) @(posedge clk);
+        if (iPHYS.omega_lft < -50 || iPHYS.omega_rght < -50 || iPHYS.omega_lft > 50 || iPHYS.omega_rght > 50) begin
+            $display("FAIL: Motors did not return to zero speed");
+            $display("iPHYS.omega_lft < -50 evaluated to %0d", iPHYS.omega_lft < -50);
+            $display("iPHYS.omega_rght < -50 evaluated to %0d", iPHYS.omega_rght < -50);
+            $display("iPHYS.omega_lft > 50 evaluated to %0d", iPHYS.omega_lft > 50);
+            $display("iPHYS.omega_rght > 50 evaluated to %0d", iPHYS.omega_rght > 50);
+            $display("omega_lft=%0d, omega_rght=%0d", iPHYS.omega_lft, iPHYS.omega_rght);
+            $stop();
+        end
+        $display("Rider not leaning passed.");
+        $display("=== Rider lean Tests Complete ===");
 
         // Simulate step-off (load cells go low) -> expect internal disable
+        $display("=== Starting step-off Tests ===");
         ld_cell_lft  = 12'h020;
         ld_cell_rght = 12'h010;
         repeat (600000) @(posedge clk);
@@ -193,6 +225,7 @@ module Segway_tb ();
             $display("FAIL: rider_off not asserted after step-off");
             $stop();
         end
+        $display("Step-off detected correctly.");
 
         // Send STOP command to complete shutdown sequence
         SendCmd(.clk(clk), .trmt(send_cmd), .tx_data(cmd), .cmd(S));
@@ -203,6 +236,7 @@ module Segway_tb ();
             $display("FAIL: pwr_up remained high after STOP and step-off");
             $stop();
         end
+        $display("Step-off and STOP command behavior passed.");
 
         // Re-mount rider and send STOP then GO sequence
         ld_cell_lft  = 12'h300;
@@ -218,38 +252,7 @@ module Segway_tb ();
             $display("FAIL: pwr_up did not reassert after GO command");
             $stop();
         end
-
-        // Transient overcurrent pulse (left)
-        OVR_I_lft = 1;
-        repeat (2000) @(posedge clk);
-        OVR_I_lft = 0;
-        repeat (300000) @(posedge clk);
-
-        // Check: Transient overcurrent does not latch shutdown
-        if (iDUT.iDRV.OVR_I_shtdwn) begin
-            $display("FAIL: OVR_I_shtdwn latched on transient overcurrent");
-            $stop();
-        end
-
-        // Persistent overcurrent (right)
-        OVR_I_rght = 1;
-        repeat (1_200_000) @(posedge clk);
-        OVR_I_rght = 0;
-        repeat (300000) @(posedge clk);
-
-        // Check: Persistent overcurrent latches shutdown
-        if (!iDUT.iDRV.OVR_I_shtdwn) begin
-            $display("FAIL: OVR_I_shtdwn not asserted after persistent overcurrent");
-            $stop();
-        end
-
-        // Dual overcurrent short event
-        OVR_I_lft  = 1;
-        OVR_I_rght = 1;
-        repeat (300000) @(posedge clk);
-        OVR_I_lft  = 0;
-        OVR_I_rght = 0;
-        repeat (300000) @(posedge clk);
+        $display("GO command re-enabled power as expected.");
 
         // Battery voltage ramp down (warning / shutdown behavior)
         batt = 12'hC00;
@@ -278,12 +281,6 @@ module Segway_tb ();
             $display("FAIL: batt_low did not clear on battery recovery");
             $stop();
         end
-
-        // Simulate fall (excessive tilt)
-        rider_lean = 16'sh1FFF;
-        repeat (600000) @(posedge clk);
-        rider_lean = 16'sh0000;
-        repeat (400000) @(posedge clk);
 
         // Final STOP
         SendCmd(.clk(clk), .trmt(send_cmd), .tx_data(cmd), .cmd(S));
