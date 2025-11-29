@@ -1,0 +1,52 @@
+vsim -gui work.steering_tb
+# vsim -gui work.steering_tb 
+# Start time: 19:16:43 on Nov 28,2025
+# Loading sv_std.std
+# Loading work.task_pkg
+# Loading work.steering_tb
+# Loading work.SegwayModel
+# Loading work.ADC128S_FC
+# Loading work.SPI_ADC128S
+# Loading work.Segway
+# Loading work.Auth_blk
+# Loading work.UART_rx
+# Loading work.inert_intf
+# Loading work.SPI_mnrch
+# Loading work.inertial_integrator
+# Loading work.balance_cntrl
+# Loading work.PID
+# Loading work.SegwayMath
+# Loading work.steer_en
+# Loading work.steer_en_SM
+# Loading work.mtr_drv
+# Loading work.PWM11
+# Loading work.A2D_intf
+# Loading work.piezo_drv
+# Loading work.rst_synch
+# Loading work.UART_tx
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
+#    Time: 0 ps  Iteration: 0  Instance: /steering_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+# ** Warning: (vsim-PLI-3003) [TOFD] - System task or function '$abs' is not defined.
+#    Time: 0 ps  Iteration: 0  Instance: /steering_tb File: C:/Users/peter/Documents/projects/segway/steering_tb.sv Line: 126
+# ** Warning: (vsim-PLI-3003) [TOFD] - System task or function '$abs' is not defined.
+#    Time: 0 ps  Iteration: 0  Instance: /steering_tb File: C:/Users/peter/Documents/projects/segway/steering_tb.sv Line: 162
+# ** Warning: (vsim-PLI-3003) [TOFD] - System task or function '$abs' is not defined.
+#    Time: 0 ps  Iteration: 0  Instance: /steering_tb File: C:/Users/peter/Documents/projects/segway/steering_tb.sv Line: 176
+add wave -position insertpoint sim:/steering_tb/iDUT/*
+run -all
+# Center steering - Left: 225, Right: 225, Diff: 0
+# ** Error (suppressible): (vsim-12023) Cannot execute undefined system task/function '$abs'
+#    Time: 4052070 ps  Iteration: 1  Process: /steering_tb/#INITIAL#102 File: C:/Users/peter/Documents/projects/segway/steering_tb.sv Line: 126
+# Right turn - Left: 528, Right: -384, Diff: 912
+# Left turn - Left: -391, Right: 520, Diff: -911
+# ** Error (suppressible): (vsim-12023) Cannot execute undefined system task/function '$abs'
+#    Time: 7262310 ps  Iteration: 1  Process: /steering_tb/#INITIAL#102 File: C:/Users/peter/Documents/projects/segway/steering_tb.sv Line: 162
+# Return to center - Left: 220, Right: 220, Diff: 0
+# ** Error (suppressible): (vsim-12023) Cannot execute undefined system task/function '$abs'
+#    Time: 8872550 ps  Iteration: 1  Process: /steering_tb/#INITIAL#102 File: C:/Users/peter/Documents/projects/segway/steering_tb.sv Line: 176
+# Rider off - Left: 260, Right: 260
+# Speeds should be zero when rider is off.
+# ** Note: $stop    : C:/Users/peter/Documents/projects/segway/steering_tb.sv(194)
+#    Time: 10875110 ps  Iteration: 1  Instance: /steering_tb
+# Break in Module steering_tb at C:/Users/peter/Documents/projects/segway/steering_tb.sv line 194
