@@ -204,10 +204,6 @@ module Segway_tb ();
         repeat (400000) @(posedge clk);
         if (iPHYS.omega_lft < -50 || iPHYS.omega_rght < -50 || iPHYS.omega_lft > 50 || iPHYS.omega_rght > 50) begin
             $display("FAIL: Motors did not return to zero speed");
-            $display("iPHYS.omega_lft < -50 evaluated to %0d", iPHYS.omega_lft < -50);
-            $display("iPHYS.omega_rght < -50 evaluated to %0d", iPHYS.omega_rght < -50);
-            $display("iPHYS.omega_lft > 50 evaluated to %0d", iPHYS.omega_lft > 50);
-            $display("iPHYS.omega_rght > 50 evaluated to %0d", iPHYS.omega_rght > 50);
             $display("omega_lft=%0d, omega_rght=%0d", iPHYS.omega_lft, iPHYS.omega_rght);
             $stop();
         end
