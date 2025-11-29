@@ -132,7 +132,7 @@ module linear_speed_tb ();
       $display("Rider lean set to: %0d", rider_lean);
 
       // skip first few cycles to avoid transients
-      repeat (500000) @(posedge clk);
+      repeat (1000000) @(posedge clk);
 
       // compute averages over 1000 cycles
       compute_average(.sig(iDUT.iBAL.lft_spd), .num_samples(1000), .clk(clk),
