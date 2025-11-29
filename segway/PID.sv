@@ -84,7 +84,7 @@ module PID (
   // Derivative (D) Term
   //------------------------------------------------------------
   // Negate and scale pitch rate to form derivative component
-  assign D_term = ~{{3{ptch_rt[15]}}, ptch_rt[15:6]};
+  assign D_term = ~{{3{ptch_rt[15]}}, ptch_rt[15:6]} + 1'b1;
 
   //------------------------------------------------------------
   // PID Output Computation
@@ -107,6 +107,7 @@ module PID (
         else if (!pwr_up) long_tmr <= 27'h0000000;
         else if (~(&long_tmr[26:19]))  // Stop incrementing once max count reached
           long_tmr <= long_tmr + 9'h100;
+          //long_tmr <= long_tmr + 20'h01000;
       end
     end else
       always_ff @(posedge clk or negedge rst_n) begin
