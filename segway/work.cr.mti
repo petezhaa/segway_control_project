@@ -19,14 +19,6 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 Top level modules:
 	PID
 
-} {} {}} C:/Users/peter/Documents/projects/segway/steering_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/steering_tb.sv
-Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module steering_tb
--- Importing package task_pkg
-
-Top level modules:
-	steering_tb
-
 } {} {}} C:/Users/peter/Documents/projects/segway/ADC128S_FC.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/ADC128S_FC.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 -- Compiling module ADC128S_FC
@@ -40,6 +32,13 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 
 Top level modules:
 	inertial_integrator
+
+} {} {}} C:/Users/peter/Documents/projects/segway/Segway.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/Segway.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module Segway
+
+Top level modules:
+	Segway
 
 } {} {}} C:/Users/peter/Documents/projects/segway/linear_speed_tb.sv {2 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/linear_speed_tb.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
@@ -58,13 +57,6 @@ These features are only supported in Questasim.
 Top level modules:
 	linear_speed_tb
 
-} {} {}} C:/Users/peter/Documents/projects/segway/Segway.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/Segway.sv
-Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module Segway
-
-Top level modules:
-	Segway
-
 } {} {}} C:/Users/peter/Documents/projects/segway/SegwayModel.sv {2 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/SegwayModel.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 -- Compiling module SegwayModel
@@ -74,28 +66,6 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 
 Top level modules:
 	SegwayModel
-
-} {} {}} C:/Users/peter/Documents/projects/segway/safety_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/safety_tb.sv
-Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module safety_tb
--- Importing package task_pkg
-
-Top level modules:
-	safety_tb
-
-} {} {}} C:/Users/peter/Documents/projects/segway/piezo_drv.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/piezo_drv.sv
-Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module piezo_drv
-
-Top level modules:
-	piezo_drv
-
-} {} {}} C:/Users/peter/Documents/projects/segway/inert_intf.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/inert_intf.sv
-Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module inert_intf
-
-Top level modules:
-	inert_intf
 
 } {} {}} C:/Users/peter/Documents/projects/segway/SegwayMath.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/SegwayMath.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
@@ -111,6 +81,20 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 Top level modules:
 	Auth_blk
 
+} {} {}} C:/Users/peter/Documents/projects/segway/inert_intf.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/inert_intf.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module inert_intf
+
+Top level modules:
+	inert_intf
+
+} {} {}} C:/Users/peter/Documents/projects/segway/piezo_drv.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/piezo_drv.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module piezo_drv
+
+Top level modules:
+	piezo_drv
+
 } {} {}} C:/Users/peter/Documents/projects/segway/steering_response_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/steering_response_tb.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 -- Compiling module steering_response_tb
@@ -119,21 +103,6 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 Top level modules:
 	steering_response_tb
 
-} {} {}} C:/Users/peter/Documents/projects/segway/rst_synch.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/rst_synch.sv
-Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module rst_synch
-
-Top level modules:
-	rst_synch
-
-} {} {}} C:/Users/peter/Documents/projects/segway/Segway_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/Segway_tb.sv
-Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module Segway_tb
--- Importing package task_pkg
-
-Top level modules:
-	Segway_tb
-
 } {} {}} C:/Users/peter/Documents/projects/segway/UART_rx.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/UART_rx.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 -- Compiling module UART_rx
@@ -141,12 +110,12 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 Top level modules:
 	UART_rx
 
-} {} {}} C:/Users/peter/Documents/projects/segway/PWM11.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/PWM11.sv
+} {} {}} C:/Users/peter/Documents/projects/segway/rst_synch.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/rst_synch.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module PWM11
+-- Compiling module rst_synch
 
 Top level modules:
-	PWM11
+	rst_synch
 
 } {} {}} C:/Users/peter/Documents/projects/segway/mtr_drv.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/mtr_drv.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
@@ -155,12 +124,12 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 Top level modules:
 	mtr_drv
 
-} {} {}} C:/Users/peter/Documents/projects/segway/A2D_intf.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/A2D_intf.sv
+} {} {}} C:/Users/peter/Documents/projects/segway/PWM11.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/PWM11.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module A2D_intf
+-- Compiling module PWM11
 
 Top level modules:
-	A2D_intf
+	PWM11
 
 } {} {}} C:/Users/peter/Documents/projects/segway/UART_tx.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/UART_tx.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
@@ -169,12 +138,12 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 Top level modules:
 	UART_tx
 
-} {} {}} C:/Users/peter/Documents/projects/segway/balance_cntrl.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/balance_cntrl.sv
+} {} {}} C:/Users/peter/Documents/projects/segway/A2D_intf.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/A2D_intf.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module balance_cntrl
+-- Compiling module A2D_intf
 
 Top level modules:
-	balance_cntrl
+	A2D_intf
 
 } {} {}} C:/Users/peter/Documents/projects/segway/task_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/task_tb.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
@@ -182,6 +151,13 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 
 Top level modules:
 	--none--
+
+} {} {}} C:/Users/peter/Documents/projects/segway/balance_cntrl.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/balance_cntrl.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module balance_cntrl
+
+Top level modules:
+	balance_cntrl
 
 } {} {}} C:/Users/peter/Documents/projects/segway/SPI_ADC128S.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/SPI_ADC128S.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020

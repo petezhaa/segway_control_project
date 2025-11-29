@@ -1,9 +1,62 @@
-vsim -gui work.steering_tb
-# vsim -gui work.steering_tb 
-# Start time: 19:16:43 on Nov 28,2025
+# reading C:/intelFPGA/20.1/modelsim_ase/win32aloem/../modelsim.ini
+# Loading project work
+# Compile of A2D_intf.sv was successful.
+# Compile of ADC128S_FC.sv was successful.
+# Compile of Auth_blk.sv was successful.
+# Compile of balance_cntrl.sv was successful.
+# Compile of inert_intf.sv was successful.
+# Compile of inertial_integrator.sv was successful.
+# Compile of linear_speed_tb.sv failed with 1 errors.
+# Compile of mtr_drv.sv was successful.
+# Compile of PID.sv was successful.
+# Compile of piezo_drv.sv was successful.
+# Compile of PWM11.sv was successful.
+# Compile of rst_synch.sv was successful.
+# Compile of Segway.sv was successful.
+# Compile of Segway_tb.sv failed with 1 errors.
+# Compile of SegwayMath.sv was successful.
+# Compile of SegwayModel.sv was successful with warnings.
+# Compile of SPI_ADC128S.sv was successful.
+# Compile of SPI_mnrch.sv was successful.
+# Compile of steer_en.sv was successful.
+# Compile of steer_en_SM.sv was successful.
+# Compile of steering_response_tb.sv failed with 1 errors.
+# Compile of task_tb.sv was successful.
+# Compile of UART_rx.sv was successful.
+# Compile of UART_tx.sv was successful.
+# 24 compiles, 3 failed with 3 errors.
+# Compile of A2D_intf.sv was successful.
+# Compile of ADC128S_FC.sv was successful.
+# Compile of Auth_blk.sv was successful.
+# Compile of balance_cntrl.sv was successful.
+# Compile of inert_intf.sv was successful.
+# Compile of inertial_integrator.sv was successful.
+# Compile of linear_speed_tb.sv was successful with warnings.
+# Compile of mtr_drv.sv was successful.
+# Compile of PID.sv was successful.
+# Compile of piezo_drv.sv was successful.
+# Compile of PWM11.sv was successful.
+# Compile of rst_synch.sv was successful.
+# Compile of Segway.sv was successful.
+# Compile of Segway_tb.sv was successful.
+# Compile of SegwayMath.sv was successful.
+# Compile of SegwayModel.sv was successful with warnings.
+# Compile of SPI_ADC128S.sv was successful.
+# Compile of SPI_mnrch.sv was successful.
+# Compile of steer_en.sv was successful.
+# Compile of steer_en_SM.sv was successful.
+# Compile of steering_response_tb.sv was successful.
+# Compile of task_tb.sv was successful.
+# Compile of UART_rx.sv was successful.
+# Compile of UART_tx.sv was successful.
+# 24 compiles, 0 failed with no errors.
+# Compile of Segway_tb.sv was successful.
+vsim -gui work.Segway_tb
+# vsim -gui work.Segway_tb 
+# Start time: 19:43:08 on Nov 28,2025
 # Loading sv_std.std
 # Loading work.task_pkg
-# Loading work.steering_tb
+# Loading work.Segway_tb
 # Loading work.SegwayModel
 # Loading work.ADC128S_FC
 # Loading work.SPI_ADC128S
@@ -25,28 +78,65 @@ vsim -gui work.steering_tb
 # Loading work.rst_synch
 # Loading work.UART_tx
 # ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
-#    Time: 0 ps  Iteration: 0  Instance: /steering_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
+#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
 # ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
 # ** Warning: (vsim-PLI-3003) [TOFD] - System task or function '$abs' is not defined.
-#    Time: 0 ps  Iteration: 0  Instance: /steering_tb File: C:/Users/peter/Documents/projects/segway/steering_tb.sv Line: 126
-# ** Warning: (vsim-PLI-3003) [TOFD] - System task or function '$abs' is not defined.
-#    Time: 0 ps  Iteration: 0  Instance: /steering_tb File: C:/Users/peter/Documents/projects/segway/steering_tb.sv Line: 162
-# ** Warning: (vsim-PLI-3003) [TOFD] - System task or function '$abs' is not defined.
-#    Time: 0 ps  Iteration: 0  Instance: /steering_tb File: C:/Users/peter/Documents/projects/segway/steering_tb.sv Line: 176
-add wave -position insertpoint sim:/steering_tb/iDUT/*
+#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb File: C:/Users/peter/Documents/projects/segway/Segway_tb.sv Line: 148
+add wave -position insertpoint sim:/Segway_tb/iDUT/*
 run -all
-# Center steering - Left: 225, Right: 225, Diff: 0
 # ** Error (suppressible): (vsim-12023) Cannot execute undefined system task/function '$abs'
-#    Time: 4052070 ps  Iteration: 1  Process: /steering_tb/#INITIAL#102 File: C:/Users/peter/Documents/projects/segway/steering_tb.sv Line: 126
-# Right turn - Left: 528, Right: -384, Diff: 912
-# Left turn - Left: -391, Right: 520, Diff: -911
+#    Time: 74052070 ps  Iteration: 1  Process: /Segway_tb/#INITIAL#104 File: C:/Users/peter/Documents/projects/segway/Segway_tb.sv Line: 148
+# FAIL: pwr_up remained high after step-off
+# ** Note: $stop    : C:/Users/peter/Documents/projects/segway/Segway_tb.sv(169)
+#    Time: 126052070 ps  Iteration: 1  Instance: /Segway_tb
+# Break in Module Segway_tb at C:/Users/peter/Documents/projects/segway/Segway_tb.sv line 169
+# Compile of Segway_tb.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.Segway_tb
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
+#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+# ** Warning: (vsim-PLI-3003) [TOFD] - System task or function '$abs' is not defined.
+#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb File: C:/Users/peter/Documents/projects/segway/Segway_tb.sv Line: 148
+add wave -position insertpoint sim:/Segway_tb/iDUT/*
+add wave -position insertpoint sim:/Segway_tb/iDUT/*
+# Load canceled
+run -all
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# A time value could not be extracted from the current line
+# A time value could not be extracted from the current line
 # ** Error (suppressible): (vsim-12023) Cannot execute undefined system task/function '$abs'
-#    Time: 7262310 ps  Iteration: 1  Process: /steering_tb/#INITIAL#102 File: C:/Users/peter/Documents/projects/segway/steering_tb.sv Line: 162
-# Return to center - Left: 220, Right: 220, Diff: 0
-# ** Error (suppressible): (vsim-12023) Cannot execute undefined system task/function '$abs'
-#    Time: 8872550 ps  Iteration: 1  Process: /steering_tb/#INITIAL#102 File: C:/Users/peter/Documents/projects/segway/steering_tb.sv Line: 176
-# Rider off - Left: 260, Right: 260
-# Speeds should be zero when rider is off.
-# ** Note: $stop    : C:/Users/peter/Documents/projects/segway/steering_tb.sv(194)
-#    Time: 10875110 ps  Iteration: 1  Instance: /steering_tb
-# Break in Module steering_tb at C:/Users/peter/Documents/projects/segway/steering_tb.sv line 194
+#    Time: 74052070 ps  Iteration: 1  Process: /Segway_tb/#INITIAL#104 File: C:/Users/peter/Documents/projects/segway/Segway_tb.sv Line: 148
+add wave -position insertpoint sim:/Segway_tb/iDUT/*
+# Compile of Segway_tb.sv was successful.
+# Segway system test passed!
+# ** Note: $stop    : C:/Users/peter/Documents/projects/segway/Segway_tb.sv(271)
+#    Time: 268258650 ps  Iteration: 0  Instance: /Segway_tb
+# Break in Module Segway_tb at C:/Users/peter/Documents/projects/segway/Segway_tb.sv line 271
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.Segway_tb
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
+#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+# ** Warning: (vsim-PLI-3003) [TOFD] - System task or function '$abs' is not defined.
+#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb File: C:/Users/peter/Documents/projects/segway/Segway_tb.sv Line: 148
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
+#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+# ** Warning: (vsim-PLI-3003) [TOFD] - System task or function '$abs' is not defined.
+#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb File: C:/Users/peter/Documents/projects/segway/Segway_tb.sv Line: 148
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
+#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+# ** Warning: (vsim-PLI-3003) [TOFD] - System task or function '$abs' is not defined.
+#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb File: C:/Users/peter/Documents/projects/segway/Segway_tb.sv Line: 148
+# End time: 19:50:02 on Nov 28,2025, Elapsed time: 0:06:54
+# Errors: 0, Warnings: 4
