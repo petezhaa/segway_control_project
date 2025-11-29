@@ -21,7 +21,6 @@ module Segway_tb ();
 
   ///// Internal registers for testing purposes??? /////////
 
-
   ////////////////////////////////////////////////////////////////
   // Instantiate Physical Model of Segway with Inertial sensor //
   //////////////////////////////////////////////////////////////	
@@ -123,6 +122,84 @@ module Segway_tb ();
     rider_lean = 16'sh0000;
     repeat (800000) @(posedge clk);  // wait for some time
 
+
+    // ================== Added Comprehensive System Tests ==================
+
+    // Steering right then left (differential wheel response)
+    steerPot = 12'hE00;
+    repeat (600000) @(posedge clk);
+    steerPot = 12'h200;
+    repeat (600000) @(posedge clk);
+    steerPot = 12'h800; // center
+    repeat (300000) @(posedge clk);
+
+    // Rider lean forward then backward (speed reversal / braking)
+    rider_lean = 16'sh0600;
+    repeat (800000) @(posedge clk);
+    rider_lean = -16'sh0400;
+    repeat (800000) @(posedge clk);
+    rider_lean = 16'sh0000;
+    repeat (400000) @(posedge clk);
+
+    // Simulate step-off (load cells go low) -> expect internal disable
+    ld_cell_lft  = 12'h020;
+    ld_cell_rght = 12'h010;
+    repeat (600000) @(posedge clk);
+
+    // Re-mount rider and send STOP then GO sequence
+    ld_cell_lft  = 12'h300;
+    ld_cell_rght = 12'h300;
+    repeat (200000) @(posedge clk);
+    SendCmd(.clk(clk), .trmt(send_cmd), .tx_data(cmd), .cmd(S));
+    repeat (400000) @(posedge clk);
+    SendCmd(.clk(clk), .trmt(send_cmd), .tx_data(cmd), .cmd(G));
+    repeat (600000) @(posedge clk);
+
+    // Transient overcurrent pulse (left)
+    OVR_I_lft = 1;
+    repeat (2000) @(posedge clk);
+    OVR_I_lft = 0;
+    repeat (300000) @(posedge clk);
+
+    // Persistent overcurrent (right)
+    OVR_I_rght = 1;
+    repeat (1_200_000) @(posedge clk);
+    OVR_I_rght = 0;
+    repeat (300000) @(posedge clk);
+
+    // Dual overcurrent short event
+    OVR_I_lft  = 1;
+    OVR_I_rght = 1;
+    repeat (300000) @(posedge clk);
+    OVR_I_lft  = 0;
+    OVR_I_rght = 0;
+    repeat (300000) @(posedge clk);
+
+    // Battery voltage ramp down (warning / shutdown behavior)
+    batt = 12'hC00;
+    repeat (200000) @(posedge clk);
+    batt = 12'hA00;
+    repeat (200000) @(posedge clk);
+    batt = 12'h800;
+    repeat (200000) @(posedge clk);
+    batt = 12'h650;
+    repeat (300000) @(posedge clk);
+    batt = 12'h500; // near critical
+    repeat (400000) @(posedge clk);
+    batt = 12'h3A0; // critical low
+    repeat (400000) @(posedge clk);
+
+    // Simulate fall (excessive tilt)
+    rider_lean = 16'sh1FFF;
+    repeat (600000) @(posedge clk);
+    rider_lean = 16'sh0000;
+    repeat (400000) @(posedge clk);
+
+    // Final STOP
+    SendCmd(.clk(clk), .trmt(send_cmd), .tx_data(cmd), .cmd(S));
+    repeat (400000) @(posedge clk);
+
+    // ======================================================================
 
     #100;
     $stop();

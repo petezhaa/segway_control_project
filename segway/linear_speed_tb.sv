@@ -144,41 +144,38 @@ module linear_speed_tb ();
                curr_rght_avg);
 
       if (!first_iter) begin
+        int lean_diff;
+        int eff_lean_tol;
+        lean_diff = rider_lean - prev_lean;
+        if (lean_diff < 0) lean_diff = -lean_diff;  // |rider_lean - prev_lean|
+
+        // -----------------------------
+        // Choose tolerance:
+        // If BOTH current & previous leans are NEGATIVE,
+        // use bigger tolerance, else use normal tolerance
+        // -----------------------------
+        if (rider_lean < 0 && prev_lean < 0) eff_lean_tol = LEAN_TOL_NEG;
+        else eff_lean_tol = LEAN_TOL_POS;
+
         // If leans are very close, don't enforce monotonic speed check
-        if (!first_iter) begin
-          int lean_diff;
-          int eff_lean_tol;
-          lean_diff = rider_lean - prev_lean;
-          if (lean_diff < 0) lean_diff = -lean_diff;  // |rider_lean - prev_lean|
-
-          // -----------------------------
-          // Choose tolerance:
-          // If BOTH current & previous leans are NEGATIVE,
-          // use bigger tolerance, else use normal tolerance
-          // -----------------------------
-          if (rider_lean < 0 && prev_lean < 0) eff_lean_tol = LEAN_TOL_NEG;
-          else eff_lean_tol = LEAN_TOL_POS;
-
-          // If leans are very close, don't enforce monotonic speed check
-          if (lean_diff <= eff_lean_tol) begin
+        if (lean_diff <= eff_lean_tol) begin
+          $display(
+              "Leans are within tolerance (|%0d - %0d| = %0d <= %0d), skipping monotonic speed check.",
+              rider_lean, prev_lean, lean_diff, eff_lean_tol);
+              continue;
+        end else if (rider_lean > prev_lean) begin
+          // if the previous lean was less than current lean, expect speed to increase
+          // leaning more forward → expect speed to increase
+          if (curr_lft_avg <= prev_lft_avg || curr_rght_avg <= prev_rght_avg) begin
+            $display("Motor speeds did not increase as expected when rider leaned more forward.");
+            $stop();
+          end
+        end else if (rider_lean < prev_lean) begin
+          // leaning more backward → expect speed to decrease
+          if (curr_lft_avg >= prev_lft_avg || curr_rght_avg >= prev_rght_avg) begin
             $display(
-                "Leans are within tolerance (|%0d - %0d| = %0d <= %0d), skipping monotonic speed check.",
-                rider_lean, prev_lean, lean_diff, eff_lean_tol);
-                continue;
-          end else if (rider_lean > prev_lean) begin
-            // if the previous lean was less than current lean, expect speed to increase
-            // leaning more forward → expect speed to increase
-            if (curr_lft_avg <= prev_lft_avg || curr_rght_avg <= prev_rght_avg) begin
-              $display("Motor speeds did not increase as expected when rider leaned more forward.");
-              $stop();
-            end
-          end else if (rider_lean < prev_lean) begin
-            // leaning more backward → expect speed to decrease
-            if (curr_lft_avg >= prev_lft_avg || curr_rght_avg >= prev_rght_avg) begin
-              $display(
-                  "Motor speeds did not decrease as expected when rider leaned more backward.");
-              $stop();
-            end
+                "Motor speeds did not decrease as expected when rider leaned more backward.");
+            $stop();
           end
         end
       end

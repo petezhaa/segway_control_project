@@ -164,27 +164,27 @@ R8
 R9
 vlinear_speed_tb
 R0
-R10
+Z12 DXx4 work 8 task_pkg 0 22 j>Dooifon2?gQX`CmSJXo2
+!s110 1764378325
 !i10b 1
-!s100 KX0;lKHOWd=3=FGEfJJA90
+!s100 ciMZ4UVnc15E>aYjGORe^1
 R2
-IHfAB4i>S;D3MNf<nR;EKA1
+INj>5Oid_1[0jM6^NoQ9_83
 R3
 S1
-R4
-w1764129177
-8C:/Users/Public/ece551/segway-project/segway/linear_speed_tb.sv
-FC:/Users/Public/ece551/segway-project/segway/linear_speed_tb.sv
-Z12 Ftask_tb.sv
-!i122 2100
-L0 1 169
+Z13 dC:/Users/peter/Documents/projects/segway
+w1764378321
+8C:/Users/peter/Documents/projects/segway/linear_speed_tb.sv
+FC:/Users/peter/Documents/projects/segway/linear_speed_tb.sv
+!i122 2119
+L0 1 211
 R6
 r1
 !s85 0
 31
-R11
-!s107 task_tb.sv|C:/Users/Public/ece551/segway-project/segway/linear_speed_tb.sv|
-!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Public/ece551/segway-project/segway/linear_speed_tb.sv|
+!s108 1764378324.000000
+!s107 C:/Users/peter/Documents/projects/segway/linear_speed_tb.sv|
+!s90 -work|work|-sv|-stats=none|C:/Users/peter/Documents/projects/segway/linear_speed_tb.sv|
 !i113 1
 R8
 R9
@@ -266,7 +266,7 @@ R8
 R9
 vPWM11
 R0
-Z13 !s110 1764131903
+Z14 !s110 1764131903
 !i10b 1
 !s100 Zj?lJnSek>EVccGkZ=2210
 R2
@@ -292,7 +292,7 @@ R9
 n@p@w@m11
 vrst_synch
 R0
-R13
+R14
 !i10b 1
 !s100 eT:9?in>Rj[1Bm0>lU@MZ2
 R2
@@ -309,15 +309,41 @@ R6
 r1
 !s85 0
 31
-Z14 !s108 1764131903.000000
+Z15 !s108 1764131903.000000
 !s107 C:/Users/Public/ece551/segway-project/segway/rst_synch.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Public/ece551/segway-project/segway/rst_synch.sv|
 !i113 1
 R8
 R9
+vsafety_tb
+R0
+R12
+!s110 1764377934
+!i10b 1
+!s100 l19c>7I50jo1AQQj8^^Xf1
+R2
+IFZF9zT2a;fUl^m]HHCbd[2
+R3
+S1
+R13
+w1764377924
+8C:/Users/peter/Documents/projects/segway/safety_tb.sv
+FC:/Users/peter/Documents/projects/segway/safety_tb.sv
+!i122 2118
+L0 2 159
+R6
+r1
+!s85 0
+31
+!s108 1764377934.000000
+!s107 C:/Users/peter/Documents/projects/segway/safety_tb.sv|
+!s90 -work|work|-sv|-stats=none|C:/Users/peter/Documents/projects/segway/safety_tb.sv|
+!i113 1
+R8
+R9
 vSegway
 R0
-R13
+R14
 !i10b 1
 !s100 nXHhRNI3F?[D:n3QiaW5U2
 R2
@@ -334,7 +360,7 @@ R6
 r1
 !s85 0
 31
-R14
+R15
 !s107 C:/Users/Public/ece551/segway-project/segway/Segway.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Public/ece551/segway-project/segway/Segway.sv|
 !i113 1
@@ -343,7 +369,7 @@ R9
 n@segway
 vSegway_tb
 R0
-R13
+R14
 !i10b 1
 !s100 0^3N0?68K6HVlo[ZT9Tm:3
 R2
@@ -354,14 +380,14 @@ R4
 R5
 8C:/Users/Public/ece551/segway-project/segway/Segway_tb.sv
 FC:/Users/Public/ece551/segway-project/segway/Segway_tb.sv
-R12
+Ftask_tb.sv
 !i122 2107
 L0 1 175
 R6
 r1
 !s85 0
 31
-R14
+R15
 !s107 task_tb.sv|C:/Users/Public/ece551/segway-project/segway/Segway_tb.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Public/ece551/segway-project/segway/Segway_tb.sv|
 !i113 1
@@ -370,7 +396,7 @@ R9
 n@segway_tb
 vSegwayMath
 R0
-R13
+R14
 !i10b 1
 !s100 eLD@Xe2C4J=N2>>1801SY2
 R2
@@ -387,7 +413,7 @@ R6
 r1
 !s85 0
 31
-R14
+R15
 !s107 C:/Users/Public/ece551/segway-project/segway/SegwayMath.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Public/ece551/segway-project/segway/SegwayMath.sv|
 !i113 1
@@ -396,7 +422,7 @@ R9
 n@segway@math
 vSegwayModel
 R0
-R13
+R14
 !i10b 1
 !s100 iz^E?Y=h=5@SlL;FS;BlO2
 R2
@@ -413,7 +439,7 @@ R6
 r1
 !s85 0
 31
-R14
+R15
 !s107 C:/Users/Public/ece551/segway-project/segway/SegwayModel.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Public/ece551/segway-project/segway/SegwayModel.sv|
 !i113 1
@@ -422,7 +448,7 @@ R9
 n@segway@model
 vSPI_ADC128S
 R0
-R13
+R14
 !i10b 1
 !s100 93oj0i;UV@::cHMPGHMJ>1
 R2
@@ -439,7 +465,7 @@ R6
 r1
 !s85 0
 31
-R14
+R15
 !s107 C:/Users/Public/ece551/segway-project/segway/SPI_ADC128S.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Public/ece551/segway-project/segway/SPI_ADC128S.sv|
 !i113 1
@@ -448,7 +474,7 @@ R9
 n@s@p@i_@a@d@c128@s
 vSPI_mnrch
 R0
-Z15 !s110 1764131904
+Z16 !s110 1764131904
 !i10b 1
 !s100 J[Z1HfM84bSW9Rh>1;An71
 R2
@@ -465,7 +491,7 @@ R6
 r1
 !s85 0
 31
-R14
+R15
 !s107 C:/Users/Public/ece551/segway-project/segway/SPI_mnrch.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Public/ece551/segway-project/segway/SPI_mnrch.sv|
 !i113 1
@@ -474,7 +500,7 @@ R9
 n@s@p@i_mnrch
 vsteer_en
 R0
-R15
+R16
 !i10b 1
 !s100 T9Dz<0mj>nYNjnU:gZKC^3
 R2
@@ -491,7 +517,7 @@ R6
 r1
 !s85 0
 31
-Z16 !s108 1764131904.000000
+Z17 !s108 1764131904.000000
 !s107 C:/Users/Public/ece551/segway-project/segway/steer_en.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Public/ece551/segway-project/segway/steer_en.sv|
 !i113 1
@@ -499,7 +525,7 @@ R8
 R9
 vsteer_en_SM
 R0
-R15
+R16
 !i10b 1
 !s100 9CGiDJ]9hO^FU1J1<NcT02
 R2
@@ -516,16 +542,41 @@ R6
 r1
 !s85 0
 31
-R16
+R17
 !s107 C:/Users/Public/ece551/segway-project/segway/steer_en_SM.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Public/ece551/segway-project/segway/steer_en_SM.sv|
 !i113 1
 R8
 R9
 nsteer_en_@s@m
+Xtask_pkg
+R0
+!s110 1764377933
+!i10b 1
+!s100 dTK@l8H]OkQX1c7m0cXXH0
+R2
+Ij>Dooifon2?gQX`CmSJXo2
+Vj>Dooifon2?gQX`CmSJXo2
+S1
+R13
+w1764374840
+8C:/Users/peter/Documents/projects/segway/task_tb.sv
+FC:/Users/peter/Documents/projects/segway/task_tb.sv
+!i122 2117
+Z18 L0 1 0
+R6
+r1
+!s85 0
+31
+!s108 1764377933.000000
+!s107 C:/Users/peter/Documents/projects/segway/task_tb.sv|
+!s90 -work|work|-sv|-stats=none|C:/Users/peter/Documents/projects/segway/task_tb.sv|
+!i113 1
+R8
+R9
 Xtask_tb_sv_unit
 R0
-R15
+R16
 V3B]b78]KcBfXB9z;L[ald0
 r1
 !s85 0
@@ -539,10 +590,10 @@ R5
 8C:/Users/Public/ece551/segway-project/segway/task_tb.sv
 FC:/Users/Public/ece551/segway-project/segway/task_tb.sv
 !i122 2114
-L0 1 0
+R18
 R6
 31
-R16
+R17
 !s107 C:/Users/Public/ece551/segway-project/segway/task_tb.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Public/ece551/segway-project/segway/task_tb.sv|
 !i113 1
@@ -550,7 +601,7 @@ R8
 R9
 vUART_rx
 R0
-R15
+R16
 !i10b 1
 !s100 1nD>>;83PPZjJ:^Z=@W8o0
 R2
@@ -567,7 +618,7 @@ R6
 r1
 !s85 0
 31
-R16
+R17
 !s107 C:/Users/Public/ece551/segway-project/segway/UART_rx.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Public/ece551/segway-project/segway/UART_rx.sv|
 !i113 1
@@ -576,7 +627,7 @@ R9
 n@u@a@r@t_rx
 vUART_tx
 R0
-R15
+R16
 !i10b 1
 !s100 RznaI=GoWZ?S8oCARo5^]3
 R2
@@ -593,7 +644,7 @@ R6
 r1
 !s85 0
 31
-R16
+R17
 !s107 C:/Users/Public/ece551/segway-project/segway/UART_tx.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Public/ece551/segway-project/segway/UART_tx.sv|
 !i113 1
