@@ -3,20 +3,20 @@ module Segway(clk,RST_n,INERT_SS_n,INERT_MOSI,INERT_SCLK,
 			  A2D_MISO,PWM1_lft,PWM2_lft,PWM1_rght,PWM2_rght,
 			  OVR_I_lft,OVR_I_rght,piezo_n,piezo,RX);
 			  
-  input clk,RST_n;
-  input INERT_MISO;						// Serial in from inertial sensor
-  input A2D_MISO;						// Serial in from A2D
-  input INERT_INT;						// Interrupt from inertial indicating data ready
+  input logic clk,RST_n;
+  input logic INERT_MISO;						// Serial in from inertial sensor
+  input logic A2D_MISO;						// Serial in from A2D
+  input logic INERT_INT;						// Interrupt from inertial indicating data ready
   input OVR_I_lft,OVR_I_rght;			// Instantaneous over current in motor
-  input RX;								// UART input from BLE module
+  input logic RX;								// UART input from BLE module
 
   
-  output A2D_SS_n, INERT_SS_n;			// Slave selects to A2D and inertial sensor
-  output A2D_MOSI, INERT_MOSI;			// MOSI signals to A2D and inertial sensor
-  output A2D_SCLK, INERT_SCLK;			// SCLK signals to A2D and inertial sensor
-  output PWM1_lft, PWM2_lft;  			// left motor speed/direction controls
-  output PWM1_rght,PWM2_rght;			// right motor speed/direction controls
-  output piezo_n,piezo;					// diff drive to piezo for sound
+  output logic A2D_SS_n, INERT_SS_n;			// Slave selects to A2D and inertial sensor
+  output logic A2D_MOSI, INERT_MOSI;			// MOSI signals to A2D and inertial sensor
+  output logic A2D_SCLK, INERT_SCLK;			// SCLK signals to A2D and inertial sensor
+  output logic PWM1_lft, PWM2_lft;  			// left motor speed/direction controls
+  output logic PWM1_rght,PWM2_rght;			// right motor speed/direction controls
+  output logic piezo_n,piezo;					// diff drive to piezo for sound
     
   wire rst_n;							// synchronized global reset signal
   wire vld;								// tells us a new inertial reading is valid

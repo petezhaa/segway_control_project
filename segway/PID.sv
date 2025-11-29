@@ -78,9 +78,26 @@ module PID (
     assign I_term_ext = { {1{I_term_raw[14]}}, I_term_raw[14:0] };
     assign D_term_ext = { {3{D_term_raw[12]}}, D_term_raw[12:0] };
 
-    // sum all 3 terms into a 16 bit signed value THEN saturate to 12 bits
-    logic signed [15:0] sum;
-    assign sum = P_term_ext + I_term_ext + D_term_ext;
+  //------------------------------------------------------------
+  // Soft-Start Timer
+  //------------------------------------------------------------
+  generate
+    if (fast_sim) begin
+      always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) long_tmr <= 27'h0000000;
+        else if (!pwr_up) long_tmr <= 27'h0000000;
+        else if (~(&long_tmr[26:19]))  // Stop incrementing once max count reached
+          long_tmr <= long_tmr + 9'h100;
+          //long_tmr <= long_tmr + 20'h01000;
+      end
+    end else
+      always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) long_tmr <= 27'h0000000;
+        else if (!pwr_up) long_tmr <= 27'h0000000;
+        else if (~(&long_tmr[26:19]))  // Stop incrementing once max count reached
+          long_tmr <= long_tmr + 1'b1;
+      end
+  endgenerate
 
 
     // Now we saturate the sum and assign to PID_cntrl

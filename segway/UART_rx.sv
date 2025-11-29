@@ -6,11 +6,11 @@
 //   Includes double-flop synchronizer to mitigate metastability on RX input.
 //==============================================================
 module UART_rx (
-    input              clk,      // System clock
-    input              rst_n,    // Active-low synchronous reset
-    input              RX,       // Asynchronous serial input line
-    input              clr_rdy,  // External signal to clear 'rdy' flag
-    output       [7:0] rx_data,  // Received 8-bit UART data
+    input  logic       clk,      // System clock
+    input  logic       rst_n,    // Active-low synchronous reset
+    input  logic       RX,       // Asynchronous serial input line
+    input  logic       clr_rdy,  // External signal to clear 'rdy' flag
+    output logic [7:0] rx_data,  // Received 8-bit UART data
     output logic       rdy       // High when a complete byte is ready
 );
 
@@ -99,7 +99,7 @@ module UART_rx (
   // Two-state FSM: IDLE and RECEIVE
   // IDLE: Waits for falling edge (start bit)
   // RECEIVE: Samples bits and asserts 'rdy' when complete
-  typedef enum logic [0] {
+  typedef enum logic [0:0] {
     IDLE,
     RECEIVE
   } rx_states;
