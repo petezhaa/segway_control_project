@@ -11,7 +11,6 @@ module over_I_tb ();
   wire piezo, piezo_n;
   wire cmd_sent;
   wire rst_n;  // synchronized global reset
-  wire OVR_I_shtdwn;  
 
   ////// Stimulus is declared as type reg ///////
   reg clk, RST_n;
@@ -20,9 +19,6 @@ module over_I_tb ();
   reg signed [15:0] rider_lean;
   reg [11:0] ld_cell_lft, ld_cell_rght, steerPot, batt;  // A2D values
   reg OVR_I_lft, OVR_I_rght;
-
-  // Previous steady-state wheel speeds for comparison between tests
-  int prev_lft_spd, prev_rght_spd;
 
   ////////////////////////////////////////////////////////////////
   // Instantiate Physical Model of Segway with Inertial sensor //
@@ -45,7 +41,7 @@ module over_I_tb ();
   /////////////////////////////////////////////////////////
   // Instantiate Model of A2D for load cell and battery //
   ///////////////////////////////////////////////////////
-    ADC128S_FC iA2D (
+  ADC128S_FC iA2D (
       .clk(clk),
       .rst_n(RST_n),
       .SS_n(A2D_SS_n),
@@ -56,7 +52,7 @@ module over_I_tb ();
       .ld_cell_rght(ld_cell_rght),
       .steerPot(steerPot),
       .batt(batt)
-    );
+  );
 
   ////// Instantiate DUT ////////
   Segway iDUT (

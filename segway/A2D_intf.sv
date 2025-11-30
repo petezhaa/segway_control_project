@@ -98,6 +98,7 @@ module A2D_intf(clk, rst_n, nxt, batt, rght_ld, lft_ld, steer_pot, SS_n, SCLK, M
                 2'b01: channel <= 3'b101; // channel 4
                 2'b10: channel <= 3'b110; // channel 5
                 2'b11: channel <= 3'b000; // channel 6
+                default: channel <= 3'b000;
             endcase
         end
         // else: keep previous channel value

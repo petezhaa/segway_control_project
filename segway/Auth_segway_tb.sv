@@ -3,7 +3,6 @@ module Auth_segway_tb ();
   import task_pkg::*;
 
   //// Interconnects to DUT/support defined as type wire /////
-
   wire SS_n, SCLK, MOSI, MISO, INT;  // to inertial sensor
   wire A2D_SS_n, A2D_SCLK, A2D_MOSI, A2D_MISO;  // to A2D converter
   wire RX_TX;
@@ -11,12 +10,11 @@ module Auth_segway_tb ();
   wire piezo, piezo_n;
   wire cmd_sent;
   wire rst_n;  // synchronized global reset
-  wire OVR_I_shtdwn; // Overcurrent shutdown output
 
   ////// Stimulus is declared as type reg ///////
   reg clk, RST_n;
-  reg [7:0] cmd;               // command host is sending to DUT
-  reg send_cmd;                // asserted to initiate sending of command
+  reg        [ 7:0] cmd;  // command host is sending to DUT
+  reg               send_cmd;  // asserted to initiate sending of command
   reg signed [15:0] rider_lean;
   reg [11:0] ld_cell_lft, ld_cell_rght, steerPot, batt;  // A2D values
   reg OVR_I_lft, OVR_I_rght;
@@ -56,29 +54,28 @@ module Auth_segway_tb ();
   );
 
   ////// Instantiate DUT ////////
-      Segway iDUT (
-        .clk(clk),
-        .RST_n(RST_n),
-        .INERT_SS_n(SS_n),
-        .INERT_MOSI(MOSI),
-        .INERT_SCLK(SCLK),
-        .INERT_MISO(MISO),
-        .INERT_INT(INT),
-        .A2D_SS_n(A2D_SS_n),
-        .A2D_MOSI(A2D_MOSI),
-        .A2D_SCLK(A2D_SCLK),
-        .A2D_MISO(A2D_MISO),
-        .PWM1_lft(PWM1_lft),
-        .PWM2_lft(PWM2_lft),
-        .PWM1_rght(PWM1_rght),
-        .PWM2_rght(PWM2_rght),
-        .OVR_I_lft(OVR_I_lft),
-        .OVR_I_rght(OVR_I_rght),
-        .piezo_n(piezo_n),
-        .piezo(piezo),
-        .RX(RX_TX),
-        .OVR_I_shtdwn(OVR_I_shtdwn)
-      );
+  Segway iDUT (
+      .clk(clk),
+      .RST_n(RST_n),
+      .INERT_SS_n(SS_n),
+      .INERT_MOSI(MOSI),
+      .INERT_SCLK(SCLK),
+      .INERT_MISO(MISO),
+      .INERT_INT(INT),
+      .A2D_SS_n(A2D_SS_n),
+      .A2D_MOSI(A2D_MOSI),
+      .A2D_SCLK(A2D_SCLK),
+      .A2D_MISO(A2D_MISO),
+      .PWM1_lft(PWM1_lft),
+      .PWM2_lft(PWM2_lft),
+      .PWM1_rght(PWM1_rght),
+      .PWM2_rght(PWM2_rght),
+      .OVR_I_lft(OVR_I_lft),
+      .OVR_I_rght(OVR_I_rght),
+      .piezo_n(piezo_n),
+      .piezo(piezo),
+      .RX(RX_TX)
+  );
 
   //// Instantiate UART_tx (mimics command from BLE module) //////
   UART_tx iTX (
@@ -178,6 +175,69 @@ module Auth_segway_tb ();
       $stop;
     end
     $display("With pwr_up deasserted, wheel speeds remain zero despite lean");
+
+    // ====================================================
+    // EXTRA AUTH_blk COVERAGE SEQUENCES
+    // ====================================================
+
+        // ----------------------------------------------------
+    // 5) Re-authorize and exercise DISCONNECTED/RECONNECT/IDLE branches
+    // ----------------------------------------------------
+    // Re-mount rider and re-enable auth
+    ld_cell_lft  = 12'h360;
+    ld_cell_rght = 12'h350;
+    rider_lean   = 16'sh0000;
+    $display("starting new auth sequence after remounting rider, %0t", $time);
+    SendCmd(.clk(clk), .trmt(send_cmd), .tx_data(cmd), .cmd(G));
+    wait4sig(.sig(iDUT.iAuth.pwr_up), .clks2wait(350000), .clk(clk));
+    $display("Re-authorized after step-off; pwr_up asserted again");
+
+    // ----------------------------------------------------
+    // 6) Send 'S' with rider_on -> DISCONNECTED (pwr_up stays high)
+    // ----------------------------------------------------
+    repeat (5000) @(posedge clk);
+    SendCmd(.clk(clk), .trmt(send_cmd), .tx_data(cmd), .cmd(S));
+    $display("time: %0t Sent 'S' command with rider on", $time);
+    // give UART tx time to finish; DISCONNECTED keeps pwr_up high
+    repeat (5000) @(posedge clk);
+    if (iDUT.iAuth.pwr_up !== 1'b1) begin
+      $error("pwr_up should stay high in DISCONNECTED after 'S' with rider on");
+      $stop;
+    end
+    $display("'S' with rider_on enters DISCONNECTED, pwr_up held high");
+
+    // ----------------------------------------------------
+    // 7) Reconnect with 'G', then force IDLE via rider_off in DISCONNECTED
+    // ----------------------------------------------------
+    SendCmd(.clk(clk), .trmt(send_cmd), .tx_data(cmd), .cmd(G));
+    wait4sig(.sig(iDUT.iAuth.pwr_up), .clks2wait(350000), .clk(clk));
+    $display("Reconnected from DISCONNECTED via 'G'");
+
+    // Go to DISCONNECTED again with 'S'
+    repeat (5000) @(posedge clk);
+    SendCmd(.clk(clk), .trmt(send_cmd), .tx_data(cmd), .cmd(S));
+    repeat (2000) @(posedge clk); // allow FSM to enter DISCONNECTED
+
+    // Now force rider_off -> should drive IDLE and drop pwr_up
+    ld_cell_lft  = 12'h000;
+    ld_cell_rght = 12'h000;
+    wait4sig(.sig(iDUT.iSTR.rider_off), .clks2wait(300000), .clk(clk));
+    repeat (2000) @(posedge clk);
+    if (iDUT.iAuth.pwr_up !== 1'b0) begin
+      $error("pwr_up should drop to IDLE when rider_off asserted in DISCONNECTED");
+      $stop;
+    end
+    $display("rider_off asserted in DISCONNECTED forces IDLE, pwr_up low");
+
+    // Extra check: another 'S' in IDLE should leave pwr_up low
+    SendCmd(.clk(clk), .trmt(send_cmd), .tx_data(cmd), .cmd(S));
+    repeat (3000) @(posedge clk);
+    if (iDUT.iAuth.pwr_up !== 1'b0) begin
+      $error("pwr_up should remain low after 'S' in IDLE (post DISCONNECTED)");
+      $stop;
+    end
+    $display("Post-DISCONNECTED 'S' in IDLE leaves pwr_up low");
+
 
     $display("AUTH + SEGWAY INTEGRATION TEST PASSED");
     $stop();
