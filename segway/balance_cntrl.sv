@@ -56,7 +56,9 @@ module balance_cntrl (
       .pwr_up(pwr_up),
       .lft_spd(lft_spd_comb),      // ✔ correct signals
       .rght_spd(rght_spd_comb),
-      .too_fast(too_fast_comb)
+      .too_fast(too_fast_comb),
+      .rst_n(rst_n),
+      .clk(clk)
   );
 
   // ===========================================================

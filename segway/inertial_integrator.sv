@@ -41,7 +41,17 @@ module inertial_integrator (
 
   // Scale back to 16 bits by right-shifting 13 bits
   // and sign-extending to preserve the sign
-  assign ptch_acc = {{3{ptch_acc_product[25]}}, ptch_acc_product[25:13]};
+  //assign ptch_acc = {{3{ptch_acc_product[25]}}, ptch_acc_product[25:13]};
+
+  always_ff @(posedge clk) begin
+    if (!rst_n) begin
+      // Asynchronous reset clears integrator
+      ptch_acc <= 16'sd0;
+    end else begin
+      // On each valid reading, update accelerometer-based pitch estimate
+      ptch_acc <= {{3{ptch_acc_product[25]}}, ptch_acc_product[25:13]};
+    end
+  end
 
   //------------------------------------------------------------
   // 3. Determine fusion correction term

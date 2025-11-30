@@ -5,6 +5,8 @@ module SegwayMath (
     input logic [11:0] steer_pot,  // Steering potentiometer input (unsigned)
     input logic en_steer,  // Steering enable flag
     input logic pwr_up,  // Power-up flag (0=off, 1=on)
+    input logic rst_n,  // Active-low reset
+    input logic clk,  // System clocks
     output logic signed [11:0] lft_spd,  // Computed signed wheel speeds for left motor
     output logic signed [11:0] rght_spd,  // Computed signed wheel speeds for right motor
     output logic too_fast  // Overspeed flag
@@ -41,7 +43,15 @@ module SegwayMath (
 
   // scaling with the soft start
   assign PID_cntrl_mult_ss_tmr = (PID_cntrl) * $signed({2'b0, ss_tmr});
-  assign PID_ss = PID_cntrl_mult_ss_tmr[19:8];  // divide by 256
+  //assign PID_ss = PID_cntrl_mult_ss_tmr[19:8];  // divide by 256
+
+  always_ff @(posedge clk or negedge rst_n) begin
+      if (!rst_n) begin
+          PID_ss <= '0;
+      end else begin
+          PID_ss <= PID_cntrl_mult_ss_tmr[19:8];
+      end
+  end
 
   assign steer_pot_limited = (&steer_pot[11:9] && (|steer_pot[8:0])) ? (STEER_POT_UPPER_LIMIT) : 
                               (~(|steer_pot[11:9]) ) ? (STEER_POT_LOWER_LIMIT) :
