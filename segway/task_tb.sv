@@ -420,7 +420,7 @@ package task_pkg;
   //   - Smoothing noisy sensor readings for debug checks.
   //   - Estimating DC offset or steady-state level of a signal.
   // ------------------------------------------------------------------
-  task automatic compute_average(input logic signed [31:0] sig,  // Signal to sample
+  task automatic compute_average(ref logic signed [11:0] sig,  // Signal to sample
                                  input int num_samples, ref logic clk, output int avg_out);
     int sum;
     sum = 0;

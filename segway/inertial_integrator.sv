@@ -5,9 +5,9 @@
 // Teamname: Gucci Flip flops
 //===========================================================
 module inertial_integrator (
-    input  logic        clk,      // System clock
-    input  logic        rst_n,    // Active-low reset
-    input  logic        vld,      // High when a new valid inertial reading is available
+    input  logic               clk,      // System clock
+    input  logic               rst_n,    // Active-low reset
+    input  logic               vld,      // High when a new valid inertial reading is available
     input  logic signed [15:0] ptch_rt,  // Gyro pitch rate input (degrees per second)
     input  logic signed [15:0] AZ,       // Accelerometer Z-axis reading
     output logic signed [15:0] ptch      // Fused pitch angle output (degrees)
@@ -27,8 +27,9 @@ module inertial_integrator (
   //------------------------------------------------------------
   localparam [15:0] AZ_OFFSET = 16'h00A0;  // Measured offset for AZ channel
   logic signed [15:0] AZ_comp;  // Bias-compensated AZ reading
-  logic signed [25:0] ptch_acc_product;  // Intermediate multiplication result
-  logic signed [15:0] ptch_acc;  // Estimated pitch from accelerometer
+  //logic signed [25:0] ptch_acc_product;  // Intermediate multiplication result
+  logic signed [27:0] ptch_acc_product;  // Intermediate multiplication result
+  logic signed [17:0] ptch_acc;  // Estimated pitch from accelerometer
   logic signed [11:0] fusion_ptch_offset;  // Fusion correction term (±1024)
 
   // Subtract offset to remove accelerometer bias
@@ -37,21 +38,17 @@ module inertial_integrator (
   // Approximate pitch ≈ AZ_comp * 327, for small angles (no trig needed)
   // (327 is an empirically determined scale factor)
   //assign ptch_acc_product = AZ_comp * $signed(327);
-  assign ptch_acc_product = (AZ_comp <<< 8) + (AZ_comp <<< 6) + (AZ_comp <<< 2) + (AZ_comp <<< 1) + AZ_comp; // use this line if it makes Area smaller
+  //assign ptch_acc_product = (AZ_comp <<< 8) + (AZ_comp <<< 6) + (AZ_comp <<< 2) + (AZ_comp <<< 1) + AZ_comp; // use this line if it makes Area smaller
+  //assign ptch_acc_product = (AZ_comp <<< 5) + (AZ_comp <<< ) + (AZ_comp <<< 3);
+  assign ptch_acc_product = (AZ_comp <<< 5) + (AZ_comp <<< 3) + AZ_comp;
+  // write me a multicycle adder for ptch_acc_product
+
+
 
   // Scale back to 16 bits by right-shifting 13 bits
   // and sign-extending to preserve the sign
   //assign ptch_acc = {{3{ptch_acc_product[25]}}, ptch_acc_product[25:13]};
-
-  always_ff @(posedge clk) begin
-    if (!rst_n) begin
-      // Asynchronous reset clears integrator
-      ptch_acc <= 16'sd0;
-    end else begin
-      // On each valid reading, update accelerometer-based pitch estimate
-      ptch_acc <= {{3{ptch_acc_product[25]}}, ptch_acc_product[25:13]};
-    end
-  end
+  assign ptch_acc = ptch_acc_product >>> 10;
 
   //------------------------------------------------------------
   // 3. Determine fusion correction term
@@ -63,7 +60,18 @@ module inertial_integrator (
   // This slowly “leaks” the integrator toward the accel reference
   // to cancel out long-term drift from gyro bias.
   //------------------------------------------------------------
-  assign fusion_ptch_offset = (ptch_acc > ptch) ? 12'sh400 : -12'sh400;
+  //assign fusion_ptch_offset = (ptch_acc > ptch) ? 12'sh400 : -12'sh400;
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      // Asynchronous reset
+      fusion_ptch_offset <= 12'sd0;
+    end else if (ptch_acc > ptch) begin
+      // Update fusion correction term based on latest readings
+      fusion_ptch_offset <= 12'sh400;
+    end else begin
+      fusion_ptch_offset <= -12'sh400;
+    end
+  end
 
   //------------------------------------------------------------
   // 4. Integrate the gyro rate over time to get pitch

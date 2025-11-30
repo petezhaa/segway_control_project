@@ -22,6 +22,7 @@ module balance_cntrl (
   //  PIPELINE STAGE #1 — Register PID output
   // ===========================================================
   logic signed [11:0] PID_cntrl_p1;
+  logic               ss_;
 
   always_ff @(posedge clk or negedge rst_n) begin
       if (!rst_n)

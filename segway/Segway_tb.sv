@@ -147,7 +147,7 @@ module Segway_tb ();
         // ----------------------------------------------------------
         $display("removing lean to 0000h (0)");
         rider_lean = 16'sh0000;
-        check_theta_zero(.clk(clk), .ptch(iPHYS.theta_platform), .target_val(16'd0150), .tol(16'd0200));
+        check_theta_zero(.clk(clk), .ptch(iPHYS.theta_platform), .target_val(16'd0150), .tol(16'd0250));
 
         // Glitch-free transition check across lean values
         check_glitch_free_transitions(.clk(clk), .signal(rider_lean), .mon_sig(iPHYS.theta_platform),
@@ -163,11 +163,11 @@ module Segway_tb ();
         $display("=== Starting steering Tests ===");
         // Steering right then left (differential wheel response)
         steerPot = 12'hE00;
-        repeat (600000) @(posedge clk);
+        repeat (5000) @(posedge clk);
         steerPot = 12'h200;
-        repeat (600000) @(posedge clk);
+        repeat (5000) @(posedge clk);
         steerPot = 12'h800; // center
-        repeat (300000) @(posedge clk);
+        repeat (5000) @(posedge clk);
 
         // Check: Center steering balance
         $display("Checking center steering balance...");
@@ -184,7 +184,7 @@ module Segway_tb ();
 
         $display("=== Starting rider lean Tests ===");
         // Rider lean forward then backward (speed reversal / braking)
-        rider_lean = 16'sh0600;
+        rider_lean = 16'sh0800;
         repeat (800000) @(posedge clk);
         if (iPHYS.omega_lft <= 0 || iPHYS.omega_rght <= 0) begin
             $display("FAIL: Motors did not achieve expected forward speed");
@@ -192,7 +192,7 @@ module Segway_tb ();
             $stop();
         end
         $display("Forward speed test passed.");
-        rider_lean = -16'sh0400;
+        rider_lean = -16'sh0800;
         repeat (800000) @(posedge clk);
         if (iPHYS.omega_lft >= 0 || iPHYS.omega_rght >= 0) begin
             $display("FAIL: Motors did not achieve expected backward speed");

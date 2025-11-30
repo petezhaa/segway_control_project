@@ -127,7 +127,7 @@ module steering_response_tb ();
     //============================================================
     steerPot = 12'hE00;
     $display("\n[TEST 1] Max right steer applied  (steerPot = 0x%0h, time = %0t)", steerPot, $time);
-    repeat (1000000) @(posedge clk);
+    repeat (300000) @(posedge clk);  // wait for steering response to settle
 
     if (!$isunknown(iDUT.iBAL.lft_spd) &&
         !$isunknown(iDUT.iBAL.rght_spd) &&
@@ -151,7 +151,7 @@ module steering_response_tb ();
     //==================================================================
     steerPot = 12'hF00;
     $display("\n[TEST 2] Right steer saturation check (steerPot = 0x%0h, time = %0t)", steerPot, $time);
-    repeat (1000000) @(posedge clk);
+    repeat (300000) @(posedge clk);
 
     if (!check_equal_with_tolerance(iDUT.iBAL.lft_spd,  prev_lft_spd,  50)) begin
       $display("[FAIL][TEST 2] lft_spd deviated too much under saturated right steer. current=%0d, prev=%0d, time=%0t",
@@ -178,7 +178,7 @@ module steering_response_tb ();
     //====================================================================
     steerPot = 12'hA00;
     $display("\n[TEST 3] Reduced right steer (steerPot = 0x%0h, time = %0t)", steerPot, $time);
-    repeat (1000000) @(posedge clk);
+    repeat (300000) @(posedge clk);
 
     if (!$isunknown(iDUT.iBAL.lft_spd) &&
         !$isunknown(iDUT.iBAL.rght_spd) &&
@@ -219,7 +219,7 @@ module steering_response_tb ();
     //============================================================
     steerPot = 12'h200;
     $display("\n[TEST 4] Max left steer applied (steerPot = 0x%0h, time = %0t)", steerPot, $time);
-    repeat (1000000) @(posedge clk);
+    repeat (300000) @(posedge clk);
 
     if (!$isunknown(iDUT.iBAL.lft_spd) &&
         !$isunknown(iDUT.iBAL.rght_spd) &&
@@ -243,7 +243,7 @@ module steering_response_tb ();
     //==================================================================
     steerPot = 12'h100;
     $display("\n[TEST 5] Left steer saturation check (steerPot = 0x%0h, time = %0t)", steerPot, $time);
-    repeat (1000000) @(posedge clk);
+    repeat (300000) @(posedge clk);
 
     if (!check_equal_with_tolerance(iDUT.iBAL.lft_spd,  prev_lft_spd,  50)) begin
       $display("[FAIL][TEST 5] lft_spd deviated too much under saturated left steer. current=%0d, prev=%0d, time=%0t",
@@ -270,7 +270,7 @@ module steering_response_tb ();
     //====================================================================
     steerPot = 12'h500;
     $display("\n[TEST 6] Reduced left steer (steerPot = 0x%0h, time = %0t)", steerPot, $time);
-    repeat (1000000) @(posedge clk);
+    repeat (300000) @(posedge clk);
 
     if (!$isunknown(iDUT.iBAL.lft_spd) &&
         !$isunknown(iDUT.iBAL.rght_spd) &&

@@ -20,6 +20,9 @@ module over_I_tb ();
   reg [11:0] ld_cell_lft, ld_cell_rght, steerPot, batt;  // A2D values
   reg OVR_I_lft, OVR_I_rght;
 
+  // Previous steady-state wheel speeds for comparison between tests
+  int prev_lft_spd, prev_rght_spd;
+
   ////////////////////////////////////////////////////////////////
   // Instantiate Physical Model of Segway with Inertial sensor //
   //////////////////////////////////////////////////////////////	
