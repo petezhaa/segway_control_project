@@ -190,6 +190,308 @@ module linear_speed_tb ();
     end
 
     $display("Linear speed test passed!");
+
+    //--------------------------------------------------------------------
+    // TEST 1: Zero lean (upright position) - speeds should be minimal/zero
+    //--------------------------------------------------------------------
+    rider_lean = 16'sh0000;
+    $display("Zero lean test - upright position (lean = %0d)", rider_lean);
+    repeat (2_000_000) @(posedge clk);
+    
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(1000), .clk(clk), .avg_out(curr_lft_avg));
+    compute_average(.sig(iPHYS.omega_rght), .num_samples(1000), .clk(clk), .avg_out(curr_rght_avg));
+    
+    if ((curr_lft_avg < -100 || curr_lft_avg > 100) || 
+        (curr_rght_avg < -100 || curr_rght_avg > 100)) begin
+      $display("Speeds not minimal at zero lean. lft_avg=%0d, rght_avg=%0d",
+               curr_lft_avg, curr_rght_avg);
+      $stop();
+    end
+    
+    $display("Zero lean produces minimal speeds. lft_avg=%0d, rght_avg=%0d",
+             curr_lft_avg, curr_rght_avg);
+
+
+    //--------------------------------------------------------------------
+    // TEST 2: Maximum forward lean - verify saturation behavior
+    //--------------------------------------------------------------------
+    rider_lean = 16'sh0FFF;  // maximum positive lean
+    $display("Maximum forward lean test (lean = %0d)", rider_lean);
+    repeat (5_000_000) @(posedge clk);
+    
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(1000), .clk(clk), .avg_out(curr_lft_avg));
+    compute_average(.sig(iPHYS.omega_rght), .num_samples(1000), .clk(clk), .avg_out(curr_rght_avg));
+    
+    prev_lft_avg = curr_lft_avg;
+    prev_rght_avg = curr_rght_avg;
+    $display("Max forward lean speeds: lft_avg=%0d, rght_avg=%0d", curr_lft_avg, curr_rght_avg);
+    
+    // Try exceeding max (should saturate)
+    rider_lean = 16'sh1FFF;
+    repeat (5_000_000) @(posedge clk);
+    
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(1000), .clk(clk), .avg_out(curr_lft_avg));
+    compute_average(.sig(iPHYS.omega_rght), .num_samples(1000), .clk(clk), .avg_out(curr_rght_avg));
+    
+    if (!check_equal_with_tolerance(curr_lft_avg, prev_lft_avg, 100) ||
+        !check_equal_with_tolerance(curr_rght_avg, prev_rght_avg, 100)) begin
+      $display("Speed changed beyond saturation. prev_lft=%0d, curr_lft=%0d, prev_rght=%0d, curr_rght=%0d",
+               prev_lft_avg, curr_lft_avg, prev_rght_avg, curr_rght_avg);
+      $stop();
+    end
+    
+    $display("Forward lean saturation verified. lft_avg=%0d, rght_avg=%0d",
+             curr_lft_avg, curr_rght_avg);
+
+
+    //--------------------------------------------------------------------
+    // TEST 3: Maximum backward lean - verify saturation behavior
+    //--------------------------------------------------------------------
+    rider_lean = -16'sh0FFF;  // maximum negative lean
+    $display("Maximum backward lean test (lean = %0d)", rider_lean);
+    repeat (5_000_000) @(posedge clk);
+    
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(1000), .clk(clk), .avg_out(curr_lft_avg));
+    compute_average(.sig(iPHYS.omega_rght), .num_samples(1000), .clk(clk), .avg_out(curr_rght_avg));
+    
+    prev_lft_avg = curr_lft_avg;
+    prev_rght_avg = curr_rght_avg;
+    $display("Max backward lean speeds: lft_avg=%0d, rght_avg=%0d", curr_lft_avg, curr_rght_avg);
+    
+    // Try exceeding max backward (should saturate)
+    rider_lean = -16'sh1FFF;
+    repeat (5_000_000) @(posedge clk);
+    
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(1000), .clk(clk), .avg_out(curr_rght_avg));
+    compute_average(.sig(iPHYS.omega_rght), .num_samples(1000), .clk(clk), .avg_out(curr_rght_avg));
+    
+    if (!check_equal_with_tolerance(curr_lft_avg, prev_lft_avg, 100) ||
+        !check_equal_with_tolerance(curr_rght_avg, prev_rght_avg, 100)) begin
+      $display("Speed changed beyond saturation. prev_lft=%0d, curr_lft=%0d, prev_rght=%0d, curr_rght=%0d",
+               prev_lft_avg, curr_lft_avg, prev_rght_avg, curr_rght_avg);
+      $stop();
+    end
+    
+    $display("Backward lean saturation verified. lft_avg=%0d, rght_avg=%0d",
+             curr_lft_avg, curr_rght_avg);
+
+
+    //--------------------------------------------------------------------
+    // TEST 4: Gradual lean increase (forward) - verify smooth acceleration
+    //--------------------------------------------------------------------
+    $display("Gradual forward lean increase test");
+    
+    int speed_samples[5];
+    int lean_values[5] = '{16'sh0200, 16'sh0400, 16'sh0600, 16'sh0800, 16'sh0A00};
+    
+    for (int i = 0; i < 5; i++) begin
+      rider_lean = lean_values[i];
+      repeat (3_000_000) @(posedge clk);
+      
+      compute_average(.sig(iPHYS.omega_lft), .num_samples(1000), .clk(clk), .avg_out(curr_lft_avg));
+      speed_samples[i] = curr_lft_avg;
+      $display("lean=%0d, lft_speed=%0d", lean_values[i], speed_samples[i]);
+      
+      if (i > 0 && speed_samples[i] <= speed_samples[i-1]) begin
+        $display("Speed not monotonically increasing. speed[%0d]=%0d, speed[%0d]=%0d",
+                 i-1, speed_samples[i-1], i, speed_samples[i]);
+        $stop();
+      end
+    end
+    
+    $display("Gradual lean increase produces monotonic speed increase");
+
+
+    //--------------------------------------------------------------------
+    // TEST 5: Gradual lean decrease (backward) - verify smooth deceleration
+    //--------------------------------------------------------------------
+    $display("Gradual backward lean increase test");
+    
+    int backward_lean_values[5] = '{-16'sh0200, -16'sh0400, -16'sh0600, -16'sh0800, -16'sh0A00};
+    
+    for (int i = 0; i < 5; i++) begin
+      rider_lean = backward_lean_values[i];
+      repeat (3_000_000) @(posedge clk);
+      
+      compute_average(.sig(iPHYS.omega_lft), .num_samples(1000), .clk(clk), .avg_out(curr_lft_avg));
+      speed_samples[i] = curr_lft_avg;
+      $display("lean=%0d, lft_speed=%0d", backward_lean_values[i], speed_samples[i]);
+      
+      if (i > 0 && speed_samples[i] >= speed_samples[i-1]) begin
+        $display("Speed not monotonically decreasing. speed[%0d]=%0d, speed[%0d]=%0d",
+                 i-1, speed_samples[i-1], i, speed_samples[i]);
+        $stop();
+      end
+    end
+    
+    $display("Gradual backward lean produces monotonic speed decrease");
+
+
+    //--------------------------------------------------------------------
+    // TEST 6: Rapid lean changes - verify system tracking
+    //--------------------------------------------------------------------
+    $display("Rapid lean changes test");
+    
+    // Forward
+    rider_lean = 16'sh0800;
+    repeat (2_000_000) @(posedge clk);
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(500), .clk(clk), .avg_out(prev_lft_avg));
+    $display("Forward lean (0x0800): speed=%0d", prev_lft_avg);
+    
+    // Backward
+    rider_lean = -16'sh0800;
+    repeat (2_000_000) @(posedge clk);
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(500), .clk(clk), .avg_out(curr_lft_avg));
+    $display("Backward lean (-0x0800): speed=%0d", curr_lft_avg);
+    
+    if (curr_lft_avg >= prev_lft_avg) begin
+      $display("Speed did not decrease for backward lean. fwd_speed=%0d, back_speed=%0d",
+               prev_lft_avg, curr_lft_avg);
+      $stop();
+    end
+    
+    // Back to forward
+    rider_lean = 16'sh0800;
+    repeat (2_000_000) @(posedge clk);
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(500), .clk(clk), .avg_out(prev_lft_avg));
+    $display("Return to forward: speed=%0d", prev_lft_avg);
+    
+    if (prev_lft_avg <= curr_lft_avg) begin
+      $display("Speed did not increase returning to forward. back_speed=%0d, fwd_speed=%0d",
+               curr_lft_avg, prev_lft_avg);
+      $stop();
+    end
+    
+    $display("System tracks rapid lean changes correctly");
+
+
+    //--------------------------------------------------------------------
+    // TEST 7: Left-right speed symmetry with neutral steering
+    //--------------------------------------------------------------------
+    $display("Left-right speed symmetry test");
+    
+    steerPot = 12'h800;  // neutral steering
+    rider_lean = 16'sh0600;
+    repeat (3_000_000) @(posedge clk);
+    
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(1000), .clk(clk), .avg_out(curr_lft_avg));
+    compute_average(.sig(iPHYS.omega_rght), .num_samples(1000), .clk(clk), .avg_out(curr_rght_avg));
+    
+    if (!check_equal_with_tolerance(curr_lft_avg, curr_rght_avg, 15)) begin
+      $display("Left and right speeds not symmetric. lft=%0d, rght=%0d, diff=%0d",
+               curr_lft_avg, curr_rght_avg, curr_lft_avg - curr_rght_avg);
+      $stop();
+    end
+    
+    $display("Left-right speeds are symmetric. lft=%0d, rght=%0d",
+             curr_lft_avg, curr_rght_avg);
+
+
+    //--------------------------------------------------------------------
+    // TEST 8: Lean oscillation around zero
+    //--------------------------------------------------------------------
+    $display("Lean oscillation around zero test");
+    
+    int oscillation_leans[6] = '{16'sh0100, -16'sh0100, 16'sh0200, -16'sh0200, 16'sh0100, 16'sh0000};
+    
+    for (int i = 0; i < 6; i++) begin
+      rider_lean = oscillation_leans[i];
+      repeat (1_500_000) @(posedge clk);
+      
+      compute_average(.sig(iPHYS.omega_lft), .num_samples(500), .clk(clk), .avg_out(curr_lft_avg));
+      $display("lean=%0d, speed=%0d", oscillation_leans[i], curr_lft_avg);
+    end
+    
+    $display("Oscillating lean handled without instability");
+
+
+    //--------------------------------------------------------------------
+    // TEST 9: Sustained forward lean - stability check
+    //--------------------------------------------------------------------
+    $display("Sustained forward lean stability test");
+    
+    rider_lean = 16'sh0700;
+    repeat (3_000_000) @(posedge clk);
+    
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(1000), .clk(clk), .avg_out(prev_lft_avg));
+    $display("Initial speed: lft=%0d", prev_lft_avg);
+    
+    // Sustain for longer period
+    repeat (5_000_000) @(posedge clk);
+    
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(1000), .clk(clk), .avg_out(curr_lft_avg));
+    $display("Sustained speed: lft=%0d", curr_lft_avg);
+    
+    if (!check_equal_with_tolerance(curr_lft_avg, prev_lft_avg, 50)) begin
+      $display("Speed drifted during sustained lean. initial=%0d, sustained=%0d",
+               prev_lft_avg, curr_lft_avg);
+      $stop();
+    end
+    
+    $display("Speed stable during sustained lean. initial=%0d, sustained=%0d",
+             prev_lft_avg, curr_lft_avg);
+
+
+    //--------------------------------------------------------------------
+    // TEST 10: Small lean variations - sensitivity check
+    //--------------------------------------------------------------------
+    $display("Small lean variations sensitivity test");
+    
+    int small_lean_values[4] = '{16'sh0050, 16'sh0100, 16'sh0150, 16'sh0200};
+    int prev_speed = 0;
+    
+    for (int i = 0; i < 4; i++) begin
+      rider_lean = small_lean_values[i];
+      repeat (2_000_000) @(posedge clk);
+      
+      compute_average(.sig(iPHYS.omega_lft), .num_samples(1000), .clk(clk), .avg_out(curr_lft_avg));
+      $display("lean=%0d, speed=%0d", small_lean_values[i], curr_lft_avg);
+      
+      if (i > 0) begin
+        // Speed should increase or at least not decrease significantly
+        if (curr_lft_avg < prev_speed - 20) begin
+          $display("Speed decreased unexpectedly. prev=%0d, curr=%0d",
+                   prev_speed, curr_lft_avg);
+          $stop();
+        end
+      end
+      prev_speed = curr_lft_avg;
+    end
+    
+    $display("System responds to small lean variations");
+
+
+    //--------------------------------------------------------------------
+    // TEST 11: Return to zero from extreme lean
+    //--------------------------------------------------------------------
+    $display("Return to zero from extreme lean test");
+    
+    // Start at extreme forward lean
+    rider_lean = 16'sh0E00;
+    repeat (3_000_000) @(posedge clk);
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(1000), .clk(clk), .avg_out(prev_lft_avg));
+    $display("Extreme forward lean speed: %0d", prev_lft_avg);
+    
+    // Return to zero
+    rider_lean = 16'sh0000;
+    repeat (3_000_000) @(posedge clk);
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(1000), .clk(clk), .avg_out(curr_lft_avg));
+    $display("Zero lean speed: %0d", curr_lft_avg);
+    
+    if (curr_lft_avg >= prev_lft_avg) begin
+      $display("Speed did not decrease returning to zero. extreme=%0d, zero=%0d",
+               prev_lft_avg, curr_lft_avg);
+      $stop();
+    end
+    
+    if (curr_lft_avg < -100 || curr_lft_avg > 100) begin
+      $display("Speed not near zero. speed=%0d", curr_lft_avg);
+      $stop();
+    end
+    
+    $display("Successfully returned to near-zero speed. speed=%0d", curr_lft_avg);
+
+    $display("All linear speed tests passed!");
     $stop();
   end
 

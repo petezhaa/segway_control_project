@@ -300,7 +300,308 @@ module steering_response_tb ();
              iDUT.iBAL.rght_spd, prev_rght_spd, $time);
 
 
-    $display("  All steering response tests PASSED at time %0t", $time);
+    //============================================================
+    // TEST 7: Center steering (neutral position, 0x800)
+    // Expectation: left and right wheel speeds should be equal
+    //============================================================
+    steerPot = 12'h800;
+    $display("\n[TEST 7] Center/neutral steer applied (steerPot = 0x%0h, time = %0t)", steerPot, $time);
+    repeat (1000000) @(posedge clk);
+
+    if (!check_equal_with_tolerance(iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, 20)) begin
+      $display("[FAIL][TEST 7] Expected lft_spd ≈ rght_spd for center steer. lft_spd=%0d, rght_spd=%0d, diff=%0d (time=%0t)",
+               iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, 
+               iDUT.iBAL.lft_spd - iDUT.iBAL.rght_spd, $time);
+      $stop();
+    end
+
+    $display("[PASS][TEST 7] Center steer OK. lft_spd=%0d ≈ rght_spd=%0d (time=%0t)",
+             iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, $time);
+
+    prev_lft_spd  = iDUT.iBAL.lft_spd;
+    prev_rght_spd = iDUT.iBAL.rght_spd;
+
+
+    //====================================================================
+    // TEST 8: Slight right steer from center (0x900)
+    // Expectation: lft_spd > rght_spd, but difference should be small
+    //====================================================================
+    steerPot = 12'h900;
+    $display("\n[TEST 8] Slight right steer from center (steerPot = 0x%0h, time = %0t)", steerPot, $time);
+    repeat (1000000) @(posedge clk);
+
+    if (!$isunknown(iDUT.iBAL.lft_spd) &&
+        !$isunknown(iDUT.iBAL.rght_spd) &&
+         iDUT.iBAL.lft_spd <= iDUT.iBAL.rght_spd) begin
+      $display("[FAIL][TEST 8] Expected lft_spd > rght_spd for slight right steer. lft_spd=%0d, rght_spd=%0d (time=%0t)",
+               iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, $time);
+      $stop();
+    end
+
+    $display("[PASS][TEST 8] Slight right steer OK. lft_spd=%0d > rght_spd=%0d, diff=%0d (time=%0t)",
+             iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, 
+             iDUT.iBAL.lft_spd - iDUT.iBAL.rght_spd, $time);
+
+
+    //====================================================================
+    // TEST 9: Slight left steer from center (0x700)
+    // Expectation: lft_spd < rght_spd, but difference should be small
+    //====================================================================
+    steerPot = 12'h700;
+    $display("\n[TEST 9] Slight left steer from center (steerPot = 0x%0h, time = %0t)", steerPot, $time);
+    repeat (1000000) @(posedge clk);
+
+    if (!$isunknown(iDUT.iBAL.lft_spd) &&
+        !$isunknown(iDUT.iBAL.rght_spd) &&
+         iDUT.iBAL.lft_spd >= iDUT.iBAL.rght_spd) begin
+      $display("[FAIL][TEST 9] Expected lft_spd < rght_spd for slight left steer. lft_spd=%0d, rght_spd=%0d (time=%0t)",
+               iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, $time);
+      $stop();
+    end
+
+    $display("[PASS][TEST 9] Slight left steer OK. lft_spd=%0d < rght_spd=%0d, diff=%0d (time=%0t)",
+             iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd,
+             iDUT.iBAL.rght_spd - iDUT.iBAL.lft_spd, $time);
+
+
+    //====================================================================
+    // TEST 10: Rapid steering transitions (center -> right -> left -> center)
+    // Expectation: System should track each steering change appropriately
+    //====================================================================
+    $display("\n[TEST 10] Rapid steering transitions test (time = %0t)", $time);
+    
+    // Start at center
+    steerPot = 12'h800;
+    repeat (100000) @(posedge clk);
+    if (!check_equal_with_tolerance(iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, 20)) begin
+      $display("[FAIL][TEST 10] Center position failed. lft_spd=%0d, rght_spd=%0d (time=%0t)",
+               iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, $time);
+      $stop();
+    end
+    $display("[TEST 10] Center confirmed. lft_spd=%0d, rght_spd=%0d (time=%0t)",
+             iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, $time);
+
+    // Quick right
+    steerPot = 12'hC00;
+    repeat (100000) @(posedge clk);
+    if (iDUT.iBAL.lft_spd <= iDUT.iBAL.rght_spd) begin
+      $display("[FAIL][TEST 10] Right steer failed. lft_spd=%0d, rght_spd=%0d (time=%0t)",
+               iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, $time);
+      $stop();
+    end
+    $display("[TEST 10] Right steer confirmed. lft_spd=%0d > rght_spd=%0d (time=%0t)",
+             iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, $time);
+
+    // Quick left
+    steerPot = 12'h400;
+    repeat (100000) @(posedge clk);
+    if (iDUT.iBAL.lft_spd >= iDUT.iBAL.rght_spd) begin
+      $display("[FAIL][TEST 10] Left steer failed. lft_spd=%0d, rght_spd=%0d (time=%0t)",
+               iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, $time);
+      $stop();
+    end
+    $display("[TEST 10] Left steer confirmed. lft_spd=%0d < rght_spd=%0d (time=%0t)",
+             iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, $time);
+
+    // Back to center
+    steerPot = 12'h800;
+    repeat (100000) @(posedge clk);
+    if (!check_equal_with_tolerance(iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, 20)) begin
+      $display("[FAIL][TEST 10] Return to center failed. lft_spd=%0d, rght_spd=%0d (time=%0t)",
+               iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, $time);
+      $stop();
+    end
+
+    $display("[PASS][TEST 10] Rapid transitions handled correctly. Final: lft_spd=%0d, rght_spd=%0d (time=%0t)",
+             iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, $time);
+
+
+    //====================================================================
+    // TEST 11: Steering with different lean angles (backward lean)
+    // Expectation: Steering behavior should work with backward motion too
+    //====================================================================
+    rider_lean = -16'sh0800;  // backward lean
+    $display("\n[TEST 11] Steering with backward lean (lean = %0d, time = %0t)", rider_lean, $time);
+    repeat (50000) @(posedge clk);  // settle to backward motion
+
+    // Right steer while going backward
+    steerPot = 12'hC00;
+    repeat (100000) @(posedge clk);
+    if (iDUT.iBAL.lft_spd <= iDUT.iBAL.rght_spd) begin
+      $display("[FAIL][TEST 11] Right steer with backward lean failed. lft_spd=%0d, rght_spd=%0d (time=%0t)",
+               iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, $time);
+      $stop();
+    end
+    $display("[TEST 11] Right steer with backward lean OK. lft_spd=%0d > rght_spd=%0d (time=%0t)",
+             iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, $time);
+
+    // Left steer while going backward
+    steerPot = 12'h400;
+    repeat (100000) @(posedge clk);
+    if (iDUT.iBAL.lft_spd >= iDUT.iBAL.rght_spd) begin
+      $display("[FAIL][TEST 11] Left steer with backward lean failed. lft_spd=%0d, rght_spd=%0d (time=%0t)",
+               iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, $time);
+      $stop();
+    end
+
+    $display("[PASS][TEST 11] Steering with backward lean works correctly. lft_spd=%0d < rght_spd=%0d (time=%0t)",
+             iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, $time);
+
+    // Return to forward lean for remaining tests
+    rider_lean = 16'sh0FFF;
+    repeat (50000) @(posedge clk);
+
+
+    //====================================================================
+    // TEST 12: Steering with minimal lean (near upright)
+    // Expectation: Steering effect should still be observable
+    //====================================================================
+    rider_lean = 16'sh0200;  // minimal forward lean
+    $display("\n[TEST 12] Steering with minimal lean (lean = %0d, time = %0t)", rider_lean, $time);
+    repeat (100000) @(posedge clk);
+
+    // Right steer with minimal lean
+    steerPot = 12'hD00;
+    repeat (100000) @(posedge clk);
+    if (iDUT.iBAL.lft_spd <= iDUT.iBAL.rght_spd) begin
+      $display("[FAIL][TEST 12] Right steer with minimal lean failed. lft_spd=%0d, rght_spd=%0d (time=%0t)",
+               iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, $time);
+      $stop();
+    end
+
+    $display("[PASS][TEST 12] Steering works with minimal lean. lft_spd=%0d > rght_spd=%0d (time=%0t)",
+             iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, $time);
+
+    // Return to normal forward lean
+    rider_lean = 16'sh0FFF;
+    repeat (50000) @(posedge clk);
+
+
+    //====================================================================
+    // TEST 13: Intermediate steering angles progression (right side)
+    // Expectation: Verify monotonic relationship between steer angle and speed differential
+    //====================================================================
+    $display("\n[TEST 13] Intermediate right steering angles progression (time = %0t)", $time);
+    
+    int steer_diff_1, steer_diff_2, steer_diff_3;
+    
+    steerPot = 12'h900;  // slight right
+    repeat (100000) @(posedge clk);
+    steer_diff_1 = iDUT.iBAL.lft_spd - iDUT.iBAL.rght_spd;
+    $display("[TEST 13] steerPot=0x900: diff=%0d (lft=%0d, rght=%0d)", 
+             steer_diff_1, iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd);
+
+    steerPot = 12'hB00;  // moderate right
+    repeat (100000) @(posedge clk);
+    steer_diff_2 = iDUT.iBAL.lft_spd - iDUT.iBAL.rght_spd;
+    $display("[TEST 13] steerPot=0xB00: diff=%0d (lft=%0d, rght=%0d)", 
+             steer_diff_2, iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd);
+
+    steerPot = 12'hD00;  // strong right
+    repeat (100000) @(posedge clk);
+    steer_diff_3 = iDUT.iBAL.lft_spd - iDUT.iBAL.rght_spd;
+    $display("[TEST 13] steerPot=0xD00: diff=%0d (lft=%0d, rght=%0d)", 
+             steer_diff_3, iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd);
+
+    if (!(steer_diff_1 < steer_diff_2 && steer_diff_2 < steer_diff_3)) begin
+      $display("[FAIL][TEST 13] Speed differential not monotonically increasing. diff1=%0d, diff2=%0d, diff3=%0d (time=%0t)",
+               steer_diff_1, steer_diff_2, steer_diff_3, $time);
+      $stop();
+    end
+
+    $display("[PASS][TEST 13] Right steering progression is monotonic: %0d < %0d < %0d (time=%0t)",
+             steer_diff_1, steer_diff_2, steer_diff_3, $time);
+
+
+    //====================================================================
+    // TEST 14: Intermediate steering angles progression (left side)
+    // Expectation: Verify monotonic relationship between steer angle and speed differential
+    //====================================================================
+    $display("\n[TEST 14] Intermediate left steering angles progression (time = %0t)", $time);
+    
+    steerPot = 12'h700;  // slight left
+    repeat (100000) @(posedge clk);
+    steer_diff_1 = iDUT.iBAL.rght_spd - iDUT.iBAL.lft_spd;
+    $display("[TEST 14] steerPot=0x700: diff=%0d (rght=%0d, lft=%0d)", 
+             steer_diff_1, iDUT.iBAL.rght_spd, iDUT.iBAL.lft_spd);
+
+    steerPot = 12'h500;  // moderate left
+    repeat (100000) @(posedge clk);
+    steer_diff_2 = iDUT.iBAL.rght_spd - iDUT.iBAL.lft_spd;
+    $display("[TEST 14] steerPot=0x500: diff=%0d (rght=%0d, lft=%0d)", 
+             steer_diff_2, iDUT.iBAL.rght_spd, iDUT.iBAL.lft_spd);
+
+    steerPot = 12'h300;  // strong left
+    repeat (100000) @(posedge clk);
+    steer_diff_3 = iDUT.iBAL.rght_spd - iDUT.iBAL.lft_spd;
+    $display("[TEST 14] steerPot=0x300: diff=%0d (rght=%0d, lft=%0d)", 
+             steer_diff_3, iDUT.iBAL.rght_spd, iDUT.iBAL.lft_spd);
+
+    if (!(steer_diff_1 < steer_diff_2 && steer_diff_2 < steer_diff_3)) begin
+      $display("[FAIL][TEST 14] Speed differential not monotonically increasing. diff1=%0d, diff2=%0d, diff3=%0d (time=%0t)",
+               steer_diff_1, steer_diff_2, steer_diff_3, $time);
+      $stop();
+    end
+
+    $display("[PASS][TEST 14] Left steering progression is monotonic: %0d < %0d < %0d (time=%0t)",
+             steer_diff_1, steer_diff_2, steer_diff_3, $time);
+
+
+    //====================================================================
+    // TEST 15: Steering symmetry verification
+    // Expectation: Same magnitude steer angle in opposite directions should 
+    //              produce similar magnitude speed differentials
+    //====================================================================
+    $display("\n[TEST 15] Steering symmetry verification (time = %0t)", $time);
+    
+    int right_diff, left_diff;
+    
+    // Moderate right steer
+    steerPot = 12'hB00;
+    repeat (100000) @(posedge clk);
+    right_diff = iDUT.iBAL.lft_spd - iDUT.iBAL.rght_spd;
+    $display("[TEST 15] Right steer (0xB00): diff=%0d (lft=%0d, rght=%0d)", 
+             right_diff, iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd);
+
+    // Moderate left steer (symmetric to 0xB00 around 0x800)
+    steerPot = 12'h500;
+    repeat (100000) @(posedge clk);
+    left_diff = iDUT.iBAL.rght_spd - iDUT.iBAL.lft_spd;
+    $display("[TEST 15] Left steer (0x500): diff=%0d (rght=%0d, lft=%0d)", 
+             left_diff, iDUT.iBAL.rght_spd, iDUT.iBAL.lft_spd);
+
+    if (!check_equal_with_tolerance(right_diff, left_diff, 30)) begin
+      $display("[FAIL][TEST 15] Steering not symmetric. right_diff=%0d, left_diff=%0d (time=%0t)",
+               right_diff, left_diff, $time);
+      $stop();
+    end
+
+    $display("[PASS][TEST 15] Steering is symmetric. right_diff=%0d ≈ left_diff=%0d (time=%0t)",
+             right_diff, left_diff, $time);
+
+
+    //====================================================================
+    // TEST 16: No steering drift at center over extended period
+    // Expectation: With center steering, speeds should remain equal
+    //====================================================================
+    $display("\n[TEST 16] Extended center steering stability test (time = %0t)", $time);
+    
+    steerPot = 12'h800;
+    repeat (500000) @(posedge clk);  // longer observation window
+    
+    if (!check_equal_with_tolerance(iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, 20)) begin
+      $display("[FAIL][TEST 16] Center steering drifted over time. lft_spd=%0d, rght_spd=%0d, diff=%0d (time=%0t)",
+               iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd,
+               iDUT.iBAL.lft_spd - iDUT.iBAL.rght_spd, $time);
+      $stop();
+    end
+
+    $display("[PASS][TEST 16] Center steering stable over extended period. lft_spd=%0d ≈ rght_spd=%0d (time=%0t)",
+             iDUT.iBAL.lft_spd, iDUT.iBAL.rght_spd, $time);
+
+
+    $display("\n=== All steering response tests PASSED at time %0t ===", $time);
+    $display("Total tests completed: 16");
     $stop();
   end
 
