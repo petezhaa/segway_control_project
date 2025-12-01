@@ -106,6 +106,18 @@ module linear_speed_tb ();
   localparam int LEAN_TOL_NEG = 250;  // how close two leans can be and be considered "same"
 
   initial begin
+    // Declare all automatic variables at the beginning
+    automatic logic signed [15:0] lean_steps[4] = '{16'sh0400, 16'sh0800, 16'sh0400, 16'sh0000};
+    automatic logic signed [15:0] rapid_leans[6] = '{16'sh0600, -16'sh0600, 16'sh0800, 
+                                            -16'sh0800, 16'sh0400, 16'sh0000};
+    automatic logic signed [15:0] small_leans[4] = '{16'sh0100, -16'sh0100, 16'sh0150, -16'sh0150};
+    automatic logic signed [15:0] test_leans[5] = '{16'sh0300, 16'sh0500, 16'sh0700, 16'sh0900, 16'sh0B00};
+    automatic logic signed [15:0] transition_leans[3] = '{16'sh0000, 16'sh0800, -16'sh0800};
+    int theta_samples[5];
+    int omega_samples[5];
+    automatic int sample_count = 0;
+    automatic int unstable_count = 0;
+    int i;
 
     /// Your magic goes here ///
     init_DUT(.clk(clk), .RST_n(RST_n), .send_cmd(send_cmd), .cmd(cmd), .rider_lean(rider_lean),
@@ -195,7 +207,7 @@ module linear_speed_tb ();
     $display("Linear speed test passed!");
 
     //====================================================================
-    // ADDITIONAL PHYSICS-BASED TEST CASES
+    // ADDITIONAL TEST CASES
     //====================================================================
 
     //--------------------------------------------------------------------
@@ -286,9 +298,7 @@ module linear_speed_tb ();
     //--------------------------------------------------------------------
     $display("Lean step response test");
     
-    logic signed [15:0] lean_steps[4] = '{16'sh0400, 16'sh0800, 16'sh0400, 16'sh0000};
-    
-    for (int i = 0; i < 4; i++) begin
+    for (i = 0; i < 4; i++) begin
       rider_lean = lean_steps[i];
       repeat (2_000_000) @(posedge clk);
       
@@ -343,14 +353,11 @@ module linear_speed_tb ();
 
 
     //--------------------------------------------------------------------
-    // TEST 9: Rapid lean reversals - verify platform stability
+    // TEST 9: Rapid lean reversal stability test
     //--------------------------------------------------------------------
     $display("Rapid lean reversal stability test");
     
-    logic signed [15:0] rapid_leans[6] = '{16'sh0600, -16'sh0600, 16'sh0800, 
-                                            -16'sh0800, 16'sh0400, 16'sh0000};
-    
-    for (int i = 0; i < 6; i++) begin
+    for (i = 0; i < 6; i++) begin
       rider_lean = rapid_leans[i];
       repeat (1_000_000) @(posedge clk);
       
@@ -371,10 +378,10 @@ module linear_speed_tb ();
     $display("Energy conservation test");
     repeat (3_000_000) @(posedge clk);
     
-    int sample_count = 0;
-    int unstable_count = 0;
+    sample_count = 0;
+    unstable_count = 0;
     
-    for (int i = 0; i < 1000; i++) begin
+    for (i = 0; i < 1000; i++) begin
       @(posedge clk);
       
       // Check if theta is growing unbounded
@@ -397,9 +404,7 @@ module linear_speed_tb ();
     //--------------------------------------------------------------------
     $display("Zero crossing behavior test");
     
-    logic signed [15:0] small_leans[4] = '{16'sh0100, -16'sh0100, 16'sh0150, -16'sh0150};
-    
-    for (int i = 0; i < 4; i++) begin
+    for (i = 0; i < 4; i++) begin
       rider_lean = small_leans[i];
       repeat (1_500_000) @(posedge clk);
       
@@ -415,11 +420,7 @@ module linear_speed_tb ();
     //--------------------------------------------------------------------
     $display("Platform angle vs wheel speed correlation test");
     
-    logic signed [15:0] test_leans[5] = '{16'sh0300, 16'sh0500, 16'sh0700, 16'sh0900, 16'sh0B00};
-    int theta_samples[5];
-    int omega_samples[5];
-    
-    for (int i = 0; i < 5; i++) begin
+    for (i = 0; i < 5; i++) begin
       rider_lean = test_leans[i];
       repeat (3_000_000) @(posedge clk);
       
@@ -488,8 +489,6 @@ module linear_speed_tb ();
     // TEST 15: Glitch-free transitions
     //--------------------------------------------------------------------
     $display("Glitch-free transition test");
-    
-    logic signed [15:0] transition_leans[3] = '{16'sh0000, 16'sh0800, -16'sh0800};
     
     check_glitch_free_transitions(clk, rider_lean, iPHYS.theta_platform,
                                    transition_leans, 1000000, 200);

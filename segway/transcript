@@ -1,14 +1,18 @@
+# Compile of Auth_segway_phys_tb.sv failed with 7 errors.
+# Compile of linear_speed_phys_tb.sv failed with 6 errors.
+# Compile of over_I_phys_tb.sv failed with 7 errors.
+# Compile of Physics_auth_segway_tb_incomplete.sv was successful.
+# Compile of Segway_phys_tb.sv was successful.
+# Compile of steering_response_phys_tb.sv failed with 10 errors.
 # Compile of A2D_intf.sv was successful.
 # Compile of ADC128S_FC.sv was successful.
 # Compile of Auth_blk.sv was successful.
-# Compile of Auth_segway_tb.sv was successful.
 # Compile of balance_cntrl.sv was successful.
 # Compile of inert_intf.sv was successful.
 # Compile of inertial_integrator.sv was successful.
-# Compile of linear_speed_tb.sv was successful with warnings.
 # Compile of mtr_drv.sv was successful.
 # Compile of over_I_task_pkg.sv was successful.
-# Compile of over_I_tb.sv was successful.
+# Compile of over_t_task.sv was successful.
 # Compile of PID.sv was successful.
 # Compile of piezo_drv.sv was successful.
 # Compile of PWM11.sv was successful.
@@ -17,19 +21,110 @@
 # Compile of Segway_tb.sv was successful.
 # Compile of SegwayMath.sv was successful.
 # Compile of SegwayModel.sv was successful with warnings.
-# Compile of simultaneous_faults_tb.sv was successful.
 # Compile of SPI_ADC128S.sv was successful.
 # Compile of SPI_mnrch.sv was successful.
 # Compile of steer_en.sv was successful.
 # Compile of steer_en_SM.sv was successful.
-# Compile of steering_response_tb.sv was successful.
-# Compile of task_tb.sv was successful.
+# Compile of task_pkg.sv was successful.
 # Compile of UART_rx.sv was successful.
 # Compile of UART_tx.sv was successful.
-# 28 compiles, 0 failed with no errors.
+# 30 compiles, 4 failed with 30 errors.
+# Compile of Auth_segway_phys_tb.sv failed with 7 errors.
+# Compile of linear_speed_phys_tb.sv failed with 6 errors.
+# Compile of over_I_phys_tb.sv was successful.
+# Compile of Physics_auth_segway_tb_incomplete.sv was successful.
+# Compile of Segway_phys_tb.sv was successful.
+# Compile of steering_response_phys_tb.sv failed with 10 errors.
+# Compile of A2D_intf.sv was successful.
+# Compile of ADC128S_FC.sv was successful.
+# Compile of Auth_blk.sv was successful.
+# Compile of balance_cntrl.sv was successful.
+# Compile of inert_intf.sv was successful.
+# Compile of inertial_integrator.sv was successful.
+# Compile of mtr_drv.sv was successful.
+# Compile of over_I_task_pkg.sv was successful.
+# Compile of over_t_task.sv was successful.
+# Compile of PID.sv was successful.
+# Compile of piezo_drv.sv was successful.
+# Compile of PWM11.sv was successful.
+# Compile of rst_synch.sv was successful.
+# Compile of Segway.sv was successful.
+# Compile of Segway_tb.sv was successful.
+# Compile of SegwayMath.sv was successful.
+# Compile of SegwayModel.sv was successful with warnings.
+# Compile of SPI_ADC128S.sv was successful.
+# Compile of SPI_mnrch.sv was successful.
+# Compile of steer_en.sv was successful.
+# Compile of steer_en_SM.sv was successful.
+# Compile of task_pkg.sv was successful.
+# Compile of UART_rx.sv was successful.
+# Compile of UART_tx.sv was successful.
+# 30 compiles, 3 failed with 23 errors.
+# Compile of Auth_segway_phys_tb.sv failed with 7 errors.
+# Compile of linear_speed_phys_tb.sv was successful with warnings.
+# Compile of over_I_phys_tb.sv was successful.
+# Compile of Physics_auth_segway_tb_incomplete.sv was successful.
+# Compile of Segway_phys_tb.sv was successful.
+# Compile of steering_response_phys_tb.sv failed with 10 errors.
+# Compile of A2D_intf.sv was successful.
+# Compile of ADC128S_FC.sv was successful.
+# Compile of Auth_blk.sv was successful.
+# Compile of balance_cntrl.sv was successful.
+# Compile of inert_intf.sv was successful.
+# Compile of inertial_integrator.sv was successful.
+# Compile of mtr_drv.sv was successful.
+# Compile of over_I_task_pkg.sv was successful.
+# Compile of over_t_task.sv was successful.
+# Compile of PID.sv was successful.
+# Compile of piezo_drv.sv was successful.
+# Compile of PWM11.sv was successful.
+# Compile of rst_synch.sv was successful.
+# Compile of Segway.sv was successful.
+# Compile of Segway_tb.sv was successful.
+# Compile of SegwayMath.sv was successful.
+# Compile of SegwayModel.sv was successful with warnings.
+# Compile of SPI_ADC128S.sv was successful.
+# Compile of SPI_mnrch.sv was successful.
+# Compile of steer_en.sv was successful.
+# Compile of steer_en_SM.sv was successful.
+# Compile of task_pkg.sv was successful.
+# Compile of UART_rx.sv was successful.
+# Compile of UART_tx.sv was successful.
+# 30 compiles, 2 failed with 17 errors.
+# Compile of Auth_segway_phys_tb.sv was successful.
+# Compile of linear_speed_phys_tb.sv was successful with warnings.
+# Compile of over_I_phys_tb.sv was successful.
+# Compile of Physics_auth_segway_tb_incomplete.sv was successful.
+# Compile of Segway_phys_tb.sv was successful.
+# Compile of steering_response_phys_tb.sv was successful.
+# Compile of A2D_intf.sv was successful.
+# Compile of ADC128S_FC.sv was successful.
+# Compile of Auth_blk.sv was successful.
+# Compile of balance_cntrl.sv was successful.
+# Compile of inert_intf.sv was successful.
+# Compile of inertial_integrator.sv was successful.
+# Compile of mtr_drv.sv was successful.
+# Compile of over_I_task_pkg.sv was successful.
+# Compile of over_t_task.sv was successful.
+# Compile of PID.sv was successful.
+# Compile of piezo_drv.sv was successful.
+# Compile of PWM11.sv was successful.
+# Compile of rst_synch.sv was successful.
+# Compile of Segway.sv was successful.
+# Compile of Segway_tb.sv was successful.
+# Compile of SegwayMath.sv was successful.
+# Compile of SegwayModel.sv was successful with warnings.
+# Compile of SPI_ADC128S.sv was successful.
+# Compile of SPI_mnrch.sv was successful.
+# Compile of steer_en.sv was successful.
+# Compile of steer_en_SM.sv was successful.
+# Compile of task_pkg.sv was successful.
+# Compile of UART_rx.sv was successful.
+# Compile of UART_tx.sv was successful.
+# 30 compiles, 0 failed with no errors.
 vsim -gui work.A2D_intf work.ADC128S_FC work.Auth_blk work.Auth_segway_tb work.balance_cntrl work.inert_intf work.inertial_integrator work.linear_speed_tb work.mtr_drv work.over_I_task_pkg work.over_I_tb work.PID work.piezo_drv work.PWM11 work.rst_synch work.Segway work.Segway_tb work.SegwayMath work.SegwayModel work.simultaneous_faults_tb work.SPI_ADC128S work.SPI_mnrch work.steer_en work.steer_en_SM work.steering_response_tb work.task_pkg work.UART_rx work.UART_tx
 # vsim -gui work.A2D_intf work.ADC128S_FC work.Auth_blk work.Auth_segway_tb work.balance_cntrl work.inert_intf work.inertial_integrator work.linear_speed_tb work.mtr_drv work.over_I_task_pkg work.over_I_tb work.PID work.piezo_drv work.PWM11 work.rst_synch work.Segway work.Segway_tb work.SegwayMath work.SegwayModel work.simultaneous_faults_tb work.SPI_ADC128S work.SPI_mnrch work.steer_en work.steer_en_SM work.steering_response_tb work.task_pkg work.UART_rx work.UART_tx 
-# Start time: 13:32:06 on Nov 29,2025
+# Start time: 17:33:22 on Dec 01,2025
 # Loading sv_std.std
 # Loading work.A2D_intf
 # Loading work.SPI_mnrch
@@ -60,26 +155,63 @@ vsim -gui work.A2D_intf work.ADC128S_FC work.Auth_blk work.Auth_segway_tb work.b
 # Loading work.simultaneous_faults_tb
 # Loading work.steering_response_tb
 # ** Warning: (vsim-8311) System Verilog assertions are supported only in Questasim.
-# ** Error (suppressible): (vsim-3389) Port 'clk' not found in the connected module (9th connection).
+# ** Error (suppressible): (vsim-3389) Port 'OVR_I_shtdwn' not found in the connected module (21st connection).
+#    Time: 0 ps  Iteration: 0  Instance: /Auth_segway_tb/iDUT File: C:/Users/peter/Documents/projects/segway/physics_tests/Physics_auth_segway_tb_incomplete.sv Line: 59
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iSegwayMath'.  Expected 10, found 9.
 #    Time: 0 ps  Iteration: 0  Instance: /Auth_segway_tb/iDUT/iBAL/iSegwayMath File: C:/Users/peter/Documents/projects/segway/balance_cntrl.sv Line: 38
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/balance_cntrl.sv(38): [TFMPC] - Missing connection for port 'rst_n'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
+#    Time: 0 ps  Iteration: 0  Instance: /Auth_segway_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
 # Error loading design
-# End time: 13:32:06 on Nov 29,2025, Elapsed time: 0:00:00
-# Errors: 1, Warnings: 11
-vsim -gui work.over_I_tb
-# vsim -gui work.over_I_tb 
-# Start time: 13:35:27 on Nov 29,2025
+# End time: 17:33:22 on Dec 01,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 14
+# Compile of Auth_segway_phys_tb.sv was successful.
+# Compile of linear_speed_phys_tb.sv was successful with warnings.
+# Compile of over_I_phys_tb.sv was successful.
+# Compile of Physics_auth_segway_tb_incomplete.sv was successful.
+# Compile of Segway_phys_tb.sv was successful.
+# Compile of steering_response_phys_tb.sv was successful.
+# Compile of A2D_intf.sv was successful.
+# Compile of ADC128S_FC.sv was successful.
+# Compile of Auth_blk.sv was successful.
+# Compile of balance_cntrl.sv was successful.
+# Compile of inert_intf.sv was successful.
+# Compile of inertial_integrator.sv was successful.
+# Compile of mtr_drv.sv was successful.
+# Compile of over_I_task_pkg.sv was successful.
+# Compile of over_t_task.sv was successful.
+# Compile of PID.sv was successful.
+# Compile of piezo_drv.sv was successful.
+# Compile of PWM11.sv was successful.
+# Compile of rst_synch.sv was successful.
+# Compile of Segway.sv was successful.
+# Compile of Segway_tb.sv was successful.
+# Compile of SegwayMath.sv was successful.
+# Compile of SegwayModel.sv was successful with warnings.
+# Compile of SPI_ADC128S.sv was successful.
+# Compile of SPI_mnrch.sv was successful.
+# Compile of steer_en.sv was successful.
+# Compile of steer_en_SM.sv was successful.
+# Compile of task_pkg.sv was successful.
+# Compile of UART_rx.sv was successful.
+# Compile of UART_tx.sv was successful.
+# 30 compiles, 0 failed with no errors.
+vsim -gui work.A2D_intf work.ADC128S_FC work.Auth_blk work.Auth_segway_tb work.balance_cntrl work.inert_intf work.inertial_integrator work.linear_speed_tb work.mtr_drv work.over_I_task_pkg work.over_I_tb work.PID work.piezo_drv work.PWM11 work.rst_synch work.Segway work.Segway_tb work.SegwayMath work.SegwayModel work.simultaneous_faults_tb work.SPI_ADC128S work.SPI_mnrch work.steer_en work.steer_en_SM work.steering_response_tb work.task_pkg work.UART_rx work.UART_tx
+# vsim -gui work.A2D_intf work.ADC128S_FC work.Auth_blk work.Auth_segway_tb work.balance_cntrl work.inert_intf work.inertial_integrator work.linear_speed_tb work.mtr_drv work.over_I_task_pkg work.over_I_tb work.PID work.piezo_drv work.PWM11 work.rst_synch work.Segway work.Segway_tb work.SegwayMath work.SegwayModel work.simultaneous_faults_tb work.SPI_ADC128S work.SPI_mnrch work.steer_en work.steer_en_SM work.steering_response_tb work.task_pkg work.UART_rx work.UART_tx 
+# Start time: 17:38:09 on Dec 01,2025
 # Loading sv_std.std
-# Loading work.over_I_task_pkg
-# Loading work.task_pkg
-# Loading work.over_I_tb
-# Loading work.SegwayModel
+# Loading work.A2D_intf
+# Loading work.SPI_mnrch
 # Loading work.ADC128S_FC
 # Loading work.SPI_ADC128S
-# Loading work.Segway
 # Loading work.Auth_blk
 # Loading work.UART_rx
+# Loading work.task_pkg
+# Loading work.Auth_segway_tb
+# Loading work.SegwayModel
+# Loading work.Segway
 # Loading work.inert_intf
-# Loading work.SPI_mnrch
 # Loading work.inertial_integrator
 # Loading work.balance_cntrl
 # Loading work.PID
@@ -88,29 +220,106 @@ vsim -gui work.over_I_tb
 # Loading work.steer_en_SM
 # Loading work.mtr_drv
 # Loading work.PWM11
-# Loading work.A2D_intf
 # Loading work.piezo_drv
 # Loading work.rst_synch
 # Loading work.UART_tx
-# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDUT'.  Expected 21, found 20.
-#    Time: 0 ps  Iteration: 0  Instance: /over_I_tb/iDUT File: C:/Users/peter/Documents/projects/segway/over_I_tb.sv Line: 61
-# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/over_I_tb.sv(61): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
-# ** Error (suppressible): (vsim-3389) Port 'clk' not found in the connected module (9th connection).
+# Loading work.linear_speed_tb
+# Loading work.over_I_task_pkg
+# Loading work.over_I_tb
+# Loading work.Segway_tb
+# Loading work.simultaneous_faults_tb
+# Loading work.steering_response_tb
+# ** Warning: (vsim-8311) System Verilog assertions are supported only in Questasim.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iSegwayMath'.  Expected 10, found 9.
+#    Time: 0 ps  Iteration: 0  Instance: /Auth_segway_tb/iDUT/iBAL/iSegwayMath File: C:/Users/peter/Documents/projects/segway/balance_cntrl.sv Line: 38
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/balance_cntrl.sv(38): [TFMPC] - Missing connection for port 'rst_n'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
+#    Time: 0 ps  Iteration: 0  Instance: /Auth_segway_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iSegwayMath'.  Expected 10, found 9.
+#    Time: 0 ps  Iteration: 0  Instance: /balance_cntrl/iSegwayMath File: C:/Users/peter/Documents/projects/segway/balance_cntrl.sv Line: 38
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/balance_cntrl.sv(38): [TFMPC] - Missing connection for port 'rst_n'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iSegwayMath'.  Expected 10, found 9.
+#    Time: 0 ps  Iteration: 0  Instance: /linear_speed_tb/iDUT/iBAL/iSegwayMath File: C:/Users/peter/Documents/projects/segway/balance_cntrl.sv Line: 38
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/balance_cntrl.sv(38): [TFMPC] - Missing connection for port 'rst_n'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
+#    Time: 0 ps  Iteration: 0  Instance: /linear_speed_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iSegwayMath'.  Expected 10, found 9.
 #    Time: 0 ps  Iteration: 0  Instance: /over_I_tb/iDUT/iBAL/iSegwayMath File: C:/Users/peter/Documents/projects/segway/balance_cntrl.sv Line: 38
-# Error loading design
-# End time: 13:35:27 on Nov 29,2025, Elapsed time: 0:00:00
-# Errors: 1, Warnings: 3
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/balance_cntrl.sv(38): [TFMPC] - Missing connection for port 'rst_n'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
+#    Time: 0 ps  Iteration: 0  Instance: /over_I_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iSegwayMath'.  Expected 10, found 9.
+#    Time: 0 ps  Iteration: 0  Instance: /Segway/iBAL/iSegwayMath File: C:/Users/peter/Documents/projects/segway/balance_cntrl.sv Line: 38
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/balance_cntrl.sv(38): [TFMPC] - Missing connection for port 'rst_n'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
+#    Time: 0 ps  Iteration: 0  Instance: /Segway/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iSegwayMath'.  Expected 10, found 9.
+#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb/iDUT/iBAL/iSegwayMath File: C:/Users/peter/Documents/projects/segway/balance_cntrl.sv Line: 38
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/balance_cntrl.sv(38): [TFMPC] - Missing connection for port 'rst_n'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
+#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iSegwayMath'.  Expected 10, found 9.
+#    Time: 0 ps  Iteration: 0  Instance: /simultaneous_faults_tb/iDUT/iBAL/iSegwayMath File: C:/Users/peter/Documents/projects/segway/balance_cntrl.sv Line: 38
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/balance_cntrl.sv(38): [TFMPC] - Missing connection for port 'rst_n'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
+#    Time: 0 ps  Iteration: 0  Instance: /simultaneous_faults_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iSegwayMath'.  Expected 10, found 9.
+#    Time: 0 ps  Iteration: 0  Instance: /steering_response_tb/iDUT/iBAL/iSegwayMath File: C:/Users/peter/Documents/projects/segway/balance_cntrl.sv Line: 38
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/balance_cntrl.sv(38): [TFMPC] - Missing connection for port 'rst_n'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
+#    Time: 0 ps  Iteration: 0  Instance: /steering_response_tb/iDUT/iDRV File: C:/Users/peter/Documents/projects/segway/Segway.sv Line: 75
+# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+add wave -position insertpoint sim:/Auth_segway_tb/iDUT/*
+run -all
+# === Simultaneous Faults Test: Initialization ===
+# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
+#    Time: 0 ps  Iteration: 4  Process: /UART_tx/#implicit#unique__107 File: C:/Users/peter/Documents/projects/segway/UART_tx.sv Line: 107
+# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
+#    Time: 0 ps  Iteration: 4  Process: /UART_rx/#implicit#unique__123 File: C:/Users/peter/Documents/projects/segway/UART_rx.sv Line: 123
+# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
+#    Time: 0 ps  Iteration: 4  Process: /Segway/iBUZZ/#implicit#unique__175 File: C:/Users/peter/Documents/projects/segway/piezo_drv.sv Line: 175
+# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
+#    Time: 0 ps  Iteration: 4  Process: /Segway/iAuth/iRX/#implicit#unique__123 File: C:/Users/peter/Documents/projects/segway/UART_rx.sv Line: 123
+# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
+#    Time: 0 ps  Iteration: 4  Process: /piezo_drv/#implicit#unique__175 File: C:/Users/peter/Documents/projects/segway/piezo_drv.sv Line: 175
+# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
+#    Time: 0 ps  Iteration: 4  Process: /Auth_blk/iRX/#implicit#unique__123 File: C:/Users/peter/Documents/projects/segway/UART_rx.sv Line: 123
+# pwr_up correctly low before authorization
+# Wheel speeds correctly zero before authorization
+# sig is 1 at time 1081830, waiting for it to go HIGH...
+# [1081830] Signal asserted (transaction finished).
+# Authorization granted, pwr_up asserted
+# sig is 1 at time 1081830, waiting for it to go HIGH...
+# [1081830] Signal asserted (transaction finished).
+# Rider weight detected, rider_off deasserted
+# ** Fatal: (vsim-7099) Unable to check out a verification license for the randomize() feature.
+#    Time: 1101850 ps  Iteration: 1  Process: /linear_speed_tb/#INITIAL#108(#ublk#33788674#108) File: C:/Users/peter/Documents/projects/segway/physics_tests/linear_speed_phys_tb.sv Line: 138
+# Fatal error in Module linear_speed_tb at C:/Users/peter/Documents/projects/segway/physics_tests/linear_speed_phys_tb.sv line 138
+# 
+# HDL call sequence:
+# Stopped at C:/Users/peter/Documents/projects/segway/physics_tests/linear_speed_phys_tb.sv 138 Module linear_speed_tb
+# 
+# Compile of Auth_segway_phys_tb.sv was successful.
+# Compile of linear_speed_phys_tb.sv was successful with warnings.
+# Compile of over_I_phys_tb.sv was successful.
+# Compile of Physics_auth_segway_tb_incomplete.sv was successful.
+# Compile of Segway_phys_tb.sv was successful.
+# Compile of steering_response_phys_tb.sv was successful.
 # Compile of A2D_intf.sv was successful.
 # Compile of ADC128S_FC.sv was successful.
 # Compile of Auth_blk.sv was successful.
-# Compile of Auth_segway_tb.sv was successful.
 # Compile of balance_cntrl.sv was successful.
 # Compile of inert_intf.sv was successful.
 # Compile of inertial_integrator.sv was successful.
-# Compile of linear_speed_tb.sv was successful with warnings.
 # Compile of mtr_drv.sv was successful.
 # Compile of over_I_task_pkg.sv was successful.
-# Compile of over_I_tb.sv failed with 1 errors.
+# Compile of over_t_task.sv was successful.
 # Compile of PID.sv was successful.
 # Compile of piezo_drv.sv was successful.
 # Compile of PWM11.sv was successful.
@@ -119,292 +328,11 @@ vsim -gui work.over_I_tb
 # Compile of Segway_tb.sv was successful.
 # Compile of SegwayMath.sv was successful.
 # Compile of SegwayModel.sv was successful with warnings.
-# Compile of simultaneous_faults_tb.sv was successful.
 # Compile of SPI_ADC128S.sv was successful.
 # Compile of SPI_mnrch.sv was successful.
 # Compile of steer_en.sv was successful.
 # Compile of steer_en_SM.sv was successful.
-# Compile of steering_response_tb.sv was successful.
-# Compile of task_tb.sv was successful.
+# Compile of task_pkg.sv was successful.
 # Compile of UART_rx.sv was successful.
 # Compile of UART_tx.sv was successful.
-# 28 compiles, 1 failed with 1 error.
-# Compile of A2D_intf.sv was successful.
-# Compile of ADC128S_FC.sv was successful.
-# Compile of Auth_blk.sv was successful.
-# Compile of Auth_segway_tb.sv was successful.
-# Compile of balance_cntrl.sv was successful.
-# Compile of inert_intf.sv was successful.
-# Compile of inertial_integrator.sv was successful.
-# Compile of linear_speed_tb.sv was successful with warnings.
-# Compile of mtr_drv.sv was successful.
-# Compile of over_I_task_pkg.sv was successful.
-# Compile of over_I_tb.sv was successful.
-# Compile of PID.sv was successful.
-# Compile of piezo_drv.sv was successful.
-# Compile of PWM11.sv was successful.
-# Compile of rst_synch.sv was successful.
-# Compile of Segway.sv was successful.
-# Compile of Segway_tb.sv was successful.
-# Compile of SegwayMath.sv was successful.
-# Compile of SegwayModel.sv was successful with warnings.
-# Compile of simultaneous_faults_tb.sv was successful.
-# Compile of SPI_ADC128S.sv was successful.
-# Compile of SPI_mnrch.sv was successful.
-# Compile of steer_en.sv was successful.
-# Compile of steer_en_SM.sv was successful.
-# Compile of steering_response_tb.sv was successful.
-# Compile of task_tb.sv was successful.
-# Compile of UART_rx.sv was successful.
-# Compile of UART_tx.sv was successful.
-# 28 compiles, 0 failed with no errors.
-vsim -gui work.A2D_intf work.ADC128S_FC work.Auth_blk work.Auth_segway_tb work.balance_cntrl work.inert_intf work.inertial_integrator work.linear_speed_tb work.mtr_drv work.over_I_task_pkg work.over_I_tb work.PID work.piezo_drv work.PWM11 work.rst_synch work.Segway work.Segway_tb work.SegwayMath work.SegwayModel work.simultaneous_faults_tb work.SPI_ADC128S work.SPI_mnrch work.steer_en work.steer_en_SM work.steering_response_tb work.task_pkg work.UART_rx work.UART_tx
-# vsim -gui work.A2D_intf work.ADC128S_FC work.Auth_blk work.Auth_segway_tb work.balance_cntrl work.inert_intf work.inertial_integrator work.linear_speed_tb work.mtr_drv work.over_I_task_pkg work.over_I_tb work.PID work.piezo_drv work.PWM11 work.rst_synch work.Segway work.Segway_tb work.SegwayMath work.SegwayModel work.simultaneous_faults_tb work.SPI_ADC128S work.SPI_mnrch work.steer_en work.steer_en_SM work.steering_response_tb work.task_pkg work.UART_rx work.UART_tx 
-# Start time: 13:37:49 on Nov 29,2025
-# Loading sv_std.std
-# Loading work.A2D_intf
-# Loading work.SPI_mnrch
-# Loading work.ADC128S_FC
-# Loading work.SPI_ADC128S
-# Loading work.Auth_blk
-# Loading work.UART_rx
-# Loading work.task_pkg
-# Loading work.Auth_segway_tb
-# Loading work.SegwayModel
-# Loading work.Segway
-# Loading work.inert_intf
-# Loading work.inertial_integrator
-# Loading work.balance_cntrl
-# Loading work.PID
-# Loading work.SegwayMath
-# Loading work.steer_en
-# Loading work.steer_en_SM
-# Loading work.mtr_drv
-# Loading work.PWM11
-# Loading work.piezo_drv
-# Loading work.rst_synch
-# Loading work.UART_tx
-# Loading work.linear_speed_tb
-# Loading work.over_I_task_pkg
-# Loading work.over_I_tb
-# Loading work.Segway_tb
-# Loading work.simultaneous_faults_tb
-# Loading work.steering_response_tb
-# ** Warning: (vsim-8311) System Verilog assertions are supported only in Questasim.
-# ** Error (suppressible): (vsim-3389) Port 'clk' not found in the connected module (9th connection).
-#    Time: 0 ps  Iteration: 0  Instance: /Auth_segway_tb/iDUT/iBAL/iSegwayMath File: C:/Users/peter/Documents/projects/segway/balance_cntrl.sv Line: 38
-# Error loading design
-# End time: 13:37:50 on Nov 29,2025, Elapsed time: 0:00:01
-# Errors: 1, Warnings: 4
-# Compile of A2D_intf.sv was successful.
-# Compile of ADC128S_FC.sv was successful.
-# Compile of Auth_blk.sv was successful.
-# Compile of Auth_segway_tb.sv was successful.
-# Compile of balance_cntrl.sv failed with 1 errors.
-# Compile of inert_intf.sv was successful.
-# Compile of inertial_integrator.sv was successful.
-# Compile of linear_speed_tb.sv was successful with warnings.
-# Compile of mtr_drv.sv was successful.
-# Compile of over_I_task_pkg.sv was successful.
-# Compile of over_I_tb.sv was successful.
-# Compile of PID.sv was successful.
-# Compile of piezo_drv.sv was successful.
-# Compile of PWM11.sv was successful.
-# Compile of rst_synch.sv was successful.
-# Compile of Segway.sv was successful.
-# Compile of Segway_tb.sv was successful.
-# Compile of SegwayMath.sv was successful.
-# Compile of SegwayModel.sv was successful with warnings.
-# Compile of simultaneous_faults_tb.sv was successful.
-# Compile of SPI_ADC128S.sv was successful.
-# Compile of SPI_mnrch.sv was successful.
-# Compile of steer_en.sv was successful.
-# Compile of steer_en_SM.sv was successful.
-# Compile of steering_response_tb.sv was successful.
-# Compile of task_tb.sv was successful.
-# Compile of UART_rx.sv was successful.
-# Compile of UART_tx.sv was successful.
-# 28 compiles, 1 failed with 1 error.
-# Compile of A2D_intf.sv was successful.
-# Compile of ADC128S_FC.sv was successful.
-# Compile of Auth_blk.sv was successful.
-# Compile of Auth_segway_tb.sv was successful.
-# Compile of balance_cntrl.sv failed with 1 errors.
-# Compile of inert_intf.sv was successful.
-# Compile of inertial_integrator.sv was successful.
-# Compile of linear_speed_tb.sv was successful with warnings.
-# Compile of mtr_drv.sv was successful.
-# Compile of over_I_task_pkg.sv was successful.
-# Compile of over_I_tb.sv was successful.
-# Compile of PID.sv was successful.
-# Compile of piezo_drv.sv was successful.
-# Compile of PWM11.sv was successful.
-# Compile of rst_synch.sv was successful.
-# Compile of Segway.sv was successful.
-# Compile of Segway_tb.sv was successful.
-# Compile of SegwayMath.sv was successful.
-# Compile of SegwayModel.sv was successful with warnings.
-# Compile of simultaneous_faults_tb.sv was successful.
-# Compile of SPI_ADC128S.sv was successful.
-# Compile of SPI_mnrch.sv was successful.
-# Compile of steer_en.sv was successful.
-# Compile of steer_en_SM.sv was successful.
-# Compile of steering_response_tb.sv was successful.
-# Compile of task_tb.sv was successful.
-# Compile of UART_rx.sv was successful.
-# Compile of UART_tx.sv was successful.
-# 28 compiles, 1 failed with 1 error.
-# Compile of A2D_intf.sv was successful.
-# Compile of ADC128S_FC.sv was successful.
-# Compile of Auth_blk.sv was successful.
-# Compile of Auth_segway_tb.sv was successful.
-# Compile of balance_cntrl.sv was successful.
-# Compile of inert_intf.sv was successful.
-# Compile of inertial_integrator.sv was successful.
-# Compile of linear_speed_tb.sv was successful with warnings.
-# Compile of mtr_drv.sv was successful.
-# Compile of over_I_task_pkg.sv was successful.
-# Compile of over_I_tb.sv was successful.
-# Compile of PID.sv was successful.
-# Compile of piezo_drv.sv was successful.
-# Compile of PWM11.sv was successful.
-# Compile of rst_synch.sv was successful.
-# Compile of Segway.sv was successful.
-# Compile of Segway_tb.sv was successful.
-# Compile of SegwayMath.sv was successful.
-# Compile of SegwayModel.sv was successful with warnings.
-# Compile of simultaneous_faults_tb.sv was successful.
-# Compile of SPI_ADC128S.sv was successful.
-# Compile of SPI_mnrch.sv was successful.
-# Compile of steer_en.sv was successful.
-# Compile of steer_en_SM.sv was successful.
-# Compile of steering_response_tb.sv was successful.
-# Compile of task_tb.sv was successful.
-# Compile of UART_rx.sv was successful.
-# Compile of UART_tx.sv was successful.
-# 28 compiles, 0 failed with no errors.
-vsim -gui work.A2D_intf work.ADC128S_FC work.Auth_blk work.Auth_segway_tb work.balance_cntrl work.inert_intf work.inertial_integrator work.linear_speed_tb work.mtr_drv work.over_I_task_pkg work.over_I_tb work.PID work.piezo_drv work.PWM11 work.rst_synch work.Segway work.Segway_tb work.SegwayMath work.SegwayModel work.simultaneous_faults_tb work.SPI_ADC128S work.SPI_mnrch work.steer_en work.steer_en_SM work.steering_response_tb work.task_pkg work.UART_rx work.UART_tx
-# vsim -gui work.A2D_intf work.ADC128S_FC work.Auth_blk work.Auth_segway_tb work.balance_cntrl work.inert_intf work.inertial_integrator work.linear_speed_tb work.mtr_drv work.over_I_task_pkg work.over_I_tb work.PID work.piezo_drv work.PWM11 work.rst_synch work.Segway work.Segway_tb work.SegwayMath work.SegwayModel work.simultaneous_faults_tb work.SPI_ADC128S work.SPI_mnrch work.steer_en work.steer_en_SM work.steering_response_tb work.task_pkg work.UART_rx work.UART_tx 
-# Start time: 13:40:53 on Nov 29,2025
-# Loading sv_std.std
-# Loading work.A2D_intf
-# Loading work.SPI_mnrch
-# Loading work.ADC128S_FC
-# Loading work.SPI_ADC128S
-# Loading work.Auth_blk
-# Loading work.UART_rx
-# Loading work.task_pkg
-# Loading work.Auth_segway_tb
-# Loading work.SegwayModel
-# Loading work.Segway
-# Loading work.inert_intf
-# Loading work.inertial_integrator
-# Loading work.balance_cntrl
-# Loading work.PID
-# Loading work.SegwayMath
-# Loading work.steer_en
-# Loading work.steer_en_SM
-# Loading work.mtr_drv
-# Loading work.PWM11
-# Loading work.piezo_drv
-# Loading work.rst_synch
-# Loading work.UART_tx
-# Loading work.linear_speed_tb
-# Loading work.over_I_task_pkg
-# Loading work.over_I_tb
-# Loading work.Segway_tb
-# Loading work.simultaneous_faults_tb
-# Loading work.steering_response_tb
-# ** Warning: (vsim-8311) System Verilog assertions are supported only in Questasim.
-# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDUT'.  Expected 21, found 20.
-#    Time: 0 ps  Iteration: 0  Instance: /linear_speed_tb/iDUT File: C:/Users/peter/Documents/projects/segway/linear_speed_tb.sv Line: 58
-# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/linear_speed_tb.sv(58): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
-# ** Error (suppressible): (vsim-3389) Port 'OVR_I_shtdwn' not found in the connected module (7th connection).
-#    Time: 0 ps  Iteration: 0  Instance: /over_I_tb/iA2D File: C:/Users/peter/Documents/projects/segway/over_I_tb.sv Line: 48
-# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDUT'.  Expected 21, found 20.
-#    Time: 0 ps  Iteration: 0  Instance: /over_I_tb/iDUT File: C:/Users/peter/Documents/projects/segway/over_I_tb.sv Line: 63
-# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/over_I_tb.sv(63): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
-# Error loading design
-# End time: 13:40:53 on Nov 29,2025, Elapsed time: 0:00:00
-# Errors: 1, Warnings: 9
-# Compile of A2D_intf.sv was successful.
-# Compile of ADC128S_FC.sv was successful.
-# Compile of Auth_blk.sv was successful.
-# Compile of Auth_segway_tb.sv was successful.
-# Compile of balance_cntrl.sv was successful.
-# Compile of inert_intf.sv was successful.
-# Compile of inertial_integrator.sv was successful.
-# Compile of linear_speed_tb.sv was successful with warnings.
-# Compile of mtr_drv.sv was successful.
-# Compile of over_I_task_pkg.sv was successful.
-# Compile of over_I_tb.sv was successful.
-# Compile of PID.sv was successful.
-# Compile of piezo_drv.sv was successful.
-# Compile of PWM11.sv was successful.
-# Compile of rst_synch.sv was successful.
-# Compile of Segway.sv was successful.
-# Compile of Segway_tb.sv was successful.
-# Compile of SegwayMath.sv was successful.
-# Compile of SegwayModel.sv was successful with warnings.
-# Compile of simultaneous_faults_tb.sv was successful.
-# Compile of SPI_ADC128S.sv was successful.
-# Compile of SPI_mnrch.sv was successful.
-# Compile of steer_en.sv was successful.
-# Compile of steer_en_SM.sv was successful.
-# Compile of steering_response_tb.sv was successful.
-# Compile of task_tb.sv was successful.
-# Compile of UART_rx.sv was successful.
-# Compile of UART_tx.sv was successful.
-# 28 compiles, 0 failed with no errors.
-vsim -gui work.A2D_intf work.ADC128S_FC work.Auth_blk work.Auth_segway_tb work.balance_cntrl work.inert_intf work.inertial_integrator work.linear_speed_tb work.mtr_drv work.over_I_task_pkg work.over_I_tb work.PID work.piezo_drv work.PWM11 work.rst_synch work.Segway work.Segway_tb work.SegwayMath work.SegwayModel work.simultaneous_faults_tb work.SPI_ADC128S work.SPI_mnrch work.steer_en work.steer_en_SM work.steering_response_tb work.task_pkg work.UART_rx work.UART_tx
-# vsim -gui work.A2D_intf work.ADC128S_FC work.Auth_blk work.Auth_segway_tb work.balance_cntrl work.inert_intf work.inertial_integrator work.linear_speed_tb work.mtr_drv work.over_I_task_pkg work.over_I_tb work.PID work.piezo_drv work.PWM11 work.rst_synch work.Segway work.Segway_tb work.SegwayMath work.SegwayModel work.simultaneous_faults_tb work.SPI_ADC128S work.SPI_mnrch work.steer_en work.steer_en_SM work.steering_response_tb work.task_pkg work.UART_rx work.UART_tx 
-# Start time: 13:41:45 on Nov 29,2025
-# Loading sv_std.std
-# Loading work.A2D_intf
-# Loading work.SPI_mnrch
-# Loading work.ADC128S_FC
-# Loading work.SPI_ADC128S
-# Loading work.Auth_blk
-# Loading work.UART_rx
-# Loading work.task_pkg
-# Loading work.Auth_segway_tb
-# Loading work.SegwayModel
-# Loading work.Segway
-# Loading work.inert_intf
-# Loading work.inertial_integrator
-# Loading work.balance_cntrl
-# Loading work.PID
-# Loading work.SegwayMath
-# Loading work.steer_en
-# Loading work.steer_en_SM
-# Loading work.mtr_drv
-# Loading work.PWM11
-# Loading work.piezo_drv
-# Loading work.rst_synch
-# Loading work.UART_tx
-# Loading work.linear_speed_tb
-# Loading work.over_I_task_pkg
-# Loading work.over_I_tb
-# Loading work.Segway_tb
-# Loading work.simultaneous_faults_tb
-# Loading work.steering_response_tb
-# ** Warning: (vsim-8311) System Verilog assertions are supported only in Questasim.
-# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDUT'.  Expected 21, found 20.
-#    Time: 0 ps  Iteration: 0  Instance: /linear_speed_tb/iDUT File: C:/Users/peter/Documents/projects/segway/linear_speed_tb.sv Line: 58
-# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/linear_speed_tb.sv(58): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
-# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDUT'.  Expected 21, found 20.
-#    Time: 0 ps  Iteration: 0  Instance: /over_I_tb/iDUT File: C:/Users/peter/Documents/projects/segway/over_I_tb.sv Line: 62
-# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/over_I_tb.sv(62): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
-# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDUT'.  Expected 21, found 20.
-#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb/iDUT File: C:/Users/peter/Documents/projects/segway/Segway_tb.sv Line: 59
-# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/Segway_tb.sv(59): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
-# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDUT'.  Expected 21, found 20.
-#    Time: 0 ps  Iteration: 0  Instance: /simultaneous_faults_tb/iDUT File: C:/Users/peter/Documents/projects/segway/simultaneous_faults_tb.sv Line: 80
-# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/simultaneous_faults_tb.sv(80): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
-# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDUT'.  Expected 21, found 20.
-#    Time: 0 ps  Iteration: 0  Instance: /steering_response_tb/iDUT File: C:/Users/peter/Documents/projects/segway/steering_response_tb.sv Line: 58
-# ** Warning: (vsim-3722) C:/Users/peter/Documents/projects/segway/steering_response_tb.sv(58): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
-# ** Warning: (vsim-PLI-3003) [TOFD] - System task or function '$abs' is not defined.
-#    Time: 0 ps  Iteration: 0  Instance: /Segway_tb File: C:/Users/peter/Documents/projects/segway/Segway_tb.sv Line: 173
-# End time: 13:41:51 on Nov 29,2025, Elapsed time: 0:00:06
-# Errors: 0, Warnings: 14
+# 30 compiles, 0 failed with no errors.

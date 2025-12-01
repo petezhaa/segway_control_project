@@ -101,6 +101,10 @@ module steering_response_tb ();
   int prev_lft_spd, prev_rght_spd; 
 
   initial begin
+    // Declare all automatic variables at the beginning
+    int steer_diff_1, steer_diff_2, steer_diff_3;
+    int right_diff, left_diff;
+    
     //-----------------------------------------
     // Global DUT + environment initialization
     //-----------------------------------------
@@ -483,8 +487,6 @@ module steering_response_tb ();
     //====================================================================
     $display("\n[TEST 13] Intermediate right steering angles progression (time = %0t)", $time);
     
-    int steer_diff_1, steer_diff_2, steer_diff_3;
-    
     steerPot = 12'h900;  // slight right
     repeat (100000) @(posedge clk);
     steer_diff_1 = iDUT.iBAL.lft_spd - iDUT.iBAL.rght_spd;
@@ -553,8 +555,6 @@ module steering_response_tb ();
     //              produce similar magnitude speed differentials
     //====================================================================
     $display("\n[TEST 15] Steering symmetry verification (time = %0t)", $time);
-    
-    int right_diff, left_diff;
     
     // Moderate right steer
     steerPot = 12'hB00;

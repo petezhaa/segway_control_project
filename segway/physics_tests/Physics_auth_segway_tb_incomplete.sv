@@ -11,7 +11,6 @@ module Auth_segway_tb ();
   wire piezo, piezo_n;
   wire cmd_sent;
   wire rst_n;  // synchronized global reset
-  wire OVR_I_shtdwn; // Overcurrent shutdown output
 
   ////// Stimulus is declared as type reg ///////
   reg clk, RST_n;
@@ -76,8 +75,7 @@ module Auth_segway_tb ();
         .OVR_I_rght(OVR_I_rght),
         .piezo_n(piezo_n),
         .piezo(piezo),
-        .RX(RX_TX),
-        .OVR_I_shtdwn(OVR_I_shtdwn)
+        .RX(RX_TX)
       );
 
   //// Instantiate UART_tx (mimics command from BLE module) //////
