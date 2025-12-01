@@ -54,27 +54,22 @@ set_wire_load_model -name 16000 -library saed32rvt_tt0p85v25c
 set_clock_uncertainty 0.15 clk
 
 #---------------------------------------------------------------
-# 9  Multi-cycle path constraints for iNEMO 
-#    (and maybe soft-start timer)
-#---------------------------------------------------------------
-#set_multicycle_path 2 -setup -from [find pin iNEMO/ptch_*_reg*/clk]
-#set_multicycle_path 2 -setup -from [find pin iNEMO/AZ*/CLK]
-#set_multicycle_path 2 -hold -from [find pin iNEMO/ptch_rt_*/CLK]
-#set_multicycle_path 2 -hold -from [find pin iNEMO/AZ*/CLK]
-#set_multicycle_path 2 –setup –from [find pin iBAL/iCNTRL/ss_tmr_reg*/CLK]
-#set_multicycle_path 2 –hold –from [find pin iBAL/iCNTRL/ss_tmr_reg*/CLK]
-
-set_multicycle_path 2 -setup -from [get_pins {iNEMO/ptch_*_reg*/CLK}]
-set_multicycle_path 2 -setup -from [get_pins {iNEMO/AZ*/CLK}]
-set_multicycle_path 2 -hold -from [get_pins {iNEMO/AZ*/CLK}]
-set_multicycle_path 2 -hold -from [get_pins {iNEMO/ptch_*_reg*/CLK}]
-
-
-
-#---------------------------------------------------------------
 # 10 First pass compile
 #---------------------------------------------------------------
-compile -map_effort medium
+compile -map_effort high
+
+#---------------------------------------------------------------
+# 9  Multi-cycle path constraints for iNEMO
+#    (and maybe soft-start timer)
+#---------------------------------------------------------------
+
+set_multicycle_path 2 -setup -from [find pin iNEMO/ptch_*_reg*/CLK]
+set_multicycle_path 2 -setup -from [find pin iNEMO/AZ*_reg*/CLK]
+set_multicycle_path 2 -hold -from [find pin iNEMO/ptch_*_reg*/CLK]
+set_multicycle_path 2 -hold -from [find pin iNEMO/AZ*_reg*/CLK]
+
+set_multicycle_path 2 -setup -from [find pin iBAL/iCNTRL/ss_tmr_reg*/CLK]
+set_multicycle_path 2 -hold -from [find pin iBAL/iCNTRL/ss_tmr_reg*/CLK]
 
 #---------------------------------------------------------------
 # 11 Fix holds on the clock if DC sees min-path issues
@@ -91,7 +86,9 @@ ungroup -all -flatten
 #---------------------------------------------------------------
 # 13 Second pass compile on flat netlist
 #---------------------------------------------------------------
-compile -map_effort medium
+compile -map_effort high
+
+compile -incremental_mapping -map_effort high
 
 report_timing -delay min
 report_timing -delay max
