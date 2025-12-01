@@ -118,7 +118,7 @@ module over_I_tb ();
 
     $display("\n=== Starting Over-Current Tests ===");
     rider_lean = 16'h0FFF;  // simulate rider leaning forward
-    repeat (500000) @(posedge clk);  // wait for balance loop to reach a steady state
+    repeat (3_000_000) @(posedge clk);  // wait for balance loop to reach a steady state
 
     $display("Applying left over-current within blanking window");
     pulse_overcurrent_cycles(.cycles(45), .clk(clk), .PWM_synch(iDUT.iDRV.iPWM_lft.PWM_synch),
@@ -131,6 +131,13 @@ module over_I_tb ();
       $display(" PWM outputs correctly remain enabled during blanking window.");
     end
 
+    check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_lft), .target_val(16'h3d00),
+                             .tol(16'h0F00));
+    check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_rght), .target_val(16'h3d00),
+                             .tol(16'h0F00));
+
+    $display("Applying left over-current within blanking window did not affect speed");
+
     $display("Applying right over-current within blanking window");
     pulse_overcurrent_cycles(.cycles(45), .clk(clk), .PWM_synch(iDUT.iDRV.iPWM_lft.PWM_synch),
                              .ovr_I_blank(iDUT.iDRV.iPWM_lft.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
@@ -141,6 +148,12 @@ module over_I_tb ();
     end else begin
       $display(" PWM outputs correctly remain enabled during blanking window.");
     end
+
+    check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_lft), .target_val(16'h3F00),
+                             .tol(16'h0F00));
+    check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_rght), .target_val(16'h3F00),
+                             .tol(16'h0F00));
+    $display("Applying right over-current within blanking window did not affect speed");
 
     $display("Applying over-current on left motor");
     inject_overcurrent_outside_blank(
@@ -155,6 +168,12 @@ module over_I_tb ();
       $display(" PWM outputs correctly disabled  left over-current.");
     end
 
+    repeat (4_000_000) @(posedge clk);  // wait for some time
+    check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_lft), .target_val(16'h0A00),
+                             .tol(16'h0900));
+    check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_rght), .target_val(16'h0A00),
+                             .tol(16'h0900));
+    $display("Left over-current caused speed to drop as expected.");
 
     $display("reinitialzing DUT for right over-current test");
     //-----------------------------------------
@@ -172,7 +191,11 @@ module over_I_tb ();
     ld_cell_rght = 12'h300;  // simulate rider getting on
     repeat (325000) @(posedge clk);  // wait for some time
     rider_lean = 16'h0FFF;
-    repeat (500000) @(posedge clk);  // wait for balance loop to reach a steady state
+    repeat (4_000_000) @(posedge clk);  // wait for balance loop to reach a steady state
+    if ((iPHYS.omega_lft < 16'h1500) || (iPHYS.omega_rght < 16'h1500)) begin
+      $display("Error: omega values too low after re-initialization!");
+      $stop();
+    end
     inject_overcurrent_outside_blank(
         .cycles(45), .clk(clk), .PWM_synch(iDUT.iDRV.iPWM_rght.PWM_synch),
         .ovr_I_blank(iDUT.iDRV.iPWM_rght.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
@@ -185,6 +208,12 @@ module over_I_tb ();
       $display(" PWM outputs correctly disabled  right over-current.");
     end
 
+    repeat (4_000_000) @(posedge clk);  // wait for some time
+    check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_lft), .target_val(16'h0A00),
+                             .tol(16'h0900));
+    check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_rght), .target_val(16'h0A00),
+                             .tol(16'h0900));
+    $display("Right over-current caused speed to drop as expected.");
 
     $display("\n=== Over-Current Tests Complete ===");
     $stop();
