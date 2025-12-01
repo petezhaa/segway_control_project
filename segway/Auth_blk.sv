@@ -1,132 +1,88 @@
-//======================================================================
-// Module: Auth_blk
-// Description:
-//   Implements an authentication block for a "Segway"-style system.
-//   The module listens on a UART RX line for specific authorization
-//   bytes ('G' = Go, 'S' = Stop). It asserts 'pwr_up' when the rider
-//   is authorized and deasserts it when the rider steps off.
-//
-//   Functionality summary:
-//   - Starts in OFF state after reset.
-//   - Transitions to ON when it receives 0x47 ('G').
-//   - Remains ON when 'G' or 'S' are received while the rider is on.
-//   - Returns to OFF when 'rider_off' is asserted.
-//
-// Dependencies:
-//   - UART_rx submodule (handles byte reception and ready signaling)
-//======================================================================
-
 module Auth_blk (
-    input  logic RX,         // UART receive line input from BLE module
-    input  logic rider_off,  // High when rider leaves the platform
-    input  logic clk,        // System clock
-    input  logic rst_n,      // Active-low reset
-    output logic pwr_up      // Power enable signal for main system
+    input  logic        clk,
+    input  logic        rst_n,
+    input  logic        RX,
+    input logic         rider_off,
+    output logic        pwr_up
 );
 
-  // ------------------------------------------------------------
-  // Internal signals for UART interface
-  // ------------------------------------------------------------
-  logic       clr_rx_rdy;  // Clear flag for received byte ready
-  logic       rx_rdy;  // Indicates a new byte has been received
-  logic [7:0] rx_data;  // Captured received data byte
 
-  // ------------------------------------------------------------
-  // UART Receiver Instantiation
-  // ------------------------------------------------------------
-  // Receives bytes from BLE UART stream and sets rx_rdy high when
-  // a byte is fully received. The ready flag is cleared by clr_rx_rdy.
-  UART_rx iRX (
-      .RX     (RX),
-      .clk    (clk),
-      .rst_n  (rst_n),
-      .clr_rdy(clr_rx_rdy),
-      .rx_data(rx_data),
-      .rdy    (rx_rdy)
-  );
+    // instantiate UART_rx module
+    logic [7:0] rx_data;
+    logic        rx_rdy;
+    logic        clr_rx_rdy;
+    UART_rx iUART_rx (
+        .clk    (clk),
+        .rst_n  (rst_n),
+        .rx_data(rx_data),
+        .RX     (RX),
+        .clr_rdy(clr_rx_rdy),
+        .rdy    (rx_rdy)
+    );
 
-  // ------------------------------------------------------------
-  // FSM Definition
-  // ------------------------------------------------------------
-  // Two-state FSM:
-  //   OFF : Waiting for valid 'G' authorization code
-  //   ON  : Power enabled; maintains power until rider_off
-  typedef enum logic [1:0] {
-    IDLE,   // 0
-    CONNECTED,
-    DISCONNECTED     // 1
-  } auth_blk_states;
+    // now for the auth SM
+    typedef enum logic [1:0] {IDLE, CONNECTED, DISCONNECTED} state_t;
+    state_t current_state, next_state;
 
-  auth_blk_states curr_state, nxt_state;
+    // flop to store SM state
+    always_ff @(posedge clk or negedge rst_n) begin
+        if(!rst_n)
+            current_state <= IDLE; // reset to idle state
+        else
+            current_state <= next_state; // move to next state
+    end
 
-  // ------------------------------------------------------------
-  // Constant UART command codes
-  // ------------------------------------------------------------
-  localparam G = 8'h47;  // 'G' = Go / Grant authorization
-  localparam S = 8'h53;  // 'S' = Stop / Standby request
+    // watch out only 3 states so we absorb the unused state into the default case
+    always_comb begin
 
-  // ------------------------------------------------------------
-  // Sequential logic: State register
-  // ------------------------------------------------------------
-  // On reset, FSM starts in OFF state.
-  // Otherwise, updates state at each rising clock edge.
-  always_ff @(posedge clk or negedge rst_n) begin
-    if (!rst_n) curr_state <= IDLE;
-    else curr_state <= nxt_state;
-  end
+        //default the outputs and next_state
+        clr_rx_rdy = 1'b0;
+        pwr_up = 1'b0;
+        next_state = current_state; // defaulted to current state to optimize
 
-  // ------------------------------------------------------------
-  // Combinational logic: Next state and output control
-  // ------------------------------------------------------------
-  // Determines next state and output (pwr_up) behavior
-  // based on current state, UART input, and rider_off.
-  always_comb begin
-    // Default assignments
-    nxt_state = curr_state;  // Stay in current state unless a transition occurs
-    pwr_up    = 0;  // Default power-down (avoids inferred latch)
-    clr_rx_rdy = 0;  // Default: do not clear rx_rdy
+        case(current_state)
 
-    case (curr_state)
+            CONNECTED: begin
+                pwr_up = 1'b1; // keep pwr_up asserted
+                if(rider_off) begin
+                    if(rx_rdy && rx_data==8'h53) begin
+                        clr_rx_rdy = 1'b1; // clear the rdy signal to indicate that we read the data
+                        next_state = IDLE;
+                        pwr_up = 1'b0;
+                    end
+                end
+                else if(rx_rdy && rx_data==8'h53) begin
+                    clr_rx_rdy = 1'b1; // clear the rdy signal to indicate that we read the data
+                    next_state = DISCONNECTED;
+                    pwr_up = 1'b1;
+                end
+                // implicit else stay in state: nxt_state = state
+            end
 
-      //===========================================================
-      // OFF State: Wait for Authorization
-      //===========================================================
-      IDLE: begin
-        // If UART receives 'G' (Go), authorize and power up
-        if (rx_rdy && (rx_data == G)) begin
-          pwr_up    = 1;
-          clr_rx_rdy = 1;
-          nxt_state = CONNECTED;
-        end
-      end
+            DISCONNECTED: begin
+                pwr_up = 1'b1; // keep pwr_up asserted
+                if(rider_off) begin
+                    //pwr_up = 1'b0;
+                    next_state = IDLE;
+                end
+                else if(rx_rdy && rx_data==8'h47) begin
+                    clr_rx_rdy = 1'b1; // clear the rdy signal to indicate that we read the data
+                    next_state = CONNECTED;
+                    pwr_up = 1'b1;
+                end
+                // implied else stay in state: nxt_state = state
+            end
 
-      //===========================================================
-      // ON State: Maintain Power Until Rider Steps Off
-      //===========================================================
-      CONNECTED: begin
-        if (rx_rdy && (rx_data == S)) begin
-          if (rider_off) begin
-            clr_rx_rdy = 1;
-            nxt_state  = IDLE;
-          end else begin
-            pwr_up = 1;
-            clr_rx_rdy = 1;
-            nxt_state = DISCONNECTED;
-          end
-        end else pwr_up = 1;
-      end
+            default: begin // absorb IDLE state into default state
+                if(rx_rdy && rx_data==8'h47) begin
+                    clr_rx_rdy = 1'b1; // clear the rdy signal to indicate that we read the data
+                    pwr_up = 1'b1; // assert pwr_up
+                    next_state = CONNECTED; // go to connected state
+                end
+                // implicit else stay in IDLE: nxt_state = state
+            end
 
-      DISCONNECTED: begin
-        if(rider_off) begin
-          nxt_state = IDLE;
-        end else if (rx_rdy && (rx_data == G)) begin
-          pwr_up = 1;
-          clr_rx_rdy = 1;
-          nxt_state = CONNECTED;
-        end else pwr_up = 1;
-      end
-
-    endcase
-  end
+        endcase
+    end
 
 endmodule

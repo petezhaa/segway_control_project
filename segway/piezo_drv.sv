@@ -232,7 +232,7 @@ module piezo_drv (
             new_note    = 1'b1;
             dur_restart = 1'b1;
           end else begin
-            // inputs went away; just go idle
+            // inputs went away; go idle
             nxt_state = IDLE;
           end
         end

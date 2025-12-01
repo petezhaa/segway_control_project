@@ -1,6 +1,6 @@
 module PWM11 (
-    input logic clk,
-    input logic rst_n,
+    input clk,
+    input rst_n,
     input logic [10:0] duty,  // 11-bit duty cycle input
     output logic PWM1,
     output logic PWM2,
@@ -53,10 +53,8 @@ module PWM11 (
   // ovr_I_blank generation
   // assign ovr_I_blank = (NONOVERLAP < cnt < (NONOVERLAP + 128)) ||
   //                        ((NONOVERLAP + duty) < cnt < (duty + NONOVERLAP + 128));
-  assign ovr_I_blank =
-  ((cnt > NONOVERLAP) && (cnt < NONOVERLAP + 11'd128)) ||                 // leading edge blank
-      ((cnt > duty + NONOVERLAP) && (cnt < duty + NONOVERLAP + 11'd128));  // trailing edge blank
-
+  assign ovr_I_blank = (cnt < NONOVERLAP) && (cnt < (NONOVERLAP + 11'd128)) ||
+                         (cnt < (duty + NONOVERLAP)) && (cnt < (duty + NONOVERLAP + 11'd128));
 
 
 endmodule
