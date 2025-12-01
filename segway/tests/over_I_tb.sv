@@ -154,7 +154,7 @@ module over_I_tb ();
 
 
     $display("reinitialzing DUT for right over-current test");
-    //-----------------------------------------
+    //----------------------------------------
     // Re-initialize DUT + environment
     //-----------------------------------------
     init_DUT(.clk(clk), .RST_n(RST_n), .send_cmd(send_cmd), .cmd(cmd), .rider_lean(rider_lean),
