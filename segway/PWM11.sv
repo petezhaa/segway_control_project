@@ -1,6 +1,6 @@
 module PWM11 (
-    input clk,
-    input rst_n,
+    input logic clk,
+    input logic rst_n,
     input logic [10:0] duty,  // 11-bit duty cycle input
     output logic PWM1,
     output logic PWM2,

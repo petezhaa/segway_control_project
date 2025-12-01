@@ -9,14 +9,14 @@ module ADC128S_FC(clk,rst_n,SS_n,SCLK,MISO,MOSI,ld_cell_lft,ld_cell_rght,steerPo
   //  that return 0xBE...                          ||
   ///////////////////////////////////////////////////
 
-  input clk,rst_n;		// clock and active low asynch reset
-  input SS_n;			// active low slave select
-  input SCLK;			// Serial clock
-  input MOSI;			// serial data in from master
-  input [11:0] ld_cell_lft;		// reading you want for ld_cell_lft
-  input [11:0] ld_cell_rght;	// reading you want for ld_cell_rght
-  input [11:0] steerPot;		// steering potentiometer input
-  input [11:0] batt;			// reading you want for batt
+  input logic clk,rst_n;		// clock and active low asynch reset
+  input logic SS_n;			// active low slave select
+  input logic SCLK;			// Serial clock
+  input logic MOSI;			// serial data in from master
+  input logic [11:0] ld_cell_lft;		// reading you want for ld_cell_lft
+  input logic [11:0] ld_cell_rght;	// reading you want for ld_cell_rght
+  input logic [11:0] steerPot;		// steering potentiometer input
+  input logic [11:0] batt;			// reading you want for batt
   
   output MISO;			// serial data out to master
   
