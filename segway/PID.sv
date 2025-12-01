@@ -33,6 +33,7 @@ module PID (
   logic signed [14:0] P_term;  // Proportional term
   logic signed [17:0] integrator;  // Integrator register (accumulates pitch error)
   logic signed [17:0] accum_val;  // Sum of pitch error and integrator value
+  logic signed [17:0] accum_val_pipe;
   logic signed [17:0] intergrator_MUX_1;  // MUX-selected integrator input value
   logic signed [14:0] I_term;  // Integral term (scaled down)
   logic signed [12:0] D_term;  // Derivative term
@@ -55,7 +56,11 @@ module PID (
   // Integral (I) Term
   //------------------------------------------------------------
   // Compute accumulator update and detect overflow
-  assign accum_val = ptch_err_sat + integrator;
+  assign accum_val_pipe = ptch_err_sat + integrator;
+
+  always_ff @(posedge clk) begin
+        accum_val <= accum_val_pipe;
+    end
 
   assign overflowed = (ptch_err_sat[9] == integrator[17]) && (accum_val[17] != integrator[17]);
 
@@ -92,10 +97,16 @@ module PID (
   // Combine P, I, and D components
   assign PID_sum = P_term + I_term + D_term;
 
+  logic signed [11:0] PID_cntrl_pipe;
+
   // Output saturation to 12-bit signed control range
-  assign PID_cntrl = (!PID_sum[16] && |PID_sum[15:11]) ? 12'h7FF :  // Clamp positive
+  assign PID_cntrl_pipe = (!PID_sum[16] && |PID_sum[15:11]) ? 12'h7FF :  // Clamp positive
       (PID_sum[16] && !(&PID_sum[15:11])) ? 12'h800 :  // Clamp negative
       PID_sum[11:0];
+
+  always_ff @(posedge clk) begin
+    PID_cntrl <= PID_cntrl_pipe;
+  end
 
   //------------------------------------------------------------
   // Soft-Start Timer
