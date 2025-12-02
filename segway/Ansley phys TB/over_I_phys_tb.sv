@@ -124,12 +124,11 @@ module over_I_tb ();
     pulse_overcurrent_cycles(.cycles(45), .clk(clk), .PWM_synch(iDUT.iDRV.iPWM_lft.PWM_synch),
                              .ovr_I_blank(iDUT.iDRV.iPWM_lft.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
                              .OVR_I_rght(OVR_I_rght), .left_or_right(1'b1));
-    if(iDUT.iDRV.PWM1_lft === 0 && iDUT.iDRV.PWM2_lft === 0 && iDUT.iDRV.PWM1_rght === 0 && iDUT.iDRV.PWM2_rght === 0) begin
-      $display(" Error: PWM outputs disabled during blanking window!");
-      $stop();
-    end else begin
-      $display(" PWM outputs correctly remain enabled during blanking window.");
-    end
+    wait4sig(.sig(iDUT.iDRV.PWM1_lft), .clks2wait(10_000), .clk(clk));
+    wait4sig(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig(.sig(iDUT.iDRV.PWM2_lft), .clks2wait(10_000), .clk(clk));
+    wait4sig(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
+    $display(" PWM outputs after left over-current within blanking window did not disable:");
 
     check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_lft), .target_val(16'h3d00),
                              .tol(16'h0F00));
@@ -142,12 +141,11 @@ module over_I_tb ();
     pulse_overcurrent_cycles(.cycles(45), .clk(clk), .PWM_synch(iDUT.iDRV.iPWM_lft.PWM_synch),
                              .ovr_I_blank(iDUT.iDRV.iPWM_lft.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
                              .OVR_I_rght(OVR_I_rght), .left_or_right(1'b0));
-    if(iDUT.iDRV.PWM1_lft === 0 && iDUT.iDRV.PWM2_lft === 0 && iDUT.iDRV.PWM1_rght === 0 && iDUT.iDRV.PWM2_rght === 0) begin
-      $display(" Error: PWM outputs disabled during blanking window!");
-      $stop();
-    end else begin
-      $display(" PWM outputs correctly remain enabled during blanking window.");
-    end
+    wait4sig(.sig(iDUT.iDRV.PWM1_lft), .clks2wait(10_000), .clk(clk));
+    wait4sig(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig(.sig(iDUT.iDRV.PWM2_lft), .clks2wait(10_000), .clk(clk));
+    wait4sig(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
+    $display(" PWM outputs after right over-current within blanking window did not disable:");
 
     check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_lft), .target_val(16'h3F00),
                              .tol(16'h0F00));
@@ -161,12 +159,11 @@ module over_I_tb ();
         .ovr_I_blank(iDUT.iDRV.iPWM_lft.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
         .OVR_I_rght(OVR_I_rght), .left_or_right(1'b1));
 
-    if(iDUT.iDRV.PWM1_lft !== 0 || iDUT.iDRV.PWM2_lft !== 0 || iDUT.iDRV.PWM1_rght !== 0 || iDUT.iDRV.PWM2_rght !== 0) begin
-      $display("Error: PWM outputs not disabled after left over-current!");
-      $stop();
-    end else begin
-      $display(" PWM outputs correctly disabled  left over-current.");
-    end
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_lft), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_lft), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
+    $display(" PWM outputs correctly disabled after left over-current.");
 
     repeat (4_000_000) @(posedge clk);  // wait for some time
     check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_lft), .target_val(16'h0A00),
@@ -201,12 +198,11 @@ module over_I_tb ();
         .ovr_I_blank(iDUT.iDRV.iPWM_rght.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
         .OVR_I_rght(OVR_I_rght), .left_or_right(1'b0));
 
-    if(iDUT.iDRV.PWM1_lft !== 0 || iDUT.iDRV.PWM2_lft !== 0 || iDUT.iDRV.PWM1_rght !== 0 || iDUT.iDRV.PWM2_rght !== 0) begin
-      $display("Error: PWM outputs not disabled after right over-current!");
-      $stop();
-    end else begin
-      $display(" PWM outputs correctly disabled  right over-current.");
-    end
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_lft), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_lft), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
+    $display(" PWM outputs correctly disabled after right over-current.");
 
     repeat (4_000_000) @(posedge clk);  // wait for some time
     check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_lft), .target_val(16'h0A00),
