@@ -101,6 +101,9 @@ module over_I_tb ();
   );
 
   initial begin
+    automatic int lean_angles[4] = '{16'sh0400, 16'sh0800, 16'sh0C00, 16'sh0FFF};
+    int i;
+    
     //-----------------------------------------
     // Global DUT + environment initialization
     //-----------------------------------------
@@ -587,9 +590,8 @@ module over_I_tb ();
     // Expectation: Protection should work at all duty cycles
     //--------------------------------------------------------------------
     $display("\nTesting over-current at different lean angles (duty cycles)");
-    int lean_angles[4] = '{16'sh0400, 16'sh0800, 16'sh0C00, 16'sh0FFF};
 
-    for (int i = 0; i < 4; i++) begin
+    for (i = 0; i < 4; i++) begin
       init_DUT(.clk(clk), .RST_n(RST_n), .send_cmd(send_cmd), .cmd(cmd), .rider_lean(rider_lean),
                .ld_cell_lft(ld_cell_lft), .ld_cell_rght(ld_cell_rght), .steerPot(steerPot),
                .batt(batt), .OVR_I_lft(OVR_I_lft), .OVR_I_rght(OVR_I_rght));

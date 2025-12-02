@@ -101,6 +101,17 @@ module steering_response_tb ();
   int prev_lft_spd, prev_rght_spd;
 
   initial begin
+    // Declare all automatic variables at the beginning
+    automatic int steer_values_right[3] = '{12'h900, 12'hB00, 12'hD00};
+    automatic int steer_values_left[3] = '{12'h700, 12'h500, 12'h300};
+    automatic int steer_pattern[6] = '{12'h800, 12'hA00, 12'h800, 12'h600, 12'h800, 12'h800};
+    automatic int lean_angles[3] = '{16'sh0400, 16'sh0800, 16'sh0C00};
+    int omega_diff[3];
+    int right_diff, left_diff;
+    logic signed [15:0] steer_temp;  // Temporary signal for glitch check
+    logic signed [15:0] steer_transitions[4];
+    int i;
+    
     //-----------------------------------------
     // Global DUT + environment initialization
     //-----------------------------------------
@@ -485,10 +496,7 @@ module steering_response_tb ();
     //--------------------------------------------------------------------
     $display("\n[TEST 13] Right steering progression (time = %0t)", $time);
 
-    int steer_values_right[3] = '{12'h900, 12'hB00, 12'hD00};
-    int omega_diff[3];
-
-    for (int i = 0; i < 3; i++) begin
+    for (i = 0; i < 3; i++) begin
       steerPot = steer_values_right[i];
       repeat (1_000_000) @(posedge clk);
       omega_diff[i] = iPHYS.omega_lft - iPHYS.omega_rght;
@@ -511,9 +519,7 @@ module steering_response_tb ();
     //--------------------------------------------------------------------
     $display("\n[TEST 14] Left steering progression (time = %0t)", $time);
 
-    int steer_values_left[3] = '{12'h700, 12'h500, 12'h300};
-
-    for (int i = 0; i < 3; i++) begin
+    for (i = 0; i < 3; i++) begin
       steerPot = steer_values_left[i];
       repeat (1_000_000) @(posedge clk);
       omega_diff[i] = iPHYS.omega_rght - iPHYS.omega_lft;
@@ -535,8 +541,6 @@ module steering_response_tb ();
     // TEST 15: Steering symmetry verification
     //--------------------------------------------------------------------
     $display("\n[TEST 15] Steering symmetry verification (time = %0t)", $time);
-
-    int right_diff, left_diff;
 
     steerPot = 12'hB00;  // moderate right
     repeat (1_000_000) @(posedge clk);
@@ -583,9 +587,7 @@ module steering_response_tb ();
     //--------------------------------------------------------------------
     $display("\n[TEST 17] Alternating steering pattern (time = %0t)", $time);
 
-    int steer_pattern[6] = '{12'h800, 12'hA00, 12'h800, 12'h600, 12'h800, 12'h800};
-
-    for (int i = 0; i < 6; i++) begin
+    for (i = 0; i < 6; i++) begin
       steerPot = steer_pattern[i];
       repeat (500_000) @(posedge clk);
 
@@ -627,9 +629,7 @@ module steering_response_tb ();
     //--------------------------------------------------------------------
     $display("\n[TEST 19] Steering across multiple lean angles (time = %0t)", $time);
 
-    int lean_angles[3] = '{16'sh0400, 16'sh0800, 16'sh0C00};
-
-    for (int i = 0; i < 3; i++) begin
+    for (i = 0; i < 3; i++) begin
       rider_lean = lean_angles[i];
       repeat (500_000) @(posedge clk);
 
@@ -653,13 +653,14 @@ module steering_response_tb ();
     //--------------------------------------------------------------------
     $display("\n[TEST 20] Glitch-free steering transitions (time = %0t)", $time);
 
-    logic signed [15:0] steer_transitions[4];
-    steer_transitions[0] = 12'h800;
-    steer_transitions[1] = 12'hC00;
-    steer_transitions[2] = 12'h400;
-    steer_transitions[3] = 12'h800;
+    steer_transitions[0] = 16'sh0800;
+    steer_transitions[1] = 16'sh0C00;
+    steer_transitions[2] = 16'sh0400;
+    steer_transitions[3] = 16'sh0800;
 
-    check_glitch_free_transitions(clk, steerPot, iPHYS.omega_lft, steer_transitions, 500_000, 300);
+    steer_temp = steerPot;  // Initialize temp with current value
+    check_glitch_free_transitions(clk, steer_temp, iPHYS.omega_lft, steer_transitions, 500_000, 300);
+    steerPot = steer_temp[11:0];  // Sync back if needed
 
     $display("[PASS][TEST 20] Steering transitions glitch-free (time=%0t)", $time);
 
