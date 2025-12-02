@@ -37,7 +37,8 @@ module inertial_integrator (
   // Approximate pitch ≈ AZ_comp * 327, for small angles (no trig needed)
   // (327 is an empirically determined scale factor)
   //assign ptch_acc_product = AZ_comp * $signed(327);
-  assign ptch_acc_product = (AZ_comp <<< 8) + (AZ_comp <<< 6) + (AZ_comp <<< 2) + (AZ_comp <<< 1) + AZ_comp; // use this line if it makes Area smaller
+  //assign ptch_acc_product = (AZ_comp <<< 8) + (AZ_comp <<< 6) + (AZ_comp <<< 2) + (AZ_comp <<< 1) + AZ_comp; // use this line if it makes Area smaller
+  assign ptch_acc_product = (AZ_comp <<< 8) + (AZ_comp <<< 6) + (AZ_comp <<< 3);
 
   // Scale back to 16 bits by right-shifting 13 bits
   // and sign-extending to preserve the sign
