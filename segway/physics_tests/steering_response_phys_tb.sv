@@ -99,6 +99,7 @@ module steering_response_tb ();
 
   // Previous steady-state wheel speeds for comparison between tests
   int prev_lft_spd, prev_rght_spd;
+  int lft_avg, rght_avg;  // For averaged measurements
 
   initial begin
     // Declare all automatic variables at the beginning
@@ -140,23 +141,21 @@ module steering_response_tb ();
     $display("\n[TEST 1] Max right steer applied  (steerPot = 0x%0h, time = %0t)", steerPot, $time);
     repeat (1_000_000) @(posedge clk);  // wait for steering response to settle
 
-    if ($isunknown(
-            iPHYS.omega_lft
-        ) || $isunknown(
-            iPHYS.omega_rght
-        ) || iPHYS.omega_lft <= iPHYS.omega_rght) begin
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(256), .clk(clk), .avg_out(lft_avg));
+    compute_average(.sig(iPHYS.omega_rght), .num_samples(256), .clk(clk), .avg_out(rght_avg));
+    if ($isunknown(lft_avg) || $isunknown(rght_avg) || lft_avg <= rght_avg) begin
       $display(
-          "[FAIL][TEST 1] Expected lft_spd > rght_spd when steering right. lft_spd=%0d, rght_spd=%0d (time=%0t)",
-          iPHYS.omega_lft, iPHYS.omega_rght, $time);
+          "[FAIL][TEST 1] Expected lft_spd > rght_spd when steering right. lft_avg=%0d, rght_avg=%0d (time=%0t)",
+          lft_avg, rght_avg, $time);
       $stop();
     end
 
-    $display("[PASS][TEST 1] Right steer OK. lft_spd=%0d > rght_spd=%0d (time=%0t)",
-             iPHYS.omega_lft, iPHYS.omega_rght, $time);
+    $display("[PASS][TEST 1] Right steer OK. lft_avg=%0d > rght_avg=%0d (time=%0t)",
+             lft_avg, rght_avg, $time);
 
     // Save speeds as reference for right-side saturation test
-    prev_lft_spd = iPHYS.omega_lft;
-    prev_rght_spd = iPHYS.omega_rght;
+    prev_lft_spd = lft_avg;
+    prev_rght_spd = rght_avg;
 
 
     //==================================================================
@@ -168,26 +167,28 @@ module steering_response_tb ();
              $time);
     repeat (1_000_000) @(posedge clk);
 
-    if ($isunknown(iPHYS.omega_lft) || (iPHYS.omega_lft <= prev_lft_spd)) begin
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(256), .clk(clk), .avg_out(lft_avg));
+    compute_average(.sig(iPHYS.omega_rght), .num_samples(256), .clk(clk), .avg_out(rght_avg));
+    if ($isunknown(lft_avg) || (lft_avg <= prev_lft_spd)) begin
       $display(
           "[FAIL][TEST 2] lft_spd should continue to increase under saturated right steer. current=%0d, prev=%0d, time=%0t",
-          iPHYS.omega_lft, prev_lft_spd, $time);
+          lft_avg, prev_lft_spd, $time);
       $stop();
     end
 
-    if ($isunknown(iPHYS.omega_rght) || (iPHYS.omega_rght >= prev_rght_spd)) begin
+    if ($isunknown(rght_avg) || (rght_avg >= prev_rght_spd)) begin
       $display(
           "[FAIL][TEST 2] rght_spd should continue to decrease under saturated right steer. current=%0d, prev=%0d, time=%0t",
-          iPHYS.omega_rght, prev_rght_spd, $time);
+          rght_avg, prev_rght_spd, $time);
       $stop();
     end
 
     $display(
-        "[PASS][TEST 2] steer saturation OK. lft_spd=%0d (ref=%0d), rght_spd=%0d (ref=%0d), time=%0t",
-        iPHYS.omega_lft, prev_lft_spd, iPHYS.omega_rght, prev_rght_spd, $time);
+        "[PASS][TEST 2] steer saturation OK. lft_avg=%0d (ref=%0d), rght_avg=%0d (ref=%0d), time=%0t",
+        lft_avg, prev_lft_spd, rght_avg, prev_rght_spd, $time);
 
-    prev_lft_spd = iPHYS.omega_lft;
-    prev_rght_spd = iPHYS.omega_rght;
+    prev_lft_spd = lft_avg;
+    prev_rght_spd = rght_avg;
 
 
     //====================================================================
@@ -200,43 +201,41 @@ module steering_response_tb ();
     $display("\n[TEST 3] Reduced right steer (steerPot = 0x%0h, time = %0t)", steerPot, $time);
     repeat (1_000_000) @(posedge clk);
 
-    if ($isunknown(
-            iPHYS.omega_lft
-        ) || $isunknown(
-            iPHYS.omega_rght
-        ) || iPHYS.omega_lft <= iPHYS.omega_rght) begin
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(256), .clk(clk), .avg_out(lft_avg));
+    compute_average(.sig(iPHYS.omega_rght), .num_samples(256), .clk(clk), .avg_out(rght_avg));
+    if ($isunknown(lft_avg) || $isunknown(rght_avg) || lft_avg <= rght_avg) begin
       $display(
-          "[FAIL][TEST 3] Expected lft_spd > rght_spd for right steer. lft_spd=%0d, rght_spd=%0d (time=%0t)",
-          iPHYS.omega_lft, iPHYS.omega_rght, $time);
+          "[FAIL][TEST 3] Expected lft_spd > rght_spd for right steer. lft_avg=%0d, rght_avg=%0d (time=%0t)",
+          lft_avg, rght_avg, $time);
       $stop();
     end
 
     $display(
-        "[PASS][TEST 3] Direction OK for reduced right steer. lft_spd=%0d > rght_spd=%0d (time=%0t)",
-        iPHYS.omega_lft, iPHYS.omega_rght, $time);
+        "[PASS][TEST 3] Direction OK for reduced right steer. lft_avg=%0d > rght_avg=%0d (time=%0t)",
+        lft_avg, rght_avg, $time);
 
-    if (iPHYS.omega_lft >= prev_lft_spd) begin
+    if (lft_avg >= prev_lft_spd) begin
       $display(
           "[FAIL][TEST 3] Expected lft_spd to decrease when steering angle reduced. current=%0d, prev(max angle)=%0d (time=%0t)",
-          iPHYS.omega_lft, prev_lft_spd, $time);
+          lft_avg, prev_lft_spd, $time);
       $stop();
     end
 
-    if (iPHYS.omega_rght <= prev_rght_spd) begin
+    if (rght_avg <= prev_rght_spd) begin
       $display(
           "[FAIL][TEST 3] Expected rght_spd to increase when steering angle reduced. current=%0d, prev(max angle)=%0d (time=%0t)",
-          iPHYS.omega_rght, prev_rght_spd, $time);
+          rght_avg, prev_rght_spd, $time);
       $stop();
     end
 
     $display(
-        "[PASS][TEST 3] Magnitude scales correctly with reduced right steer. lft_spd=%0d (prev=%0d), rght_spd=%0d (prev=%0d), time=%0t",
-        iPHYS.omega_lft, prev_lft_spd, iPHYS.omega_rght, prev_rght_spd, $time);
+        "[PASS][TEST 3] Magnitude scales correctly with reduced right steer. lft_avg=%0d (prev=%0d), rght_avg=%0d (prev=%0d), time=%0t",
+        lft_avg, prev_lft_spd, rght_avg, prev_rght_spd, $time);
 
 
     // Update reference for left-steer tests
-    prev_lft_spd = iPHYS.omega_lft;
-    prev_rght_spd = iPHYS.omega_rght;
+    prev_lft_spd = lft_avg;
+    prev_rght_spd = rght_avg;
 
 
     //============================================================
@@ -247,23 +246,21 @@ module steering_response_tb ();
     $display("\n[TEST 4] Max left steer applied (steerPot = 0x%0h, time = %0t)", steerPot, $time);
     repeat (1_000_000) @(posedge clk);
 
-    if ($isunknown(
-            iPHYS.omega_lft
-        ) || $isunknown(
-            iPHYS.omega_rght
-        ) || iPHYS.omega_lft >= iPHYS.omega_rght) begin
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(256), .clk(clk), .avg_out(lft_avg));
+    compute_average(.sig(iPHYS.omega_rght), .num_samples(256), .clk(clk), .avg_out(rght_avg));
+    if ($isunknown(lft_avg) || $isunknown(rght_avg) || lft_avg >= rght_avg) begin
       $display(
-          "[FAIL][TEST 4] Expected lft_spd < rght_spd when steering left. lft_spd=%0d, rght_spd=%0d (time=%0t)",
-          iPHYS.omega_lft, iPHYS.omega_rght, $time);
+          "[FAIL][TEST 4] Expected lft_spd < rght_spd when steering left. lft_avg=%0d, rght_avg=%0d (time=%0t)",
+          lft_avg, rght_avg, $time);
       $stop();
     end
 
-    $display("[PASS][TEST 4] Left steer OK. lft_spd=%0d < rght_spd=%0d (time=%0t)",
-             iPHYS.omega_lft, iPHYS.omega_rght, $time);
+    $display("[PASS][TEST 4] Left steer OK. lft_avg=%0d < rght_avg=%0d (time=%0t)",
+             lft_avg, rght_avg, $time);
 
     // Save as reference for left-side saturation test
-    prev_lft_spd = iDUT.iBAL.lft_spd;
-    prev_rght_spd = iDUT.iBAL.rght_spd;
+    prev_lft_spd = lft_avg;
+    prev_rght_spd = rght_avg;
 
 
     //==================================================================
@@ -275,26 +272,28 @@ module steering_response_tb ();
              $time);
     repeat (1_000_000) @(posedge clk);
 
-    if (iPHYS.omega_lft <= prev_lft_spd) begin
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(256), .clk(clk), .avg_out(lft_avg));
+    compute_average(.sig(iPHYS.omega_rght), .num_samples(256), .clk(clk), .avg_out(rght_avg));
+    if (lft_avg <= prev_lft_spd) begin
       $display(
           "[FAIL][TEST 5] lft_spd should not increase under too much under saturated left steer. current=%0d, prev=%0d, time=%0t",
-          iPHYS.omega_lft, prev_lft_spd, $time);
+          lft_avg, prev_lft_spd, $time);
       $stop();
     end
 
-    if (iPHYS.omega_rght <= prev_rght_spd) begin
+    if (rght_avg <= prev_rght_spd) begin
       $display(
           "[FAIL][TEST 5] rght_spd should not decrease under too much under saturated left steer. current=%0d, prev=%0d, time=%0t",
-          iPHYS.omega_rght, prev_rght_spd, $time);
+          rght_avg, prev_rght_spd, $time);
       $stop();
     end
 
     $display(
-        "[PASS][TEST 5] Left steer saturation within tolerance. lft_spd=%0d (ref=%0d), rght_spd=%0d (ref=%0d), time=%0t",
-        iPHYS.omega_lft, prev_lft_spd, iPHYS.omega_rght, prev_rght_spd, $time);
+        "[PASS][TEST 5] Left steer saturation within tolerance. lft_avg=%0d (ref=%0d), rght_avg=%0d (ref=%0d), time=%0t",
+        lft_avg, prev_lft_spd, rght_avg, prev_rght_spd, $time);
 
-    prev_lft_spd = iPHYS.omega_lft;
-    prev_rght_spd = iPHYS.omega_rght;
+    prev_lft_spd = lft_avg;
+    prev_rght_spd = rght_avg;
 
     //====================================================================
     // TEST 6: Left steer at a smaller angle (0x500)
@@ -306,38 +305,36 @@ module steering_response_tb ();
     $display("\n[TEST 6] Reduced left steer (steerPot = 0x%0h, time = %0t)", steerPot, $time);
     repeat (1_000_000) @(posedge clk);
 
-    if ($isunknown(
-            iPHYS.omega_lft
-        ) || !$isunknown(
-            iPHYS.omega_rght
-        ) && iPHYS.omega_lft >= iPHYS.omega_rght) begin
+    compute_average(.sig(iPHYS.omega_lft), .num_samples(256), .clk(clk), .avg_out(lft_avg));
+    compute_average(.sig(iPHYS.omega_rght), .num_samples(256), .clk(clk), .avg_out(rght_avg));
+    if ($isunknown(lft_avg) || !$isunknown(rght_avg) && lft_avg >= rght_avg) begin
       $display(
-          "[FAIL][TEST 6] Expected lft_spd < rght_spd for left steer. lft_spd=%0d, rght_spd=%0d (time=%0t)",
-          iPHYS.omega_lft, iPHYS.omega_rght, $time);
+          "[FAIL][TEST 6] Expected lft_spd < rght_spd for left steer. lft_avg=%0d, rght_avg=%0d (time=%0t)",
+          lft_avg, rght_avg, $time);
       $stop();
     end
 
     $display(
-        "[PASS][TEST 6] Direction OK for reduced left steer. lft_spd=%0d < rght_spd=%0d (time=%0t)",
-        iPHYS.omega_lft, iPHYS.omega_rght, $time);
+        "[PASS][TEST 6] Direction OK for reduced left steer. lft_avg=%0d < rght_avg=%0d (time=%0t)",
+        lft_avg, rght_avg, $time);
 
-    if (iPHYS.omega_lft <= prev_lft_spd) begin
+    if (lft_avg <= prev_lft_spd) begin
       $display(
           "[FAIL][TEST 6] Expected lft_spd to increase when steering angle reduced (less aggressive left). current=%0d, prev(max angle)=%0d (time=%0t)",
-          iPHYS.omega_lft, prev_lft_spd, $time);
+          lft_avg, prev_lft_spd, $time);
       $stop();
     end
 
-    if (iPHYS.omega_rght >= prev_rght_spd) begin
+    if (rght_avg >= prev_rght_spd) begin
       $display(
           "[FAIL][TEST 6] Expected rght_spd to decrease when steering angle reduced. current=%0d, prev(max angle)=%0d (time=%0t)",
-          iPHYS.omega_rght, prev_rght_spd, $time);
+          rght_avg, prev_rght_spd, $time);
       $stop();
     end
 
     $display(
-        "[PASS][TEST 6] Magnitude scales correctly with reduced left steer. lft_spd=%0d (prev=%0d), rght_spd=%0d (prev=%0d), time=%0t",
-        iPHYS.omega_lft, prev_lft_spd, iPHYS.omega_rght, prev_rght_spd, $time);
+        "[PASS][TEST 6] Magnitude scales correctly with reduced left steer. lft_avg=%0d (prev=%0d), rght_avg=%0d (prev=%0d), time=%0t",
+        lft_avg, prev_lft_spd, rght_avg, prev_rght_spd, $time);
 
 
     //====================================================================

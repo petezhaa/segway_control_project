@@ -127,12 +127,16 @@ module over_I_tb ();
     pulse_overcurrent_cycles(.cycles(45), .clk(clk), .PWM_synch(iDUT.iDRV.iPWM_lft.PWM_synch),
                              .ovr_I_blank(iDUT.iDRV.iPWM_lft.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
                              .OVR_I_rght(OVR_I_rght), .left_or_right(1'b1));
-    if(iDUT.iDRV.PWM1_lft === 0 && iDUT.iDRV.PWM2_lft === 0 && iDUT.iDRV.PWM1_rght === 0 && iDUT.iDRV.PWM2_rght === 0) begin
+    // Wait for several PWM edges to ensure outputs remain enabled
+    wait4sig(.sig(iDUT.iDRV.PWM1_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig(.sig(iDUT.iDRV.PWM2_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
+    if(iDUT.iDRV.PWM1_lft === 0 || iDUT.iDRV.PWM2_lft === 0 || iDUT.iDRV.PWM1_rght === 0 || iDUT.iDRV.PWM2_rght === 0) begin
       $display(" Error: PWM outputs disabled during blanking window!");
       $stop();
-    end else begin
+    end else
       $display(" PWM outputs correctly remain enabled during blanking window.");
-    end
 
     check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_lft), .target_val(16'h3d00),
                              .tol(16'h0F00));
@@ -145,12 +149,15 @@ module over_I_tb ();
     pulse_overcurrent_cycles(.cycles(45), .clk(clk), .PWM_synch(iDUT.iDRV.iPWM_lft.PWM_synch),
                              .ovr_I_blank(iDUT.iDRV.iPWM_lft.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
                              .OVR_I_rght(OVR_I_rght), .left_or_right(1'b0));
-    if(iDUT.iDRV.PWM1_lft === 0 && iDUT.iDRV.PWM2_lft === 0 && iDUT.iDRV.PWM1_rght === 0 && iDUT.iDRV.PWM2_rght === 0) begin
+    wait4sig(.sig(iDUT.iDRV.PWM1_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig(.sig(iDUT.iDRV.PWM2_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
+    if(iDUT.iDRV.PWM1_lft === 0 || iDUT.iDRV.PWM2_lft === 0 || iDUT.iDRV.PWM1_rght === 0 || iDUT.iDRV.PWM2_rght === 0) begin
       $display(" Error: PWM outputs disabled during blanking window!");
       $stop();
-    end else begin
+    end else
       $display(" PWM outputs correctly remain enabled during blanking window.");
-    end
 
     check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_lft), .target_val(16'h3F00),
                              .tol(16'h0F00));
@@ -163,13 +170,16 @@ module over_I_tb ();
         .cycles(45), .clk(clk), .PWM_synch(iDUT.iDRV.iPWM_lft.PWM_synch),
         .ovr_I_blank(iDUT.iDRV.iPWM_lft.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
         .OVR_I_rght(OVR_I_rght), .left_or_right(1'b1));
-
+    // Wait for all PWM outputs to drop
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
     if(iDUT.iDRV.PWM1_lft !== 0 || iDUT.iDRV.PWM2_lft !== 0 || iDUT.iDRV.PWM1_rght !== 0 || iDUT.iDRV.PWM2_rght !== 0) begin
       $display("Error: PWM outputs not disabled after left over-current!");
       $stop();
-    end else begin
-      $display(" PWM outputs correctly disabled  left over-current.");
-    end
+    end else
+      $display(" PWM outputs correctly disabled after left over-current.");
 
     repeat (4_000_000) @(posedge clk);  // wait for some time
     check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_lft), .target_val(16'h0A00),
@@ -203,13 +213,15 @@ module over_I_tb ();
         .cycles(45), .clk(clk), .PWM_synch(iDUT.iDRV.iPWM_rght.PWM_synch),
         .ovr_I_blank(iDUT.iDRV.iPWM_rght.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
         .OVR_I_rght(OVR_I_rght), .left_or_right(1'b0));
-
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
     if(iDUT.iDRV.PWM1_lft !== 0 || iDUT.iDRV.PWM2_lft !== 0 || iDUT.iDRV.PWM1_rght !== 0 || iDUT.iDRV.PWM2_rght !== 0) begin
       $display("Error: PWM outputs not disabled after right over-current!");
       $stop();
-    end else begin
-      $display(" PWM outputs correctly disabled  right over-current.");
-    end
+    end else
+      $display(" PWM outputs correctly disabled after right over-current.");
 
     repeat (4_000_000) @(posedge clk);  // wait for some time
     check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_lft), .target_val(16'h0A00),
@@ -272,10 +284,15 @@ module over_I_tb ();
                                      .ovr_I_blank(iDUT.iDRV.iPWM_rght.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
                                      .OVR_I_rght(OVR_I_rght), .left_or_right(1'b0));
 
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
     if(iDUT.iDRV.PWM1_rght !== 0 || iDUT.iDRV.PWM2_rght !== 0) begin
       $display("Error: PWM outputs not disabled after over-current during backward lean!");
       $stop();
-    end
+    end else
+      $display(" PWM outputs correctly disabled during backward lean.");
 
     repeat (4_000_000) @(posedge clk);
     check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_rght), .target_val(16'h0A00), .tol(16'h0900));
@@ -304,10 +321,15 @@ module over_I_tb ();
                                      .ovr_I_blank(iDUT.iDRV.iPWM_lft.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
                                      .OVR_I_rght(OVR_I_rght), .left_or_right(1'b1));
 
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
     if(iDUT.iDRV.PWM1_lft !== 0 || iDUT.iDRV.PWM2_lft !== 0) begin
       $display("Error: Left PWM not disabled during steering!");
       $stop();
-    end
+    end else
+      $display(" PWM outputs correctly disabled with steering applied.");
 
     repeat (4_000_000) @(posedge clk);
     $display("Over-current with steering handled correctly");
@@ -341,11 +363,16 @@ module over_I_tb ();
       OVR_I_rght = 1'b0;
     end
 
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
     if(iDUT.iDRV.PWM1_lft !== 0 || iDUT.iDRV.PWM2_lft !== 0 || 
        iDUT.iDRV.PWM1_rght !== 0 || iDUT.iDRV.PWM2_rght !== 0) begin
       $display("Error: PWM outputs not disabled after simultaneous over-current!");
       $stop();
-    end
+    end else
+      $display(" PWM outputs correctly disabled after simultaneous over-current.");
 
     repeat (4_000_000) @(posedge clk);
     $display("Simultaneous over-current handled correctly");
@@ -373,10 +400,15 @@ module over_I_tb ();
                                      .ovr_I_blank(iDUT.iDRV.iPWM_lft.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
                                      .OVR_I_rght(OVR_I_rght), .left_or_right(1'b1));
 
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
     if(iDUT.iDRV.PWM1_lft !== 0 || iDUT.iDRV.PWM2_lft !== 0) begin
       $display("Error: PWM not disabled with low battery!");
       $stop();
-    end
+    end else
+      $display(" PWM outputs correctly disabled with low battery.");
 
     $display("Over-current protection works at low battery");
 
@@ -406,10 +438,15 @@ module over_I_tb ();
       repeat (5000) @(posedge clk);  // brief recovery period
     end
 
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
     if(iDUT.iDRV.PWM1_rght !== 0 || iDUT.iDRV.PWM2_rght !== 0) begin
       $display("Error: PWM not disabled after intermittent over-current!");
       $stop();
-    end
+    end else
+      $display(" PWM outputs correctly disabled after intermittent over-current.");
 
     $display("Intermittent over-current handled correctly");
 
@@ -435,10 +472,15 @@ module over_I_tb ();
                                      .ovr_I_blank(iDUT.iDRV.iPWM_lft.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
                                      .OVR_I_rght(OVR_I_rght), .left_or_right(1'b1));
 
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
     if(iDUT.iDRV.PWM1_lft !== 0 || iDUT.iDRV.PWM2_lft !== 0) begin
       $display("Error: PWM not disabled at minimal lean!");
       $stop();
-    end
+    end else
+      $display(" PWM outputs correctly disabled at minimal lean.");
 
     $display("Over-current protection works at minimal lean");
 
@@ -468,10 +510,15 @@ module over_I_tb ();
       OVR_I_lft = 1'b0;
     end
 
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
     if(iDUT.iDRV.PWM1_lft !== 0 || iDUT.iDRV.PWM2_lft !== 0) begin
       $display("Error: PWM not disabled at blanking boundary!");
       $stop();
-    end
+    end else
+      $display(" PWM outputs correctly disabled at blanking boundary.");
 
     $display("Over-current at blanking boundary handled correctly");
 
@@ -511,10 +558,15 @@ module over_I_tb ();
       end
     join
 
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
     if(iDUT.iDRV.PWM1_rght !== 0 || iDUT.iDRV.PWM2_rght !== 0) begin
       $display("Error: PWM not disabled during steering changes!");
       $stop();
-    end
+    end else
+      $display(" PWM outputs correctly disabled during steering changes.");
 
     $display("Over-current during steering changes handled correctly");
 
@@ -574,13 +626,18 @@ module over_I_tb ();
                                      .ovr_I_blank(iDUT.iDRV.iPWM_lft.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
                                      .OVR_I_rght(OVR_I_rght), .left_or_right(1'b1));
 
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_lft),  .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
     // Wait extended period and verify outputs stay disabled
     repeat (10_000_000) @(posedge clk);
     if(iDUT.iDRV.PWM1_lft !== 0 || iDUT.iDRV.PWM2_lft !== 0 ||
        iDUT.iDRV.PWM1_rght !== 0 || iDUT.iDRV.PWM2_rght !== 0) begin
       $display("Error: System auto-recovered from over-current (should require reset)!");
       $stop();
-    end
+    end else
+      $display(" PWM outputs correctly stayed disabled.");
 
     $display("System correctly stays disabled after over-current");
 
@@ -608,10 +665,15 @@ module over_I_tb ();
                                        .ovr_I_blank(iDUT.iDRV.iPWM_lft.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
                                        .OVR_I_rght(OVR_I_rght), .left_or_right(1'b1));
 
+      wait4sig_low(.sig(iDUT.iDRV.PWM1_lft),  .clks2wait(10_000), .clk(clk));
+      wait4sig_low(.sig(iDUT.iDRV.PWM2_lft),  .clks2wait(10_000), .clk(clk));
+      wait4sig_low(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+      wait4sig_low(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
       if(iDUT.iDRV.PWM1_lft !== 0 || iDUT.iDRV.PWM2_lft !== 0) begin
         $display("Error: PWM not disabled at lean 0x%0h!", lean_angles[i]);
         $stop();
-      end
+      end else
+        $display(" PWM outputs correctly disabled at lean 0x%0h.", lean_angles[i]);
     end
 
     $display("Over-current protection works at all duty cycles");

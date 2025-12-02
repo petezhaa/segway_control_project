@@ -120,23 +120,23 @@ package task_pkg;
 
   task automatic wait4sig_low(ref logic sig, input int clks2wait, ref logic clk);
     fork
-      // Timeout branch: aborts if 'sig' never rises
+      // Timeout branch: aborts if 'sig' never falls
       begin : timeout
         repeat (clks2wait) @(posedge clk);
-        $error("[%0t] Timeout waiting for signal to go HIGH.", $time);
+        $error("[%0t] Timeout waiting for signal to go LOW.", $time);
         $stop;
       end
 
-      // Wait-for-rise branch: disables timeout on success
+      // Wait-for-fall branch: disables timeout on success
       begin : wait_done
-        $display("sig is %b at time %0t, waiting for it to go HIGH...", sig, $time);
+        $display("sig is %b at time %0t, waiting for it to go LOW...", sig, $time);
         if (sig === 1'b0) begin
-          // Already high before we start waiting
+          // Already low before we start waiting
         end else begin
           @(negedge sig);
         end
         disable timeout;
-        $display("[%0t] Signal asserted (transaction finished).", $time);
+        $display("[%0t] Signal de-asserted (transaction finished).", $time);
       end
     join
   endtask

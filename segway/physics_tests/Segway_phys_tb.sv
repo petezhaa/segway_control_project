@@ -173,41 +173,51 @@ module Segway_tb ();
         $display("Checking center steering balance...");
         compute_average(.sig(iPHYS.omega_lft), .num_samples(256), .clk(clk), .avg_out(lft_avg));
         compute_average(.sig(iPHYS.omega_rght), .num_samples(256), .clk(clk), .avg_out(rght_avg));
-        diff = lft_avg - rght_avg;
-        diff = (diff < 0) ? -diff : diff;
-        if (diff > 150) begin
+        if (!check_equal_with_tolerance(lft_avg, rght_avg, 150)) begin
+            diff = lft_avg - rght_avg;
+            diff = (diff < 0) ? -diff : diff;
             $display("FAIL: Motors not balanced at center steering (diff=%0d)", diff);
             $stop();
         end
-        $display("Center steering balance OK (diff=%0d)", diff);
+        diff = lft_avg - rght_avg;
+        diff = (diff < 0) ? -diff : diff;
+        $display("Center steering balance OK (lft_avg=%0d, rght_avg=%0d, diff=%0d)", lft_avg, rght_avg, diff);
         $display("=== Steering Tests Complete ===");
 
         $display("=== Starting rider lean Tests ===");
         // Rider lean forward then backward (speed reversal / braking)
         rider_lean = 16'sh0800;
         repeat (800000) @(posedge clk);
-        if (iPHYS.omega_lft <= 0 || iPHYS.omega_rght <= 0) begin
+        compute_average(.sig(iPHYS.omega_lft), .num_samples(256), .clk(clk), .avg_out(lft_avg));
+        compute_average(.sig(iPHYS.omega_rght), .num_samples(256), .clk(clk), .avg_out(rght_avg));
+        if (lft_avg <= 0 || rght_avg <= 0) begin
             $display("FAIL: Motors did not achieve expected forward speed");
-            $display("omega_lft=%0d, omega_rght=%0d", iPHYS.omega_lft, iPHYS.omega_rght);
+            $display("omega_lft_avg=%0d, omega_rght_avg=%0d", lft_avg, rght_avg);
             $stop();
         end
-        $display("Forward speed test passed.");
+        $display("Forward speed test passed (lft_avg=%0d, rght_avg=%0d).", lft_avg, rght_avg);
+        
         rider_lean = -16'sh0800;
         repeat (800000) @(posedge clk);
-        if (iPHYS.omega_lft >= 0 || iPHYS.omega_rght >= 0) begin
+        compute_average(.sig(iPHYS.omega_lft), .num_samples(256), .clk(clk), .avg_out(lft_avg));
+        compute_average(.sig(iPHYS.omega_rght), .num_samples(256), .clk(clk), .avg_out(rght_avg));
+        if (lft_avg >= 0 || rght_avg >= 0) begin
             $display("FAIL: Motors did not achieve expected backward speed");
-            $display("omega_lft=%0d, omega_rght=%0d", iPHYS.omega_lft, iPHYS.omega_rght);
+            $display("omega_lft_avg=%0d, omega_rght_avg=%0d", lft_avg, rght_avg);
             $stop();
         end
-        $display("Backward speed test passed.");
+        $display("Backward speed test passed (lft_avg=%0d, rght_avg=%0d).", lft_avg, rght_avg);
+        
         rider_lean = 16'sh0000;
         repeat (400000) @(posedge clk);
-        if (iPHYS.omega_lft < -50 || iPHYS.omega_rght < -50 || iPHYS.omega_lft > 50 || iPHYS.omega_rght > 50) begin
+        compute_average(.sig(iPHYS.omega_lft), .num_samples(256), .clk(clk), .avg_out(lft_avg));
+        compute_average(.sig(iPHYS.omega_rght), .num_samples(256), .clk(clk), .avg_out(rght_avg));
+        if (!check_equal_with_tolerance(lft_avg, 0, 50) || !check_equal_with_tolerance(rght_avg, 0, 50)) begin
             $display("FAIL: Motors did not return to zero speed");
-            $display("omega_lft=%0d, omega_rght=%0d", iPHYS.omega_lft, iPHYS.omega_rght);
+            $display("omega_lft_avg=%0d, omega_rght_avg=%0d", lft_avg, rght_avg);
             $stop();
         end
-        $display("Rider not leaning passed.");
+        $display("Rider not leaning passed (lft_avg=%0d, rght_avg=%0d).", lft_avg, rght_avg);
         $display("=== Rider lean Tests Complete ===");
 
         // Simulate step-off (load cells go low) -> expect internal disable
