@@ -33,14 +33,14 @@ module steer_en #(parameter fast_sim = 1'b1) (
     assign abs_lft_rght_diff = (lft_rght_diff[11]) ? -lft_rght_diff : lft_rght_diff;
 
     logic [12:0] rider_weight_scaled_1_4;
-    assign rider_weight_scaled_1_4 = rider_weight >> 2;
+    assign rider_weight_scaled_1_4 = rider_weight/4;
 
     logic [12:0] rider_weight_scaled_15_16;
-    assign rider_weight_scaled_15_16 = rider_weight - (rider_weight>>4);
+    assign rider_weight_scaled_15_16 = rider_weight - (rider_weight/16);
 
-    assign diff_gt_1_4 = (abs_lft_rght_diff > rider_weight_scaled_1_4);
+    assign diff_gt_1_4 = (abs_lft_rght_diff > rider_weight_scaled_1_4) ? 1'b1 : 1'b0;
 
-    assign diff_gt_15_16 = (abs_lft_rght_diff > rider_weight_scaled_15_16);
+    assign diff_gt_15_16 = (abs_lft_rght_diff > rider_weight_scaled_15_16) ? 1'b1 : 1'b0;
 
   // Timer counter and tmr_full
   localparam integer FULL_CYCLES = 67000000; // ~1.34 s @ 50 MHz
