@@ -117,6 +117,29 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 Top level modules:
 	Auth_blk
 
+} {} {}} C:/Users/peter/Documents/projects/segway/physics_tests/Physics_auth_segway_tb_incomplete.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/physics_tests/Physics_auth_segway_tb_incomplete.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module Auth_segway_tb
+-- Importing package task_pkg
+
+Top level modules:
+	Auth_segway_tb
+
+} {} {}} C:/Users/peter/Documents/projects/segway/task_pkg.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/task_pkg.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling package task_pkg
+
+Top level modules:
+	--none--
+
+} {} {}} C:/Users/peter/Documents/projects/segway/physics_tests/Segway_phys_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/physics_tests/Segway_phys_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module steering_response_tb
+-- Importing package task_pkg
+
+Top level modules:
+	steering_response_tb
+
 } {} {}} C:/Users/peter/Documents/projects/segway/simultaneous_faults_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/simultaneous_faults_tb.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 -- Compiling module simultaneous_faults_tb
@@ -193,6 +216,23 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 Top level modules:
 	steering_response_tb
 
+} {} {}} C:/Users/peter/Documents/projects/segway/physics_tests/linear_speed_phys_tb.sv {2 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/physics_tests/linear_speed_phys_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module linear_speed_tb
+-- Importing package task_pkg
+** Warning: C:/Users/peter/Documents/projects/segway/physics_tests/linear_speed_phys_tb.sv(126): (vlog-2186) SystemVerilog testbench feature
+(randomization, coverage or assertion) detected in the design.
+These features are only supported in Questasim.
+** Warning: C:/Users/peter/Documents/projects/segway/physics_tests/linear_speed_phys_tb.sv(199): (vlog-2186) SystemVerilog testbench feature
+(randomization, coverage or assertion) detected in the design.
+These features are only supported in Questasim.
+** Warning: C:/Users/peter/Documents/projects/segway/physics_tests/linear_speed_phys_tb.sv(199): (vlog-2186) SystemVerilog testbench feature
+(randomization, coverage or assertion) detected in the design.
+These features are only supported in Questasim.
+
+Top level modules:
+	linear_speed_tb
+
 } {} {}} C:/Users/peter/Documents/projects/segway/A2D_intf.sv {1 {vlog -work work -sv -stats=none {C:\Users\peter\Documents\projects\segway\A2D_intf.sv}
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 -- Compiling module A2D_intf
@@ -214,6 +254,15 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 
 Top level modules:
 	Segway_tb
+
+} {} {}} C:/Users/peter/Documents/projects/segway/physics_tests/over_I_phys_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/physics_tests/over_I_phys_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module over_I_tb
+-- Importing package task_pkg
+-- Importing package over_I_task_pkg
+
+Top level modules:
+	over_I_tb
 
 } {} {}} C:/Users/peter/Documents/projects/segway/balance_cntrl.sv {1 {vlog -work work -sv -stats=none {C:\Users\peter\Documents\projects\segway\balance_cntrl.sv}
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
@@ -252,6 +301,14 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 
 Top level modules:
 	over_I_tb
+
+} {} {}} C:/Users/peter/Documents/projects/segway/physics_tests/steering_response_phys_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/peter/Documents/projects/segway/physics_tests/steering_response_phys_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module steering_response_tb
+-- Importing package task_pkg
+
+Top level modules:
+	steering_response_tb
 
 } {} {}} C:/Users/peter/Documents/projects/segway/SPI_mnrch.sv {1 {vlog -work work -sv -stats=none {C:\Users\peter\Documents\projects\segway\SPI_mnrch.sv}
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020

@@ -1,0 +1,32 @@
+# vsim -c -do "run -all; quit -f" work.steering_response_tb 
+# Start time: 22:04:28 on Dec 01,2025
+# Loading sv_std.std
+# Loading work.task_pkg
+# Loading work.steering_response_tb
+# Loading work.SegwayModel
+# Loading work.ADC128S_FC
+# Loading work.SPI_ADC128S
+# Loading work.Segway
+# Loading work.Auth_blk
+# Loading work.UART_rx
+# Loading work.inert_intf
+# Loading work.SPI_mnrch
+# Loading work.inertial_integrator
+# Loading work.balance_cntrl
+# Loading work.PID
+# Loading work.SegwayMath
+# Loading work.steer_en
+# Loading work.steer_en_SM
+# Loading work.mtr_drv
+# Loading work.PWM11
+# Loading work.A2D_intf
+# Loading work.piezo_drv
+# Loading work.rst_synch
+# Loading work.UART_tx
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iSegwayMath'.  Expected 10, found 9.
+#    Time: 0 ps  Iteration: 0  Instance: /steering_response_tb/iDUT/iBAL/iSegwayMath File: ../balance_cntrl.sv Line: 38
+# ** Warning: (vsim-3722) ../balance_cntrl.sv(38): [TFMPC] - Missing connection for port 'rst_n'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
+#    Time: 0 ps  Iteration: 0  Instance: /steering_response_tb/iDUT/iDRV File: ../Segway.sv Line: 75
+# ** Warning: (vsim-3722) ../Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+# run -all

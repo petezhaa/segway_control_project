@@ -1,0 +1,42 @@
+{
+  "timestamp": "2025-12-01T22:00:12.836729",
+  "duration": 44.024353,
+  "results": [
+    {
+      "name": "Auth_segway_phys_tb",
+      "status": "FAILED",
+      "duration": 1.080677,
+      "output": "Error loading design\n"
+    },
+    {
+      "name": "Auth_segway_tb",
+      "status": "FAILED",
+      "duration": 35.993743,
+      "output": "Reading pref.tcl\n\n# 2020.1\n\n# vsim -c -do \"run -all; quit -f\" work.Auth_segway_tb \n# Start time: 22:00:16 on Dec 01,2025\n# Loading sv_std.std\n# Loading work.task_pkg\n# Loading work.Auth_segway_tb\n# Loading work.SegwayModel\n# Loading work.ADC128S_FC\n# Loading work.SPI_ADC128S\n# Loading work.Segway\n# Loading work.Auth_blk\n# Loading work.UART_rx\n# Loading work.inert_intf\n# Loading work.SPI_mnrch\n# Loading work.inertial_integrator\n# Loading work.balance_cntrl\n# Loading work.PID\n# Loading work.SegwayMath\n# Loading work.steer_en\n# Loading work.steer_en_SM\n# Loading work.mtr_drv\n# Loading work.PWM11\n# Loading work.A2D_intf\n# Loading work.piezo_drv\n# Loading work.rst_synch\n# Loading work.UART_tx\n# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iSegwayMath'.  Expected 10, found 9.\n#    Time: 0 ps  Iteration: 0  Instance: /Auth_segway_tb/iDUT/iBAL/iSegwayMath File: ../balance_cntrl.sv Line: 38\n# ** Warning: (vsim-3722) ../balance_cntrl.sv(38): [TFMPC] - Missing connection for port 'rst_n'.\n# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.\n#    Time: 0 ps  Iteration: 0  Instance: /Auth_segway_tb/iDUT/iDRV File: ../Segway.sv Line: 75\n# ** Warning: (vsim-3722) ../Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.\n# run -all\n# pwr_up correctly low before authorization\n# Wheel speeds correctly zero before authorization\n# sig is 1 at time 21041830, waiting for it to go HIGH...\n# [21041830] Signal asserted (transaction finished).\n# Authorization granted, pwr_up asserted\n# sig is 1 at time 21041830, waiting for it to go HIGH...\n# [21041830] Signal asserted (transaction finished).\n# Rider weight detected, rider_off deasserted\n# Wheel speeds responding correctly after authorization and lean\n# 'S' command sent, pwr_up remains asserted while rider on\n# sig is 0 at time 26183450, waiting for it to go HIGH...\n# [26680770] Signal asserted (transaction finished).\n# Rider stepped off, pwr_up correctly deasserted\n# With pwr_up deasserted, wheel speeds remain zero despite lean\n# AUTH + SEGWAY INTEGRATION TEST PASSED\n# ** Note: $stop    : ../physics_tests/Auth_segway_tb.sv(182)\n#    Time: 46680770 ps  Iteration: 1  Instance: /Auth_segway_tb\n# Break in Module Auth_segway_tb at ../physics_tests/Auth_segway_tb.sv line 182\n# Stopped at ../physics_tests/Auth_segway_tb.sv line 182\n#  quit -f\n# End time: 22:00:51 on Dec 01,2025, Elapsed time: 0:00:35\n# Errors: 0, Warnings: 4\n"
+    },
+    {
+      "name": "linear_speed_phys_tb",
+      "status": "FAILED",
+      "duration": 1.073077,
+      "output": "Error loading design\n"
+    },
+    {
+      "name": "over_I_phys_tb",
+      "status": "FAILED",
+      "duration": 1.182293,
+      "output": "Error loading design\n"
+    },
+    {
+      "name": "Segway_phys_tb",
+      "status": "FAILED",
+      "duration": 1.371199,
+      "output": "Error loading design\n"
+    },
+    {
+      "name": "steering_response_phys_tb",
+      "status": "FAILED",
+      "duration": 1.233853,
+      "output": "Error loading design\n"
+    }
+  ]
+}

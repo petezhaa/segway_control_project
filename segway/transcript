@@ -336,3 +336,36 @@ run -all
 # Compile of UART_rx.sv was successful.
 # Compile of UART_tx.sv was successful.
 # 30 compiles, 0 failed with no errors.
+# Compile of Auth_segway_phys_tb.sv was successful.
+# Compile of linear_speed_phys_tb.sv was successful with warnings.
+# Compile of over_I_phys_tb.sv was successful.
+# Compile of Physics_auth_segway_tb_incomplete.sv was successful.
+# Compile of Segway_phys_tb.sv was successful.
+# Compile of steering_response_phys_tb.sv was successful.
+# Compile of A2D_intf.sv was successful.
+# Compile of ADC128S_FC.sv was successful.
+# Compile of Auth_blk.sv was successful.
+# Compile of balance_cntrl.sv was successful.
+# Compile of inert_intf.sv was successful.
+# Compile of inertial_integrator.sv was successful.
+# Compile of mtr_drv.sv was successful.
+# Compile of over_I_task_pkg.sv was successful.
+# Compile of over_t_task.sv was successful.
+# Compile of PID.sv was successful.
+# Compile of piezo_drv.sv was successful.
+# Compile of PWM11.sv was successful.
+# Compile of rst_synch.sv was successful.
+# Compile of Segway.sv was successful.
+# Compile of Segway_tb.sv was successful.
+# Compile of SegwayMath.sv was successful.
+# Compile of SegwayModel.sv was successful with warnings.
+# Compile of SPI_ADC128S.sv was successful.
+# Compile of SPI_mnrch.sv was successful.
+# Compile of steer_en.sv was successful.
+# Compile of steer_en_SM.sv was successful.
+# Compile of task_pkg.sv was successful.
+# Compile of UART_rx.sv was successful.
+# Compile of UART_tx.sv was successful.
+# 30 compiles, 0 failed with no errors.
+# End time: 20:06:18 on Dec 01,2025, Elapsed time: 2:28:09
+# Errors: 1, Warnings: 41
