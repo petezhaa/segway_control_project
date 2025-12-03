@@ -1,0 +1,804 @@
+m255
+K4
+z2
+Z0 !s12c _opt
+Z1 !s99 nomlopt
+R0
+R1
+R0
+R1
+R0
+R1
+R0
+R1
+Z2 !s12c _opt2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+R2
+R1
+Z3 !s12c _opt1
+R1
+R3
+R1
+R3
+R1
+R3
+R1
+R3
+R1
+R3
+R1
+R3
+R1
+R3
+R1
+R3
+R1
+R3
+R1
+R3
+R1
+R3
+R1
+R3
+R1
+R3
+R1
+R3
+R1
+R3
+R1
+R3
+R1
+R0
+R1
+!s11f vlog 2024.3_2 2024.11, Nov 25 2024
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z4 d/filespace/a/aaibrahim5/ECE551
+T_opt
+!s110 1764720936
+VziHebJUcQhC;7HoRGJg7U2
+04 15 4 work linear_speed_tb fast 0
+=5-000ae431a4f1-692f8128-3554e-150511
+R1
+Z5 !s12f OEM100
+Z6 !s12b OEM100
+Z7 !s124 OEM100
+Z8 !s135 nogc
+Z9 o-quiet -auto_acc_if_foreign -work work +acc
+Z10 tCvgOpt 0
+n@_opt
+Z11 OE;O;2024.3_2;79
+T_opt1
+!s110 1764705409
+VYco3iz9W9G9^Ve[]]`zkS1
+04 9 4 work Segway_tb fast 0
+=8-000ae431a4f1-692f4481-5d8bb-127b31
+R1
+R5
+R6
+R7
+R8
+R9
+R10
+n@_opt1
+R11
+R4
+T_opt2
+!s110 1764719458
+VmoS@WEn<QF0FfN:g4i_K[2
+04 20 4 work steering_response_tb fast 0
+=31-000ae431a4f1-692f7b62-6f8ef-13a716
+R1
+R5
+R6
+R7
+R8
+R9
+R10
+n@_opt2
+R11
+R4
+vA2D_intf
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/A2D_intf.sv
+Z12 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+Z13 !s110 1764699949
+!i10b 1
+!s100 `LnT0HBOMzf<e>T`O7^V>1
+I5[RcdQN^S3g0bSO;3Cco10
+S1
+Z14 d/filespace/a/aaibrahim5/ECE551/segway_control_project
+Z15 w1764699887
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/A2D_intf.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/A2D_intf.sv
+!i122 0
+L0 2 141
+Z16 VDg1SIo80bB@j0V0VzS_@n1
+Z17 OE;L;2024.3_2;79
+r1
+!s85 0
+31
+Z18 !s108 1764699949.000000
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/A2D_intf.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/A2D_intf.sv|
+!i113 0
+Z19 o-work work -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R10
+n@a2@d_intf
+vADC128S_FC
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/ADC128S_FC.sv
+R12
+R13
+!i10b 1
+!s100 Rl]`k>AN?gM4;jCHS^0iI3
+I2`HIEf6GL;ONX3D1CSg@81
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/ADC128S_FC.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/ADC128S_FC.sv
+!i122 1
+L0 1 114
+R16
+R17
+r1
+!s85 0
+31
+R18
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/ADC128S_FC.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/ADC128S_FC.sv|
+!i113 0
+R19
+R10
+n@a@d@c128@s_@f@c
+vAuth_blk
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Auth_blk.sv
+R12
+R13
+!i10b 1
+!s100 d`fR[>O2_2JhJmE0S7CMV3
+I;[XUR^c`4I]Yo2EPc::O12
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Auth_blk.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Auth_blk.sv
+!i122 2
+L0 19 114
+R16
+R17
+r1
+!s85 0
+31
+R18
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Auth_blk.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Auth_blk.sv|
+!i113 0
+R19
+R10
+n@auth_blk
+vbalance_cntrl
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/balance_cntrl.sv
+R12
+R13
+!i10b 1
+!s100 eCm3fP]2[^:bUN4Q97]NF2
+IWm@N^Wm^zO=cXQL^dD@EB0
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/balance_cntrl.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/balance_cntrl.sv
+!i122 3
+L0 1 50
+R16
+R17
+r1
+!s85 0
+31
+R18
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/balance_cntrl.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/balance_cntrl.sv|
+!i113 0
+R19
+R10
+vinert_intf
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/inert_intf.sv
+R12
+R13
+!i10b 1
+!s100 OH_FKJah^fZZII=B:cK?>3
+IaKN<LP;EczlL63z7?0l;f3
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/inert_intf.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/inert_intf.sv
+!i122 4
+L0 1 215
+R16
+R17
+r1
+!s85 0
+31
+R18
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/inert_intf.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/inert_intf.sv|
+!i113 0
+R19
+R10
+vinertial_integrator
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/inertial_integrator.sv
+R12
+!s110 1764700304
+!i10b 1
+!s100 J55jCl<mjVH28QUMWd2nj3
+Ig_OXJf1[10@E3Q5>HRZ;<2
+S1
+R14
+w1764700142
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/inertial_integrator.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/inertial_integrator.sv
+!i122 25
+L0 7 83
+R16
+R17
+r1
+!s85 0
+31
+!s108 1764700304.000000
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/inertial_integrator.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/inertial_integrator.sv|
+!i113 0
+R19
+R10
+vlinear_speed_tb
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Ansley phys TB/linear_speed_phys_tb.sv
+R12
+Z20 DXx4 work 8 task_pkg 0 22 ^@VMj4UV6T7Gc8cO;^IIF3
+!s110 1764720933
+!i10b 1
+!s100 j=>bLz@KD9YWbBlDFHz9F3
+IC0BVfY<[8I@IGf308zBS93
+S1
+R14
+w1764720930
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Ansley phys TB/linear_speed_phys_tb.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Ansley phys TB/linear_speed_phys_tb.sv
+!i122 75
+L0 1 213
+R16
+R17
+r1
+!s85 0
+31
+!s108 1764720933.000000
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Ansley phys TB/linear_speed_phys_tb.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Ansley phys TB/linear_speed_phys_tb.sv|
+!i113 0
+R19
+R10
+vmtr_drv
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/mtr_drv.sv
+R12
+R13
+!i10b 1
+!s100 5g6Z]a5;9e3aOJ<njee9_3
+IZBXlZ0gH>bld5<dQhh4HY3
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/mtr_drv.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/mtr_drv.sv
+!i122 6
+L0 1 139
+R16
+R17
+r1
+!s85 0
+31
+R18
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/mtr_drv.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/mtr_drv.sv|
+!i113 0
+R19
+R10
+Xover_I_task_pkg
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/over_t_task.sv
+R12
+R13
+!i10b 1
+!s100 Cj8@ChFH]2oRW0G0mj_XO2
+IE8U8lPa8l;5jm5iJhP1A03
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/over_t_task.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/over_t_task.sv
+!i122 8
+Z21 L0 1 0
+VE8U8lPa8l;5jm5iJhP1A03
+R17
+r1
+!s85 0
+31
+R18
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/over_t_task.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/over_t_task.sv|
+!i113 0
+R19
+R10
+nover_@i_task_pkg
+vPID
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/PID.sv
+R12
+R13
+!i10b 1
+!s100 m1jY>1g?>87m=7ZPL8E@f3
+Ibb]]8?[`Pef9W3SDO:GDh0
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/PID.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/PID.sv
+!i122 9
+L0 9 127
+R16
+R17
+r1
+!s85 0
+31
+R18
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/PID.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/PID.sv|
+!i113 0
+R19
+R10
+n@p@i@d
+vpiezo_drv
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/piezo_drv.sv
+R12
+Z22 !s110 1764699950
+!i10b 1
+!s100 kNjo>mLkYMT=;E>`Pd9:E2
+I<3mdQIHQj5VS6gA]0hYB:0
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/piezo_drv.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/piezo_drv.sv
+!i122 10
+L0 1 408
+R16
+R17
+r1
+!s85 0
+31
+R18
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/piezo_drv.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/piezo_drv.sv|
+!i113 0
+R19
+R10
+vPWM11
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/PWM11.sv
+R12
+R22
+!i10b 1
+!s100 Y9hZ2EZg43e<`;HOe<=>g0
+I=6I>Q=>o90XSd<A5aV_P<0
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/PWM11.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/PWM11.sv
+!i122 11
+L0 1 60
+R16
+R17
+r1
+!s85 0
+31
+Z23 !s108 1764699950.000000
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/PWM11.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/PWM11.sv|
+!i113 0
+R19
+R10
+n@p@w@m11
+vrst_synch
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/rst_synch.sv
+R12
+R22
+!i10b 1
+!s100 eT:9?in>Rj[1Bm0>lU@MZ2
+ID00`=]>V`OMflH5S<OPYH0
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/rst_synch.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/rst_synch.sv
+!i122 12
+L0 1 26
+R16
+R17
+r1
+!s85 0
+31
+R23
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/rst_synch.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/rst_synch.sv|
+!i113 0
+R19
+R10
+vSegway
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Segway.sv
+R12
+R22
+!i10b 1
+!s100 ?JY3Uj`VSFN2_9oYfXM0S0
+Iab4:8enz8GUV^[^hY2O==1
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Segway.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Segway.sv
+!i122 13
+L0 1 102
+R16
+R17
+r1
+!s85 0
+31
+R23
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Segway.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Segway.sv|
+!i113 0
+R19
+R10
+n@segway
+vSegway_tb
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Ansley phys TB/Segway_phys_tb.sv
+R12
+R20
+!s110 1764705407
+!i10b 1
+!s100 HWLASYMgT3;YW0KdOUi<^0
+I>UnkSo4njW;9J3Q^@`CD<3
+S1
+R14
+w1764705404
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Ansley phys TB/Segway_phys_tb.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Ansley phys TB/Segway_phys_tb.sv
+!i122 40
+L0 1 294
+R16
+R17
+r1
+!s85 0
+31
+!s108 1764705406.000000
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Ansley phys TB/Segway_phys_tb.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Ansley phys TB/Segway_phys_tb.sv|
+!i113 0
+R19
+R10
+n@segway_tb
+vSegwayMath
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SegwayMath.sv
+R12
+R22
+!i10b 1
+!s100 1;[i1RbNW<2LVE<FClO5O1
+IOSH]n5oT;_mLdG21g9e]@2
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SegwayMath.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SegwayMath.sv
+!i122 14
+L0 2 130
+R16
+R17
+r1
+!s85 0
+31
+R23
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SegwayMath.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SegwayMath.sv|
+!i113 0
+R19
+R10
+n@segway@math
+vSegwayModel
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SegwayModel.sv
+R12
+R22
+!i10b 1
+!s100 iz^E?Y=h=5@SlL;FS;BlO2
+IUoJLL>Pe57Mo@]iUJ`C@g0
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SegwayModel.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SegwayModel.sv
+!i122 15
+L0 1 454
+R16
+R17
+r1
+!s85 0
+31
+R23
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SegwayModel.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SegwayModel.sv|
+!i113 0
+R19
+R10
+n@segway@model
+vSPI_ADC128S
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SPI_ADC128S.sv
+R12
+R22
+!i10b 1
+!s100 93oj0i;UV@::cHMPGHMJ>1
+I?C`dlEH_eR0L:GM_l@lbW2
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SPI_ADC128S.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SPI_ADC128S.sv
+!i122 16
+L0 1 140
+R16
+R17
+r1
+!s85 0
+31
+R23
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SPI_ADC128S.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SPI_ADC128S.sv|
+!i113 0
+R19
+R10
+n@s@p@i_@a@d@c128@s
+vSPI_mnrch
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SPI_mnrch.sv
+R12
+R22
+!i10b 1
+!s100 J[Z1HfM84bSW9Rh>1;An71
+IYhdIW;=2m8zY<1zF6F1JC2
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SPI_mnrch.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SPI_mnrch.sv
+!i122 17
+L0 1 162
+R16
+R17
+r1
+!s85 0
+31
+R23
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SPI_mnrch.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SPI_mnrch.sv|
+!i113 0
+R19
+R10
+n@s@p@i_mnrch
+vsteer_en
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/steer_en.sv
+R12
+R22
+!i10b 1
+!s100 T9Dz<0mj>nYNjnU:gZKC^3
+Ihl4gJ8ETkVD93HL1bibo50
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/steer_en.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/steer_en.sv
+!i122 18
+L0 1 93
+R16
+R17
+r1
+!s85 0
+31
+R23
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/steer_en.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/steer_en.sv|
+!i113 0
+R19
+R10
+vsteer_en_SM
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/steer_en_SM.sv
+R12
+R22
+!i10b 1
+!s100 ;NHk1TL@[1G^?;@O[?X:12
+I]A=<g_P]U3k0VIS[KB;Jb3
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/steer_en_SM.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/steer_en_SM.sv
+!i122 19
+L0 1 89
+R16
+R17
+r1
+!s85 0
+31
+R23
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/steer_en_SM.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/steer_en_SM.sv|
+!i113 0
+R19
+R10
+nsteer_en_@s@m
+vsteering_response_tb
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Ansley phys TB/steering_response_phys_tb.sv
+R12
+R20
+!s110 1764719455
+!i10b 1
+!s100 nQ[>CA:Y1mZnVT8LA_;7=3
+IXi0TTX^iB3MllzcGHXKL@0
+S1
+R14
+w1764719452
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Ansley phys TB/steering_response_phys_tb.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Ansley phys TB/steering_response_phys_tb.sv
+!i122 70
+L0 1 523
+R16
+R17
+r1
+!s85 0
+31
+!s108 1764719455.000000
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Ansley phys TB/steering_response_phys_tb.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Ansley phys TB/steering_response_phys_tb.sv|
+!i113 0
+R19
+R10
+Xtask_pkg
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/task_pkg.sv
+R12
+R22
+!i10b 1
+!s100 nMRAF6ZVWY@CZfaR`MDgB0
+I^@VMj4UV6T7Gc8cO;^IIF3
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/task_pkg.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/task_pkg.sv
+!i122 20
+R21
+V^@VMj4UV6T7Gc8cO;^IIF3
+R17
+r1
+!s85 0
+31
+R23
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/task_pkg.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/task_pkg.sv|
+!i113 0
+R19
+R10
+vUART_rx
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/UART_rx.sv
+R12
+R22
+!i10b 1
+!s100 WTE9ISoL[OJS;h3EmeocK2
+IRiKRi[Ke5j7_C2j5PNW1d3
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/UART_rx.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/UART_rx.sv
+!i122 21
+L0 8 135
+R16
+R17
+r1
+!s85 0
+31
+R23
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/UART_rx.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/UART_rx.sv|
+!i113 0
+R19
+R10
+n@u@a@r@t_rx
+vUART_tx
+2/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/UART_tx.sv
+R12
+R22
+!i10b 1
+!s100 RznaI=GoWZ?S8oCARo5^]3
+IWGNeF_0@hTSiP8ANdOSan2
+S1
+R14
+R15
+8/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/UART_tx.sv
+F/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/UART_tx.sv
+!i122 22
+L0 8 118
+R16
+R17
+r1
+!s85 0
+31
+R23
+!s107 /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/UART_tx.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/UART_tx.sv|
+!i113 0
+R19
+R10
+n@u@a@r@t_tx

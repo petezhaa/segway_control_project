@@ -1,0 +1,173 @@
+/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SegwayMath.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SegwayMath.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module SegwayMath
+
+Top level modules:
+	SegwayMath
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Auth_blk.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Auth_blk.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module Auth_blk
+
+Top level modules:
+	Auth_blk
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/inert_intf.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/inert_intf.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module inert_intf
+
+Top level modules:
+	inert_intf
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/piezo_drv.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/piezo_drv.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module piezo_drv
+
+Top level modules:
+	piezo_drv
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/task_pkg.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/task_pkg.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling package task_pkg
+
+Top level modules:
+	--none--
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/UART_rx.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/UART_rx.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module UART_rx
+
+Top level modules:
+	UART_rx
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/rst_synch.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/rst_synch.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module rst_synch
+
+Top level modules:
+	rst_synch
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/mtr_drv.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/mtr_drv.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module mtr_drv
+
+Top level modules:
+	mtr_drv
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/PWM11.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/PWM11.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module PWM11
+
+Top level modules:
+	PWM11
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/UART_tx.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/UART_tx.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module UART_tx
+
+Top level modules:
+	UART_tx
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/A2D_intf.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/A2D_intf.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module A2D_intf
+
+Top level modules:
+	A2D_intf
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/balance_cntrl.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/balance_cntrl.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module balance_cntrl
+
+Top level modules:
+	balance_cntrl
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SPI_ADC128S.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SPI_ADC128S.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module SPI_ADC128S
+
+Top level modules:
+	SPI_ADC128S
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SPI_mnrch.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SPI_mnrch.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module SPI_mnrch
+
+Top level modules:
+	SPI_mnrch
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/steer_en_SM.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/steer_en_SM.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module steer_en_SM
+
+Top level modules:
+	steer_en_SM
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/steer_en.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/steer_en.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module steer_en
+
+Top level modules:
+	steer_en
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/PID.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/PID.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module PID
+
+Top level modules:
+	PID
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/inertial_integrator.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/inertial_integrator.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module inertial_integrator
+
+Top level modules:
+	inertial_integrator
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/ADC128S_FC.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/ADC128S_FC.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module ADC128S_FC
+
+Top level modules:
+	ADC128S_FC
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/over_I_task_pkg.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/over_I_task_pkg.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling package over_I_task_pkg
+
+Top level modules:
+	--none--
+
+} {} {}} {/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Ansley phys TB/linear_speed_phys_tb.sv} {1 {vlog -work work -vopt -sv -stats=none {/filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Ansley phys TB/linear_speed_phys_tb.sv}
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module linear_speed_tb
+-- Importing package task_pkg
+
+Top level modules:
+	linear_speed_tb
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Segway.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/Segway.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module Segway
+
+Top level modules:
+	Segway
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SegwayModel.sv {2 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SegwayModel.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling module SegwayModel
+** Warning: /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SegwayModel.sv(141): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+** Warning: /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SegwayModel.sv(254): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+** Warning: /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/SegwayModel.sv(256): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+
+Top level modules:
+	SegwayModel
+
+} {} {}} /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/over_t_task.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/a/aaibrahim5/ECE551/segway_control_project/segway/over_t_task.sv
+QuestaSim vlog 2024.3_2 Compiler 2024.11 Nov 25 2024
+-- Compiling package over_I_task_pkg
+
+Top level modules:
+	--none--
+
+} {} {}}

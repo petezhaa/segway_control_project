@@ -101,6 +101,12 @@ module steering_response_tb ();
   int prev_lft_spd, prev_rght_spd;
 
   initial begin
+    automatic int steer_values_right[3] = '{12'h900, 12'hB00, 12'hD00};
+    automatic int steer_values_left[3] = '{12'h700, 12'h500, 12'h300};
+    int i;
+    int omega_diff[3];
+    int right_diff, left_diff;
+    automatic int lean_angles[3] = '{16'sh0400, 16'sh0800, 16'sh0C00};
     //-----------------------------------------
     // Global DUT + environment initialization
     //-----------------------------------------
@@ -293,7 +299,7 @@ module steering_response_tb ();
     //====================================================================
     steerPot = 12'h600;
     $display("\n[TEST 6] Reduced left steer (steerPot = 0x%0h, time = %0t)", steerPot, $time);
-    repeat (1_000_000) @(posedge clk);
+    repeat (2_000_000) @(posedge clk);
 
     if ($isunknown(
             iPHYS.omega_lft
@@ -327,9 +333,186 @@ module steering_response_tb ();
     $display(
         "[PASS][TEST 6] Magnitude scales correctly with reduced left steer. lft_spd=%0d (prev=%0d), rght_spd=%0d (prev=%0d), time=%0t",
         iPHYS.omega_lft, prev_lft_spd, iPHYS.omega_rght, prev_rght_spd, $time);
+        
+        
+     //--------------------------------------------------------------------
+    // TEST 7: Center steering - verify symmetrical wheel velocities
+    //--------------------------------------------------------------------
+    steerPot = 12'h800;
+    $display("\n[TEST 7] Center/neutral steering (steerPot = 0x%0h, time = %0t)", steerPot, $time);
+    repeat (5_000_000) @(posedge clk);
+
+    if (!check_equal_with_tolerance(iPHYS.omega_lft, iPHYS.omega_rght, 500)) begin
+      $display("[FAIL][TEST 7] Wheel velocities not equal at center. lft=%0d, rght=%0d, diff=%0d (time=%0t)",
+               iPHYS.omega_lft, iPHYS.omega_rght, iPHYS.omega_lft - iPHYS.omega_rght, $time);
+      $stop();
+    end
+
+    $display("[PASS][TEST 7] Center steering symmetrical. lft=%0d, rght=%0d (time=%0t)",
+             iPHYS.omega_lft, iPHYS.omega_rght, $time);   
+     
+     
+         //--------------------------------------------------------------------
+    // TEST 8: Rapid steering transitions: idea is to ensure no abrupt jumps in speed?
+    //--------------------------------------------------------------------
+    $display("\n[TEST 8] Rapid steering transitions (time = %0t)", $time);
+
+    steerPot = 12'hC00;  // right
+    repeat (400_000) @(posedge clk);
+    if (iPHYS.omega_lft <= iPHYS.omega_rght) begin
+      $display("[FAIL][TEST 8] Right steer failed. lft=%0d, rght=%0d (time=%0t)",
+               iPHYS.omega_lft, iPHYS.omega_rght, $time);
+      $stop();
+    end
+
+    steerPot = 12'h400;  // left
+    repeat (400_000) @(posedge clk);
+    if (iPHYS.omega_lft >= iPHYS.omega_rght) begin
+      $display("[FAIL][TEST 8] Left steer failed. lft=%0d, rght=%0d (time=%0t)",
+               iPHYS.omega_lft, iPHYS.omega_rght, $time);
+      $stop();
+    end
+
+    steerPot = 12'h800;  // back to center
+    repeat (1_000_000) @(posedge clk);
+    if (!check_equal_with_tolerance(iPHYS.omega_lft, iPHYS.omega_rght, 1000)) begin
+      $display("[FAIL][TEST 8] Return to center failed. lft=%0d, rght=%0d (time=%0t)",
+               iPHYS.omega_lft, iPHYS.omega_rght, $time);
+      $stop();
+    end
+
+    $display("[PASS][TEST 8] Rapid transitions handled. Final: lft=%0d, rght=%0d (time=%0t)",
+             iPHYS.omega_lft, iPHYS.omega_rght, $time);
+             
+             
+             
+     //--------------------------------------------------------------------
+    // TEST 9: Steering with backward lean
+    //--------------------------------------------------------------------
+    rider_lean = -16'sh0800;
+    $display("\n[TEST 9] Steering with backward lean (lean = %0d, time = %0t)", rider_lean, $time);
+    repeat (3_000_000) @(posedge clk);
+
+    steerPot = 12'hC00;  // right steer i.e. move left TODO: check if the direction of these makes sense? it goes back+left
+    repeat (1_000_000) @(posedge clk);
+    if (iPHYS.omega_lft <= iPHYS.omega_rght) begin
+      $display("[FAIL][TEST 9] Right steer with backward lean failed. lft=%0d, rght=%0d (time=%0t)",
+               iPHYS.omega_lft, iPHYS.omega_rght, $time);
+      $stop();
+    end
+
+    steerPot = 12'h400;  // left steer i.e. move right TODO: check if the direction of these makes sense? it goes back+right
+    repeat (1_000_000) @(posedge clk);
+    if (iPHYS.omega_lft >= iPHYS.omega_rght) begin
+      $display("[FAIL][TEST 9] Left steer with backward lean failed. lft=%0d, rght=%0d (time=%0t)",
+               iPHYS.omega_lft, iPHYS.omega_rght, $time);
+      $stop();
+    end
+
+    $display("[PASS][TEST 9] Steering with backward lean works. lft=%0d < rght=%0d (time=%0t)",
+             iPHYS.omega_lft, iPHYS.omega_rght, $time);
+
+    rider_lean = 16'sh0FFF;  // return to forward lean
+    repeat (2_000_000) @(posedge clk);
+    
+    
+    
+    //--------------------------------------------------------------------
+    // TEST 10: Steering with minimal lean (near upright)
+    //--------------------------------------------------------------------
+    rider_lean = 16'sh0200;
+    $display("\n[TEST 10] Steering with minimal lean (lean = %0d, time = %0t)", rider_lean, $time);
+    repeat (3_000_000) @(posedge clk);
+
+    steerPot = 12'hD00;  // strong right
+    repeat (2_000_000) @(posedge clk);
+    if (iPHYS.omega_lft <= iPHYS.omega_rght) begin
+      $display("[FAIL][TEST 10] Right steer with minimal lean failed. lft=%0d, rght=%0d (time=%0t)",
+               iPHYS.omega_lft, iPHYS.omega_rght, $time);
+      $stop();
+    end
+
+    $display("[PASS][TEST 10] Steering works with minimal lean. lft=%0d > rght=%0d (time=%0t)",
+             iPHYS.omega_lft, iPHYS.omega_rght, $time);
+
+    steerPot = 12'h800;		// return to center
+    repeat (3_000_000) @(posedge clk);
+    rider_lean = 16'sh0FFF;  // return to normal lean
+    repeat (2_000_000) @(posedge clk);
+    
+    //--------------------------------------------------------------------
+    // TEST 11: Right steering progression - verify monotonic relationship
+    //--------------------------------------------------------------------
+    $display("\n[TEST 11] Right steering progression (time = %0t)", $time);
+
+    for (i = 0; i < 3; i++) begin
+      steerPot = steer_values_right[i];
+      repeat (500_000) @(posedge clk); //TODO: omega values roll over, expected? decreased time to prevent it rolling
+      omega_diff[i] = iPHYS.omega_lft - iPHYS.omega_rght;
+      $display("[TEST 11] steerPot=0x%0h: lft=%0d, rght=%0d, diff=%0d",
+               steer_values_right[i], iPHYS.omega_lft, iPHYS.omega_rght, omega_diff[i]);
+    end
+
+    if (!(omega_diff[0] < omega_diff[1] && omega_diff[1] < omega_diff[2])) begin
+      $display("[FAIL][TEST 11] Not monotonic. diff[0]=%0d, diff[1]=%0d, diff[2]=%0d (time=%0t)",
+               omega_diff[0], omega_diff[1], omega_diff[2], $time);
+      $stop();
+    end
+
+    $display("[PASS][TEST 11] Right steering progression monotonic: %0d < %0d < %0d (time=%0t)",
+             omega_diff[0], omega_diff[1], omega_diff[2], $time);
+
+    //--------------------------------------------------------------------
+    // TEST 12: Left steering progression - verify monotonic relationship
+    //--------------------------------------------------------------------
+    $display("\n[TEST 12] Left steering progression (time = %0t)", $time);
+
+    for (i = 0; i < 3; i++) begin
+      steerPot = steer_values_left[i];
+      repeat (500_000) @(posedge clk);
+      omega_diff[i] = iPHYS.omega_rght - iPHYS.omega_lft;
+      $display("[TEST 12] steerPot=0x%0h: lft=%0d, rght=%0d, diff=%0d",
+               steer_values_left[i], iPHYS.omega_lft, iPHYS.omega_rght, omega_diff[i]);
+    end
+
+    if (!(omega_diff[0] < omega_diff[1] && omega_diff[1] < omega_diff[2])) begin
+      $display("[FAIL][TEST 12] Not monotonic. diff[0]=%0d, diff[1]=%0d, diff[2]=%0d (time=%0t)",
+               omega_diff[0], omega_diff[1], omega_diff[2], $time);
+      $stop();
+    end
+
+    $display("[PASS][TEST 12] Left steering progression monotonic: %0d < %0d < %0d (time=%0t)",
+             omega_diff[0], omega_diff[1], omega_diff[2], $time);
+
+    steerPot = 12'h800;  // back to center steer
+    repeat (3_000_000) @(posedge clk);
 
 
-    $display("  All steering response tests PASSED at time %0t", $time);
+    //--------------------------------------------------------------------
+    // TEST 13: Steering with varying lean angles
+    //--------------------------------------------------------------------
+    $display("\n[TEST 13] Steering across multiple lean angles (time = %0t)", $time);
+
+    for (i = 0; i < 3; i++) begin
+      rider_lean = lean_angles[i];
+      repeat (500_000) @(posedge clk);
+
+      steerPot = 12'hB00;  // consistent right steer
+      repeat (1_000_000) @(posedge clk);
+
+      if (iPHYS.omega_lft <= iPHYS.omega_rght) begin
+        $display("[FAIL][TEST 13] Steering failed at lean=%0d. lft=%0d, rght=%0d (time=%0t)",
+                 lean_angles[i], iPHYS.omega_lft, iPHYS.omega_rght, $time);
+        $stop();
+      end
+
+      $display("[TEST 13] Lean=%0d: lft=%0d > rght=%0d", lean_angles[i], iPHYS.omega_lft, iPHYS.omega_rght);
+    end
+
+    $display("[PASS][TEST 13] Steering works across varying lean angles (time=%0t)", $time);
+        
+
+    $display("  YAHOO!! All steering response tests PASSED at time %0t", $time);
     $stop();
   end
 

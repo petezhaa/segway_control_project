@@ -121,7 +121,7 @@ module linear_speed_tb ();
 
     lean_gen = new();
 
-    repeat (10) begin
+    repeat (50) begin
       @(posedge clk);
       if (!lean_gen.randomize()) begin
         $error("Randomization failed");

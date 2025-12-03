@@ -1,0 +1,10 @@
+BEGIN 1:SegwayModel:fast:work
+    omega_rght :  1:Segway_tb:fast:work
+    omega_lft :  1:Segway_tb:fast:work
+    theta_platform :  1:Segway_tb:fast:work
+END 
+BEGIN 1:Segway:fast:work
+    pwr_up :  1:Segway_tb:fast:work
+    rider_off :  1:Segway_tb:fast:work
+    batt_low :  1:Segway_tb:fast:work
+END 

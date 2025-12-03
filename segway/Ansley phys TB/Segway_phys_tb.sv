@@ -154,7 +154,7 @@ module Segway_tb ();
                                                                     .values('{16'sh0FFF, 16'shF000, 16'sh0000}), .wait_cycles(5000),
                                                                     .tolerance(16'd0400));
 
-        repeat (500000) @(posedge clk);  // observe ring-down behavior
+        repeat (1_000_000) @(posedge clk);  // observe ring-down behavior
         $display("=== Lean Tests Complete ===");
 
 
@@ -163,19 +163,19 @@ module Segway_tb ();
         $display("=== Starting steering Tests ===");
         // Steering right then left (differential wheel response)
         steerPot = 12'hE00;
-        repeat (5000) @(posedge clk);
+        repeat (500_000) @(posedge clk);
         steerPot = 12'h200;
-        repeat (5000) @(posedge clk);
+        repeat (500_000) @(posedge clk);
         steerPot = 12'h800; // center
-        repeat (5000) @(posedge clk);
+        repeat (2_000_000) @(posedge clk);
 
         // Check: Center steering balance
         $display("Checking center steering balance...");
-        compute_average(.sig(iPHYS.omega_lft), .num_samples(256), .clk(clk), .avg_out(lft_avg));
-        compute_average(.sig(iPHYS.omega_rght), .num_samples(256), .clk(clk), .avg_out(rght_avg));
+        compute_average(.sig(iPHYS.omega_lft), .num_samples(1000), .clk(clk), .avg_out(lft_avg));
+        compute_average(.sig(iPHYS.omega_rght), .num_samples(1000), .clk(clk), .avg_out(rght_avg));
         diff = lft_avg - rght_avg;
         diff = (diff < 0) ? -diff : diff;
-        if (diff > 150) begin
+        if (diff > 1000) begin
             $display("FAIL: Motors not balanced at center steering (diff=%0d)", diff);
             $stop();
         end

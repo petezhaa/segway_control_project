@@ -1,0 +1,8 @@
+BEGIN 1:balance_cntrl:fast:work
+    rght_spd :  1:linear_speed_tb:fast:work
+    lft_spd :  1:linear_speed_tb:fast:work
+END 
+BEGIN 1:SegwayModel:fast:work
+    omega_rght :  1:linear_speed_tb:fast:work
+    omega_lft :  1:linear_speed_tb:fast:work
+END 
