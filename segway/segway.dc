@@ -15,6 +15,7 @@ create_clock -name clk -period 3 [get_ports clk]
 # 3 Do not let DC optimize/buffer through the clock tree
 #---------------------------------------------------------------
 set_dont_touch_network [get_ports clk]
+set_dont_touch_network [get_net iRST/rst_n]
 
 #---------------------------------------------------------------
 # 4 Constrain INPUTS (except clk) with 0.25 ns input delay
@@ -90,8 +91,8 @@ compile -map_effort high
 
 compile -incremental_mapping -map_effort high
 
-report_timing -delay min
-report_timing -delay max
+report_timing -delay min > mindelaytime.rpt
+report_timing -delay max > maxdelaytime.rpt
 
-report_area
+report_area > area.rpt
 write -format verilog -output segway.vg
