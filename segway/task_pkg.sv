@@ -13,6 +13,10 @@ package task_pkg;
   // Used to wait long enough for one complete TX frame to leave the UART.
   localparam UART_TX_FULL_FRAME = 52080;
 
+  localparam BATT_LOW_THRES = 12'h800;
+  localparam MIN_RIDER_WEIGHT = 12'h200;  // Minimum load cell reading to consider "rider present"
+  localparam WT_HYSTERESIS = 8'h40;  // Hysteresis for rider weight detection
+
   // ------------------------------------------------------------------
   // Task: init_DUT
   // Purpose:
@@ -137,6 +141,29 @@ package task_pkg;
         end
         disable timeout;
         $display("[%0t] Signal de-asserted (transaction finished).", $time);
+      end
+    join
+  endtask
+
+
+  task automatic wait4sig_eq(ref logic [11:0] sigA, ref logic [11:0] sigB, input int clks2wait, ref logic clk);
+    fork
+      // Timeout branch: aborts if 'sig' never rises
+      begin : timeout
+        repeat (clks2wait) @(posedge clk);
+        $error("[%0t] Timeout waiting for signalA to equal signalB.", $time);
+        $stop;
+      end
+
+      // Wait-for-rise branch: disables timeout on success
+      begin : wait_done
+        if (sigA === sigB) begin
+          // Already high before we start waiting
+        end else begin
+          wait (sigA === sigB);
+        end
+        disable timeout;
+        $display("[%0t] Signal equal. SignalA = %h, SignalB = %h", $time, sigA, sigB);
       end
     join
   endtask
@@ -427,6 +454,36 @@ package task_pkg;
       };
     }
   endclass
+
+  class segway_rand extends rand_lean;
+    rand logic [7:0] cmd;
+    rand logic [11:0] ld_cell_lft;
+    rand logic [11:0] ld_cell_rght;
+    rand logic [11:0] steerPot;
+    rand logic [11:0] batt;
+    rand logic signed [15:0] rider_lean;
+    rand logic OVR_I_lft;
+    rand logic OVR_I_rght;
+
+    constraint cmd_c {cmd inside {S, G};}
+    constraint ld_cell_lft_c {ld_cell_lft inside {[12'h000 : 12'hFFF]};}
+    constraint ld_cell_rght_c {ld_cell_rght inside {[12'h000 : 12'hFFF]};}
+    constraint steerPot_c {steerPot inside {[12'h200 : 12'hEFF]};}
+    constraint batt_c {batt inside {[12'h000 : 12'hFFF]};}
+    constraint OVR_I_lft_c {
+      OVR_I_lft dist {
+        0 := 90,
+        1 := 10
+      };
+    }
+    constraint OVR_I_rght_c {
+      OVR_I_rght dist {
+        0 := 90,
+        1 := 10
+      };
+    }
+    constraint lean_c {lean_val inside {[16'shF401 : 16'sh0BFF]};}
+  endclass : segway_rand
 
   // ------------------------------------------------------------------
   // Task: compute_average

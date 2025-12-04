@@ -26,12 +26,11 @@ module steer_en #(parameter fast_sim = 1'b1) (
 
     assign sum_gt_min = (rider_weight > MIN_WT_HYS_SUM);
 
-    logic [11:0] lft_rght_diff;
-    assign lft_rght_diff = rght_ld - lft_ld;
+    logic signed [12:0] lft_rght_diff;
+    assign lft_rght_diff =  $signed({1'b0, rght_ld}) - $signed({1'b0, lft_ld});;
 
-    logic [11:0] abs_lft_rght_diff;
-    assign abs_lft_rght_diff = (lft_rght_diff[11]) ? -lft_rght_diff : lft_rght_diff;
-
+    logic [12:0] abs_lft_rght_diff;
+    assign abs_lft_rght_diff = (lft_rght_diff[12]) ? -lft_rght_diff : lft_rght_diff;
     logic [12:0] rider_weight_scaled_1_4;
     assign rider_weight_scaled_1_4 = rider_weight/4;
 
