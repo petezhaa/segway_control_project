@@ -1,5 +1,5 @@
-# vsim -c -do "run -all; quit -f" work.steering_response_tb 
-# Start time: 22:04:28 on Dec 01,2025
+# vsim -c -voptargs="+acc" -sv_seed random -do "run -all; quit -f" work.steering_response_tb 
+# Start time: 22:09:34 on Dec 01,2025
 # Loading sv_std.std
 # Loading work.task_pkg
 # Loading work.steering_response_tb
@@ -29,4 +29,69 @@
 # ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'iDRV'.  Expected 11, found 10.
 #    Time: 0 ps  Iteration: 0  Instance: /steering_response_tb/iDUT/iDRV File: ../Segway.sv Line: 75
 # ** Warning: (vsim-3722) ../Segway.sv(75): [TFMPC] - Missing connection for port 'OVR_I_shtdwn'.
+# Sv_Seed = 554454482
 # run -all
+# 
+# === Starting Steering Response Tests ===
+# 
+# [TEST 1] Max right steer applied  (steerPot = 0xe00, time = 8541830)
+# [PASS][TEST 1] Right steer OK. lft_spd=19966 > rght_spd=-6916 (time=28541830)
+# 
+# [TEST 2] Right steer saturation check (steerPot = 0xf00, time = 28541830)
+# [PASS][TEST 2] steer saturation OK. lft_spd=32414 (ref=19966), rght_spd=-11865 (ref=-6916), time=48541830
+# 
+# [TEST 3] Reduced right steer (steerPot = 0xa00, time = 48541830)
+# [PASS][TEST 3] Direction OK for reduced right steer. lft_spd=31342 > rght_spd=-6037 (time=68541830)
+# [PASS][TEST 3] Magnitude scales correctly with reduced right steer. lft_spd=31342 (prev=32414), rght_spd=-6037 (prev=-11865), time=68541830
+# 
+# [TEST 4] Max left steer applied (steerPot = 0x200, time = 68541830)
+# [PASS][TEST 4] Left steer OK. lft_spd=12091 < rght_spd=16008 (time=88541830)
+# 
+# [TEST 5] Left steer saturation check (steerPot = 0x100, time = 88541830)
+# [PASS][TEST 5] Left steer saturation within tolerance. lft_spd=-172 (ref=-332), rght_spd=29946 (ref=580), time=108541830
+# 
+# [TEST 6] Reduced left steer (steerPot = 0x600, time = 108541830)
+# [PASS][TEST 6] Direction OK for reduced left steer. lft_spd=6 < rght_spd=29647 (time=128541830)
+# [PASS][TEST 6] Magnitude scales correctly with reduced left steer. lft_spd=6 (prev=-172), rght_spd=29647 (prev=29946), time=128541830
+# 
+# [TEST 7] Center/neutral steering (steerPot = 0x800, time = 128541830)
+# [PASS][TEST 7] Center steering symmetrical. lft=16390, rght=16390 (time=228541830)
+# 
+# [TEST 8] Slight right steer (steerPot = 0x900, time = 228541830)
+# [PASS][TEST 8] Slight right steer OK. lft=19986 > rght=12734, diff=7252 (time=248541830)
+# 
+# [TEST 9] Slight left steer (steerPot = 0x700, time = 248541830)
+# [PASS][TEST 9] Slight left steer OK. lft=14159 < rght=18507, diff=4348 (time=268541830)
+# 
+# [TEST 10] Rapid steering transitions (time = 268541830)
+# [PASS][TEST 10] Rapid transitions handled (avg). Final: lft_avg=16038, rght_avg=16731 (time=346552070)
+# 
+# [TEST 11] Steering with backward lean (lean = -2048, time = 346552070)
+# [PASS][TEST 11] Backward lean steering (avg) OK. lft_avg=-10526, rght_avg=-3052 (time=446557190)
+# 
+# [TEST 12] Steering with minimal lean (lean = 512, time = 486557190)
+# [PASS][TEST 12] Minimal lean steering (avg) OK. lft_avg=12987 > rght_avg=-7301 (time=566559750)
+# 
+# [TEST 13] Right steering progression (time = 586559750)
+# [TEST 13] steerPot=0x900: lft_avg=24854, rght_avg=-2685, diff=27539
+# [TEST 13] steerPot=0xb00: lft_avg=26740, rght_avg=-2199, diff=28939
+# [TEST 13] steerPot=0xd00: lft_avg=30904, rght_avg=-4654, diff=35558
+# [PASS][TEST 13] Right steering progression monotonic: 27539 < 28939 < 35558 (time=616567430)
+# 
+# [TEST 14] Left steering progression (time = 616567430)
+# [TEST 14] steerPot=0x700: lft_avg=23249, rght_avg=5238, diff=-18011
+# [TEST 14] steerPot=0x500: lft_avg=17961, rght_avg=11492, diff=-6469
+# [TEST 14] steerPot=0x300: lft_avg=11241, rght_avg=18871, diff=7630
+# [PASS][TEST 14] Left steering progression monotonic: -18011 < -6469 < 7630 (time=646575110)
+# 
+# [TEST 15] Steering symmetry verification (time = 646575110)
+# [TEST 15] Right (0xB00): lft_avg=19776, rght_avg=11284, diff=8492
+# [TEST 15] Left (0x500): lft_avg=11985, rght_avg=19714, diff=7729
+# [FAIL][TEST 15] Steering not symmetric. right_diff=8492, left_diff=7729 (time=686580230)
+# ** Note: $stop    : ../physics_tests/steering_response_phys_tb.sv(867)
+#    Time: 686580230 ps  Iteration: 1  Instance: /steering_response_tb
+# Break in Module steering_response_tb at ../physics_tests/steering_response_phys_tb.sv line 867
+# Stopped at ../physics_tests/steering_response_phys_tb.sv line 867
+#  quit -f
+# End time: 11:17:44 on Dec 02,2025, Elapsed time: 13:08:10
+# Errors: 0, Warnings: 4
