@@ -29,9 +29,8 @@ module UART_rx (
   //------------------------------------------------------------
   // Tracks progress through the 10-bit UART frame
   // Reset on start bit; incremented on each baud-aligned sample
-  always_ff @(posedge clk, negedge rst_n) begin
-    if (!rst_n) bit_cnt <= 0;
-    else if (start) bit_cnt <= 0;
+  always_ff @(posedge clk) begin
+    if (start) bit_cnt <= 0;
     else if (shift) bit_cnt <= bit_cnt + 1;
   end
 
@@ -44,9 +43,8 @@ module UART_rx (
   logic [12:0] baud_cnt;
   localparam baud_full = 13'd5208;  // 50_000_000 / 9600
 
-  always_ff @(posedge clk or negedge rst_n) begin
-    if (!rst_n) baud_cnt <= 0;
-    else if (start | shift) begin
+  always_ff @(posedge clk) begin
+    if (start | shift) begin
       if (start) baud_cnt <= baud_full >> 1;  // Half period for mid-bit sampling
       else baud_cnt <= baud_full;  // Full period for data/stop bits
     end else if (receiving) baud_cnt <= baud_cnt - 1;
@@ -77,9 +75,8 @@ module UART_rx (
   // Stop bit is checked separately in state machine
   // rx_data extracts the final 8-bit payload
   logic [8:0] rx_shift_reg;
-  always_ff @(posedge clk or negedge rst_n) begin
-    if (!rst_n) rx_shift_reg <= 0;
-    else if (shift) rx_shift_reg <= {double_flopped_RX, rx_shift_reg[8:1]};
+  always_ff @(posedge clk) begin
+    if (shift) rx_shift_reg <= {double_flopped_RX, rx_shift_reg[8:1]};
   end
 
   assign rx_data = rx_shift_reg[7:0];

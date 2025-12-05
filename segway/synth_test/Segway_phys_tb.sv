@@ -110,15 +110,9 @@ module Segway_tb ();
                          .ld_cell_lft(ld_cell_lft), .ld_cell_rght(ld_cell_rght), .steerPot(steerPot),
                          .batt(batt), .OVR_I_lft(OVR_I_lft), .OVR_I_rght(OVR_I_rght));
 
+        repeat (300_000) @(posedge clk);  // wait for system to stabilize
         // Send 'G' command
-        //SendCmd(.clk(clk), .trmt(send_cmd), .tx_data(cmd), .cmd(G));
-        send_cmd = 1'b1;
-        cmd = G;
-        @(negedge clk);
-        send_cmd = 1'b0;
-        @(negedge clk);
-        repeat (UART_TX_FULL_FRAME) @(posedge clk);
-
+        SendCmd(.clk(clk), .trmt(send_cmd), .tx_data(cmd), .cmd(G));
 
         repeat (3000) @(posedge clk);  // initial small delay
         ld_cell_lft  = 12'h300;  // simulate rider getting on
