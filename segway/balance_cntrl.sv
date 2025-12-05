@@ -44,7 +44,8 @@ module balance_cntrl #(
         .lft_spd(lft_spd),
         .rght_spd(rght_spd),
         .too_fast(too_fast),
-        .clk(clk)
+        .clk(clk),
+        .rst_n(rst_n)
     );
 
 endmodule
