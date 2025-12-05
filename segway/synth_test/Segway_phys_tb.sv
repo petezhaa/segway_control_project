@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 module Segway_tb ();
 
     import task_pkg::*;
@@ -110,13 +111,14 @@ module Segway_tb ();
                          .batt(batt), .OVR_I_lft(OVR_I_lft), .OVR_I_rght(OVR_I_rght));
 
         // Send 'G' command
-        // SendCmd(.clk(clk), .trmt(send_cmd), .tx_data(cmd), .cmd(G));
-        cmd = G;
+        //SendCmd(.clk(clk), .trmt(send_cmd), .tx_data(cmd), .cmd(G));
         send_cmd = 1'b1;
+        cmd = G;
         @(negedge clk);
         send_cmd = 1'b0;
         @(negedge clk);
         repeat (UART_TX_FULL_FRAME) @(posedge clk);
+
 
         repeat (3000) @(posedge clk);  // initial small delay
         ld_cell_lft  = 12'h300;  // simulate rider getting on
