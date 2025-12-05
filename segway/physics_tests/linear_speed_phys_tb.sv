@@ -181,6 +181,20 @@ module linear_speed_tb ();
             end
           end
         end
+      end else begin
+        if (rider_lean < 0) begin
+          if (curr_lft_avg >= 0 || curr_rght_avg >= 0) begin
+            $display(
+                "Initial backward lean did not produce negative motor speeds as expected.");
+            $stop();
+          end
+        end else if (rider_lean > 0) begin
+          if (curr_lft_avg <= 0 || curr_rght_avg <= 0) begin
+            $display(
+                "Initial forward lean did not produce positive motor speeds as expected.");
+            $stop();
+          end
+        end
       end
 
       $display("Motor speeds changed correctly with lean change.");
