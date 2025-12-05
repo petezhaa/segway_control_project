@@ -58,9 +58,13 @@ module PID (
   // Compute accumulator update and detect overflow
   assign accum_val_pipe = ptch_err_sat + integrator;
 
-  always_ff @(posedge clk) begin
+  always_ff @(posedge clk, negedge rst_n) begin
+    if (!rst_n) begin
+      accum_val <= 18'h00000;
+    end else begin
         accum_val <= accum_val_pipe;
     end
+  end
 
   assign overflowed = (ptch_err_sat[9] == integrator[17]) && (accum_val[17] != integrator[17]);
 
@@ -104,8 +108,9 @@ module PID (
       (PID_sum[16] && !(&PID_sum[15:11])) ? 12'h800 :  // Clamp negative
       PID_sum[11:0];
 
-  always_ff @(posedge clk) begin
-    PID_cntrl <= PID_cntrl_pipe;
+  always_ff @(posedge clk, negedge rst_n) begin
+    if (!rst_n) PID_cntrl <= 12'h000;
+    else PID_cntrl <= PID_cntrl_pipe;
   end
 
   //------------------------------------------------------------

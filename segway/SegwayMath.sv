@@ -48,8 +48,9 @@ module SegwayMath (
   assign PID_cntrl_mult_ss_tmr = (PID_cntrl) * $signed({2'b0, ss_tmr});
   //assign PID_ss = PID_cntrl_mult_ss_tmr[19:8];  // divide by 256
 
-  always_ff @(posedge clk) begin
-      PID_ss <= PID_cntrl_mult_ss_tmr[19:8];
+  always_ff @(posedge clk, negedge rst_n) begin
+    if (!rst_n) PID_ss <= 0;
+    else PID_ss <= PID_cntrl_mult_ss_tmr[19:8];
   end
 
   assign steer_pot_limited = (&steer_pot[11:9] && (|steer_pot[8:0])) ? (STEER_POT_UPPER_LIMIT) :
@@ -63,10 +64,16 @@ module SegwayMath (
 
   //assign steer_scaled_x = (steer_pot_limited >>> 4) + (steer_pot_limited >>> 3);
 
-  always_ff @(posedge clk) begin
-      steer_shift_4 <= (steer_pot_limited >>> 4);
-      steer_shift_3 <= (steer_pot_limited >>> 3);
+  always_ff @(posedge clk, negedge rst_n) begin
+    if (!rst_n) begin
+      steer_shift_4  <= 0;
+      steer_shift_3  <= 0;
+      steer_scaled_x <= 0;
+    end else begin
+      steer_shift_4  <= (steer_pot_limited >>> 4);
+      steer_shift_3  <= (steer_pot_limited >>> 3);
       steer_scaled_x <= steer_shift_4 + steer_shift_3;
+    end
   end
 
   // Compile-time constant for (3/16)*C
@@ -91,9 +98,14 @@ module SegwayMath (
   //assign lft_torque  = PID_ss + steer_term;
   //assign rght_torque = PID_ss - steer_term;
 
-  always_ff @(posedge clk) begin
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      lft_torque  <= '0;
+      rght_torque <= '0;
+    end else begin
       lft_torque  <= PID_ss + steer_term;
       rght_torque <= PID_ss - steer_term;
+    end
   end
 
   // deadzone shaping for left side

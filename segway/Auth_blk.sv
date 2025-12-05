@@ -126,6 +126,10 @@ module Auth_blk (
         end else pwr_up = 1;
       end
 
+      default: begin
+        nxt_state = IDLE;
+      end
+
     endcase
   end
 

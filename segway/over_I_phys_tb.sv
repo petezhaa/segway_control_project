@@ -1,0 +1,222 @@
+module over_I_tb ();
+
+  import task_pkg::*;
+  import over_I_task_pkg::*;
+
+  //// Interconnects to DUT/support defined as type wire /////
+  wire SS_n, SCLK, MOSI, MISO, INT;  // to inertial sensor
+  wire A2D_SS_n, A2D_SCLK, A2D_MOSI, A2D_MISO;  // to A2D converter
+  wire RX_TX;
+  wire PWM1_rght, PWM2_rght, PWM1_lft, PWM2_lft;
+  wire piezo, piezo_n;
+  wire cmd_sent;
+  wire rst_n;  // synchronized global reset
+
+  ////// Stimulus is declared as type reg ///////
+  reg clk, RST_n;
+  reg [7:0] cmd;  // command host is sending to DUT
+  reg send_cmd;  // asserted to initiate sending of command
+  reg signed [15:0] rider_lean;
+  reg [11:0] ld_cell_lft, ld_cell_rght, steerPot, batt;  // A2D values
+  reg OVR_I_lft, OVR_I_rght;
+
+  // Previous steady-state wheel speeds for comparison between tests
+  int prev_lft_spd, prev_rght_spd;
+
+  ////////////////////////////////////////////////////////////////
+  // Instantiate Physical Model of Segway with Inertial sensor //
+  //////////////////////////////////////////////////////////////	
+  SegwayModel iPHYS (
+      .clk(clk),
+      .RST_n(RST_n),
+      .SS_n(SS_n),
+      .SCLK(SCLK),
+      .MISO(MISO),
+      .MOSI(MOSI),
+      .INT(INT),
+      .PWM1_lft(PWM1_lft),
+      .PWM2_lft(PWM2_lft),
+      .PWM1_rght(PWM1_rght),
+      .PWM2_rght(PWM2_rght),
+      .rider_lean(rider_lean)
+  );
+
+  /////////////////////////////////////////////////////////
+  // Instantiate Model of A2D for load cell and battery //
+  ///////////////////////////////////////////////////////
+  ADC128S_FC iA2D (
+      .clk(clk),
+      .rst_n(RST_n),
+      .SS_n(A2D_SS_n),
+      .SCLK(A2D_SCLK),
+      .MISO(A2D_MISO),
+      .MOSI(A2D_MOSI),
+      .ld_cell_lft(ld_cell_lft),
+      .ld_cell_rght(ld_cell_rght),
+      .steerPot(steerPot),
+      .batt(batt)
+  );
+
+  ////// Instantiate DUT ////////
+  Segway iDUT (
+      .clk(clk),
+      .RST_n(RST_n),
+      .INERT_SS_n(SS_n),
+      .INERT_MOSI(MOSI),
+      .INERT_SCLK(SCLK),
+      .INERT_MISO(MISO),
+      .INERT_INT(INT),
+      .A2D_SS_n(A2D_SS_n),
+      .A2D_MOSI(A2D_MOSI),
+      .A2D_SCLK(A2D_SCLK),
+      .A2D_MISO(A2D_MISO),
+      .PWM1_lft(PWM1_lft),
+      .PWM2_lft(PWM2_lft),
+      .PWM1_rght(PWM1_rght),
+      .PWM2_rght(PWM2_rght),
+      .OVR_I_lft(OVR_I_lft),
+      .OVR_I_rght(OVR_I_rght),
+      .piezo_n(piezo_n),
+      .piezo(piezo),
+      .RX(RX_TX)
+  );
+
+  //// Instantiate UART_tx (mimics command from BLE module) //////
+  UART_tx iTX (
+      .clk(clk),
+      .rst_n(rst_n),
+      .TX(RX_TX),
+      .trmt(send_cmd),
+      .tx_data(cmd),
+      .tx_done(cmd_sent)
+  );
+
+  /////////////////////////////////////
+  // Instantiate reset synchronizer //
+  ///////////////////////////////////
+  rst_synch iRST (
+      .clk  (clk),
+      .RST_n(RST_n),
+      .rst_n(rst_n)
+  );
+
+  initial begin
+    //-----------------------------------------
+    // Global DUT + environment initialization
+    //-----------------------------------------
+    init_DUT(.clk(clk), .RST_n(RST_n), .send_cmd(send_cmd), .cmd(cmd), .rider_lean(rider_lean),
+             .ld_cell_lft(ld_cell_lft), .ld_cell_rght(ld_cell_rght), .steerPot(steerPot),
+             .batt(batt), .OVR_I_lft(OVR_I_lft), .OVR_I_rght(OVR_I_rght));
+
+    // Send 'G' command to enable Segway (balance controller on)
+    SendCmd(.clk(clk), .trmt(send_cmd), .tx_data(cmd), .cmd(G));
+
+    repeat (3000) @(posedge clk);  // wait for some time
+    ld_cell_lft  = 12'h300;  // simulate rider getting on
+    ld_cell_rght = 12'h300;  // simulate rider getting on
+    repeat (325000) @(posedge clk);  // wait for some time
+
+    $display("\n=== Starting Over-Current Tests ===");
+    rider_lean = 16'h0FFF;  // simulate rider leaning forward
+    repeat (3_000_000) @(posedge clk);  // wait for balance loop to reach a steady state
+
+    $display("Applying left over-current within blanking window");
+    pulse_overcurrent_cycles(.cycles(45), .clk(clk), .PWM_synch(iDUT.iDRV.iPWM_lft.PWM_synch),
+                             .ovr_I_blank(iDUT.iDRV.iPWM_lft.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
+                             .OVR_I_rght(OVR_I_rght), .left_or_right(1'b1));
+    wait4sig(.sig(iDUT.iDRV.PWM1_lft), .clks2wait(10_000), .clk(clk));
+    wait4sig(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig(.sig(iDUT.iDRV.PWM2_lft), .clks2wait(10_000), .clk(clk));
+    wait4sig(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
+    $display(" PWM outputs after left over-current within blanking window did not disable:");
+
+    check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_lft), .target_val(16'h3d00),
+                             .tol(16'h0F00));
+    check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_rght), .target_val(16'h3d00),
+                             .tol(16'h0F00));
+
+    $display("Applying left over-current within blanking window did not affect speed");
+
+    $display("Applying right over-current within blanking window");
+    pulse_overcurrent_cycles(.cycles(45), .clk(clk), .PWM_synch(iDUT.iDRV.iPWM_lft.PWM_synch),
+                             .ovr_I_blank(iDUT.iDRV.iPWM_lft.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
+                             .OVR_I_rght(OVR_I_rght), .left_or_right(1'b0));
+    wait4sig(.sig(iDUT.iDRV.PWM1_lft), .clks2wait(10_000), .clk(clk));
+    wait4sig(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig(.sig(iDUT.iDRV.PWM2_lft), .clks2wait(10_000), .clk(clk));
+    wait4sig(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
+    $display(" PWM outputs after right over-current within blanking window did not disable:");
+
+    check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_lft), .target_val(16'h3F00),
+                             .tol(16'h0F00));
+    check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_rght), .target_val(16'h3F00),
+                             .tol(16'h0F00));
+    $display("Applying right over-current within blanking window did not affect speed");
+
+    $display("Applying over-current on left motor");
+    inject_overcurrent_outside_blank(
+        .cycles(45), .clk(clk), .PWM_synch(iDUT.iDRV.iPWM_lft.PWM_synch),
+        .ovr_I_blank(iDUT.iDRV.iPWM_lft.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
+        .OVR_I_rght(OVR_I_rght), .left_or_right(1'b1));
+
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_lft), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_lft), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
+    $display(" PWM outputs correctly disabled after left over-current.");
+
+    repeat (4_000_000) @(posedge clk);  // wait for some time
+    check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_lft), .target_val(16'h0A00),
+                             .tol(16'h0900));
+    check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_rght), .target_val(16'h0A00),
+                             .tol(16'h0900));
+    $display("Left over-current caused speed to drop as expected.");
+
+    $display("reinitialzing DUT for right over-current test");
+    //-----------------------------------------
+    // Re-initialize DUT + environment
+    //-----------------------------------------
+    init_DUT(.clk(clk), .RST_n(RST_n), .send_cmd(send_cmd), .cmd(cmd), .rider_lean(rider_lean),
+             .ld_cell_lft(ld_cell_lft), .ld_cell_rght(ld_cell_rght), .steerPot(steerPot),
+             .batt(batt), .OVR_I_lft(OVR_I_lft), .OVR_I_rght(OVR_I_rght));
+
+    // Send 'G' command to enable Segway (balance controller on)
+    SendCmd(.clk(clk), .trmt(send_cmd), .tx_data(cmd), .cmd(G));
+
+    repeat (3000) @(posedge clk);  // wait for some time
+    ld_cell_lft  = 12'h300;  // simulate rider getting on
+    ld_cell_rght = 12'h300;  // simulate rider getting on
+    repeat (325000) @(posedge clk);  // wait for some time
+    rider_lean = 16'h0FFF;
+    repeat (4_000_000) @(posedge clk);  // wait for balance loop to reach a steady state
+    if ((iPHYS.omega_lft < 16'h1500) || (iPHYS.omega_rght < 16'h1500)) begin
+      $display("Error: omega values too low after re-initialization!");
+      $stop();
+    end
+    inject_overcurrent_outside_blank(
+        .cycles(45), .clk(clk), .PWM_synch(iDUT.iDRV.iPWM_rght.PWM_synch),
+        .ovr_I_blank(iDUT.iDRV.iPWM_rght.ovr_I_blank), .OVR_I_lft(OVR_I_lft),
+        .OVR_I_rght(OVR_I_rght), .left_or_right(1'b0));
+
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_lft), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM1_rght), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_lft), .clks2wait(10_000), .clk(clk));
+    wait4sig_low(.sig(iDUT.iDRV.PWM2_rght), .clks2wait(10_000), .clk(clk));
+    $display(" PWM outputs correctly disabled after right over-current.");
+
+    repeat (4_000_000) @(posedge clk);  // wait for some time
+    check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_lft), .target_val(16'h0A00),
+                             .tol(16'h0900));
+    check_theta_steady_state(.clk(clk), .ptch(iPHYS.omega_rght), .target_val(16'h0A00),
+                             .tol(16'h0900));
+    $display("Right over-current caused speed to drop as expected.");
+
+    $display("\n=== Over-Current Tests Complete ===");
+    $stop();
+  end
+
+
+
+  always #10 clk = ~clk;
+
+endmodule
