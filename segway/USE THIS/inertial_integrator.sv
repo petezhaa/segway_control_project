@@ -54,7 +54,16 @@ module inertial_integrator (
   // This slowly “leaks” the integrator toward the accel reference
   // to cancel out long-term drift from gyro bias.
   //------------------------------------------------------------
-  assign fusion_ptch_offset = (ptch_acc > ptch) ? 12'sh400 : -12'sh400;
+  //assign fusion_ptch_offset = (ptch_acc > ptch) ? 12'sh400 : -12'sh400;
+  always_comb begin
+    if (ptch_acc > ptch) begin
+      fusion_ptch_offset = 12'sh400;  // +1024
+    end else  if (ptch_acc < ptch) begin
+      fusion_ptch_offset = -12'sh400; // -1024
+    end else begin
+      fusion_ptch_offset = 12'sd0;    // No correction
+    end
+  end
 
   //------------------------------------------------------------
   // 4. Integrate the gyro rate over time to get pitch
