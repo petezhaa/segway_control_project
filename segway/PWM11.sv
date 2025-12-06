@@ -51,10 +51,10 @@ module PWM11 (
   assign PWM_synch = ~(|cnt);
 
   // ovr_I_blank generation
-  // assign ovr_I_blank = (NONOVERLAP < cnt < (NONOVERLAP + 128)) ||
-  //                        ((NONOVERLAP + duty) < cnt < (duty + NONOVERLAP + 128));
-  assign ovr_I_blank = (cnt < NONOVERLAP) && (cnt < (NONOVERLAP + 11'd128)) ||
-                         (cnt < (duty + NONOVERLAP)) && (cnt < (duty + NONOVERLAP + 11'd128));
+  assign ovr_I_blank = (NONOVERLAP < cnt < (NONOVERLAP + 128)) ||
+                        ((NONOVERLAP + duty) < cnt < (duty + NONOVERLAP + 128));
+  //assign ovr_I_blank = (cnt < NONOVERLAP) && (cnt < (NONOVERLAP + 11'd128)) ||
+  //                       (cnt < (duty + NONOVERLAP)) && (cnt < (duty + NONOVERLAP + 11'd128));
 
 
 endmodule
